@@ -12,9 +12,7 @@ static struct {
 	void (*callback) (int key, int down);
 } keys[MAX_KEYS];
 
-void
-esGameInit(int screen_width, int screen_height)
-{
+void esGameInit(int screen_width, int screen_height) {
 	window_w = screen_width;
 	window_h = screen_height;
 
@@ -28,17 +26,13 @@ esGameInit(int screen_width, int screen_height)
 	glewInit();
 }
 
-static void
-event_key(int sdlkey, int down)
-{
+static void event_key(int sdlkey, int down) {
 	if (keys[sdlkey].callback) {
 		keys[sdlkey].callback(sdlkey, down);
 	}
 }
 
-static void
-events(void)
-{
+static void events(void) {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -50,9 +44,7 @@ events(void)
 	}
 }
 
-void
-esGameGlSwap(void)
-{
+void esGameGlSwap(void) {
 	SDL_GL_SwapBuffers();
 }
 
@@ -61,9 +53,7 @@ static Uint32 emscripten_last_frame;
 static void (*emscripten_frame)(float t);
 static void (*emscripten_exit)();
 
-static void
-emscripten_mainloop(void)
-{
+static void emscripten_mainloop(void) {
 	if (!loop_run) {
 		esMusicHalt();
 		if (emscripten_exit) emscripten_exit();
@@ -82,9 +72,11 @@ emscripten_mainloop(void)
 
 #endif
 
-void
-esGameLoop(void (*frame)(float t), void (*exit)(), int frame_rate)
-{
+void esGameLoop(
+		void (*frame)(float t),
+		void (*exit)(),
+		int frame_rate) {
+
 	loop_run = 1;
 
 #ifdef EMSCRIPTEN
@@ -123,20 +115,22 @@ esGameLoop(void (*frame)(float t), void (*exit)(), int frame_rate)
 #endif
 }
 
-void
-esGameLoopQuit(void)
-{
+void esGameLoopQuit(void) {
 	loop_run = 0;
 }
 
-void
-esGameRegisterKey(int sdlkey, void (*callback)(int key, int down))
-{
+void esGameRegisterKey(int sdlkey,
+		void (*callback)(int key, int down)) {
 	if (key_regs == 0) {
 		memset(keys, 0, sizeof(keys));
 	}
 	key_regs++;
 
 	keys[sdlkey].callback = callback;
+}
+
+void esGameWindowSize(int *w, int *h) {
+	*w = window_w;
+	*h = window_h;
 }
 

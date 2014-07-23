@@ -1,9 +1,7 @@
 #include "estk.h"
 #include <GL/glew.h>
 
-static int
-check_shader(GLuint id, const char *shader_info)
-{
+static int check_shader(GLuint id, const char *shader_info) {
 	GLint result = GL_FALSE;
 
 	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
@@ -19,9 +17,9 @@ check_shader(GLuint id, const char *shader_info)
 	return 0;
 }
 
-int
-shader_load(const char *file_name, GLenum shader_type, const char *shader_info)
-{
+int shader_load(const char *file_name,
+		GLenum shader_type, const char *shader_info) {
+
 	char *content = esFileAlloc(file_name);
 	if (content == NULL) {
 		return 0;
@@ -69,21 +67,17 @@ int esShaderLoad(esShader *shader,
 	return 0;
 }
 
-void
-esShaderUse(const esShader *shader)
-{
+void esShaderUse(const esShader *shader) {
 	glUseProgram(shader->glprogram);
 }
 
-void
-esShaderUnload(esShader *shader)
-{
+void esShaderUnload(esShader *shader) {
 	glDeleteShader(shader->glprogram);
 }
 
-int
-esShaderUniformRegister(esShader *shader, esUniform reg, const char *name)
-{
+int esShaderUniformRegister(esShader *shader,
+		esUniform reg, const char *name) {
+
 	int loc = glGetUniformLocation(shader->glprogram, name);
 	if (loc < 0) return 1;
 
@@ -91,9 +85,7 @@ esShaderUniformRegister(esShader *shader, esUniform reg, const char *name)
 	return 0;
 }
 
-int
-esShaderUniformGl(esShader *shader, esUniform reg)
-{
+int esShaderUniformGl(esShader *shader, esUniform reg) {
 	return shader->uniforms[reg];
 }
 

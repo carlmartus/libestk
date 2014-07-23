@@ -38,6 +38,7 @@ void esGameGlSwap(void);
 void esGameLoop(void (*frame)(float t), void (*exit)(), int frame_rate);
 void esGameLoopQuit(void);
 void esGameRegisterKey(int sdlkey, void (*callback)(int key, int down));
+void esGameWindowSize(int *w, int *h);
 
 // }}}
 // Shader {{{
