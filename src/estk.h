@@ -5,6 +5,9 @@
 
 // Misc {{{
 
+typedef struct { float x, y; } esVec2;
+typedef struct { float x, y, z; } esVec3;
+
 enum esBool {
 	ES_FALSE = 0,
 	ES_TRUE = 1,
@@ -108,8 +111,6 @@ void esGeoRender(const esGeo *geo, int vertices);
 // }}}
 // Projection {{{
 
-typedef struct { float x, y, z; } esVec3;
-
 void esProjOrtho(float *mat, float x0, float y0, float x1, float y1);
 void esProjPerspective(
 		float *mat, float fov, float screenratio, float near, float far,
@@ -189,6 +190,13 @@ int esMusicLoad(esMusic *mu, const char *file_name);
 void esMusicUnLoad(esMusic *mu);
 void esMusicPlay(esMusic *mu);
 void esMusicHalt(void);
+
+// }}}
+// Sprites {{{
+
+void es2dSpritesInit(esTexture *sprites, int palettDim, int maxSprites);
+void es2dSpritesClear(void);
+void es2dSpritesPut(esVec2 loc, int spriteX, int spriteY);
 
 // }}}
 
