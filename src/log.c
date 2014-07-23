@@ -60,7 +60,7 @@ void esLog(int class, const char *fmt, ...) {
 	if (log_cb) {
 		log_cb(class, buf);
 	} else {
-		fprintf(LOG_OUTPUT, "orga %s: %s\n", get_prefix(class), buf);
+		fprintf(LOG_OUTPUT, "estk %s: %s\n", get_prefix(class), buf);
 	}
 }
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
-add_definitions("-Wall -O2 -g -std=gnu11")
+add_definitions("-Wall -O2 -std=gnu11")
 
 # Version/Naming
 # ==============
@@ -23,4 +23,17 @@ set_target_properties(${ESTK}
 	SOVERSION ${MAJOR})
 
 target_link_libraries(${ESTK} m GLEW SDL SDL_image SDL_mixer)
+
+# Demos
+# =====
+
+set(DEMOS_SOURCE
+	attr cam clear events fb font image mainloop red
+	shadercomp sound stride uniform)
+
+foreach(FILE ${DEMOS_SOURCE})
+	add_executable(${FILE} "demos/${FILE}.c")
+	target_link_libraries(${FILE} ${ESTK} GL)
+	include_directories(${FILE} src)
+endforeach(FILE)
 

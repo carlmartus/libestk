@@ -1,7 +1,7 @@
 #include "estk.h"
 #include <GL/glew.h>
 
-static int check_shader(GLuint id, const char *shader_info) {
+static int checkShader(GLuint id, const char *shaderInfo) {
 	GLint result = GL_FALSE;
 
 	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
@@ -9,7 +9,6 @@ static int check_shader(GLuint id, const char *shader_info) {
 	if (result != GL_TRUE) {
 		char info_buf[500];
 		glGetShaderInfoLog(id, sizeof(info_buf)-1, NULL, info_buf);
-		esLog(ES_INFO, "Shader info (%s):\n%s\n", shader_info, info_buf);
 		esCheckGlError();
 		return 1;
 	}
@@ -17,34 +16,35 @@ static int check_shader(GLuint id, const char *shader_info) {
 	return 0;
 }
 
-int shader_load(const char *file_name,
-		GLenum shader_type, const char *shader_info) {
+int loadShader(const char *fileName,
+		GLenum shaderType, const char *shaderInfo) {
 
-	char *content = esFileAlloc(file_name);
+	char *content = esFileAlloc(fileName);
 	if (content == NULL) {
 		return 0;
 	}
 
-	int shad = glCreateShader(shader_type);
+	int shad = glCreateShader(shaderType);
 	glShaderSource(shad, 1, (const char**) &content , NULL);
 	glCompileShader(shad);
 	esCheckGlError();
 	free(content);
 
-	if (check_shader(shad, shader_info)) return 0;
+	if (checkShader(shad, shaderInfo)) return 0;
 
+	esLog(ES_INFO, "Loaded shader %s", fileName);
 	return shad;
 }
 
 int esShaderLoad(esShader *shader,
 		const char *vertFile, const char *fragFile) {
-	int idvert = shader_load(vertFile, GL_VERTEX_SHADER, "Vertex shader");
+	int idvert = loadShader(vertFile, GL_VERTEX_SHADER, "Vertex shader");
 	if (idvert == 0) {
 		esLog(ES_ERRO, "Invalid vertex shader file (%s)\n", vertFile);
 		return 1;
 	}
 
-	int idfrag = shader_load(fragFile, GL_FRAGMENT_SHADER, "Fragment shader");
+	int idfrag = loadShader(fragFile, GL_FRAGMENT_SHADER, "Fragment shader");
 	if (idfrag == 0) {
 		esLog(ES_ERRO, "Invalid fragment shader file (%s)\n", fragFile);
 		return 1;

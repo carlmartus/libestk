@@ -28,12 +28,12 @@ void _esCheckGlError(const char *file, int line) {
 }
 
 
-void *esFileAlloc(const char *file_name) {
-	FILE *fd = fopen(file_name, "r");
+void *esFileAlloc(const char *fileName) {
+	FILE *fd = fopen(fileName, "r");
 	if (fd == NULL) return NULL;
 	struct stat st;
 
-	stat(file_name, &st);
+	stat(fileName, &st);
 
 	char *buf = malloc(st.st_size + 1);
 	fread(buf, st.st_size, 1, fd);
@@ -41,8 +41,8 @@ void *esFileAlloc(const char *file_name) {
 
 	buf[st.st_size] = '\0';
 
-	esLog(ES_INFO, "Loaded %s (%d b)\n%s",
-			file_name, (int) st.st_size, buf);
+	esLog(ES_INFO, "Loaded file %s (%d b)",
+			fileName, (int) st.st_size);
 	return buf;
 }
 
