@@ -1,4 +1,5 @@
 #include "estk.h"
+#include <sys/stat.h>
 #include <GL/glew.h>
 
 static void checkError(const char *file, int line) {
@@ -22,5 +23,24 @@ static void checkError(const char *file, int line) {
 
 void _esCheckGlError(const char *file, int line) {
 	checkError(file, line);
+}
+
+
+void *esFileAlloc(const char *file_name) {
+	FILE *fd = fopen(file_name, "r");
+	if (fd == NULL) return NULL;
+	struct stat st;
+
+	stat(file_name, &st);
+
+	char *buf = malloc(st.st_size + 1);
+	fread(buf, st.st_size, 1, fd);
+	fclose(fd);
+
+	buf[st.st_size] = '\0';
+
+	esLog(ES_INFO, "Loaded %s (%d b)\n%s",
+			file_name, (int) st.st_size, buf);
+	return buf;
 }
 

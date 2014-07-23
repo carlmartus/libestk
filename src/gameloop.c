@@ -1,6 +1,10 @@
 #include "estk.h"
+#include <SDL/SDL.h>
+#include <GL/glew.h>
 
 #define MAX_KEYS 2000
+
+static int window_w, window_h;
 
 static int loop_run;
 static int key_regs = 0;

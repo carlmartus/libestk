@@ -13,6 +13,23 @@ enum esBool {
 void _esCheckGlError();
 #define esCheckGlError() _esCheckGlError(__FILE__, __LINE__)
 
+void *esFileAlloc(const char *file_name);
+
+// }}}
+// Logging {{{
+
+enum {
+	ES_INFO, // Information
+	ES_WARN, // Warning
+	ES_ERRO, // Error
+	ES_DEBU, // Debug
+};
+
+typedef void (*esLogMessage) (int class, const char *message);
+
+void esLogCallback(esLogMessage callback);
+void esLog(int class, const char *fmt, ...);
+
 // }}}
 // Game loop {{{
 
@@ -34,7 +51,7 @@ typedef struct {
 } esShader;
 
 int esShaderLoad(esShader *shader,
-		const char *vert_file, const char *frag_file);
+		const char *vertFile, const char *fragFile);
 void esShaderUse(const esShader *shader);
 void esShaderUnload(esShader *shader);
 int esShaderUniformRegister(esShader *shader,

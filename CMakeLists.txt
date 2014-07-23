@@ -10,15 +10,17 @@ set(MAJOR 2)
 set(MINOR 0)
 set(PATCH 0)
 set(VERSION ${MAJOR}.${MINOR}.${PATCH})
-set(ESTK organic${MAJOR})
+set(ESTK estk${MAJOR})
 
 # Library
 # =======
 
 file(GLOB LIB_SOURCE src/*.c)
-add_library(${ORGANIC} SHARED ${LIB_SOURCE})
+add_library(${ESTK} SHARED ${LIB_SOURCE})
 
-set_target_properties(${ORGANIC}
+set_target_properties(${ESTK}
 	PROPERTIES VERSION ${VERSION}
 	SOVERSION ${MAJOR})
+
+target_link_libraries(${ESTK} m GLEW SDL)
 
