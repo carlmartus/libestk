@@ -1,6 +1,11 @@
 #include "estk.h"
+#include <string.h>
 #include <SDL/SDL.h>
 #include <GL/glew.h>
+
+#ifdef EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#endif
 
 #define MAX_KEYS 2000
 
@@ -20,7 +25,7 @@ void esGameInit(int screen_width, int screen_height) {
 	SDL_SetVideoMode(screen_width, screen_height, 0, SDL_OPENGL);
 
 	if (Mix_OpenAudio(22050, AUDIO_S16, 1, 4096)) {
-		printf("Cannot open audio\n");
+		esLog(ES_ERRO, "Cannot open audio\n");
 	}
 
 	glewInit();

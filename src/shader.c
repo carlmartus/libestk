@@ -9,7 +9,7 @@ static int check_shader(GLuint id, const char *shader_info) {
 	if (result != GL_TRUE) {
 		char info_buf[500];
 		glGetShaderInfoLog(id, sizeof(info_buf)-1, NULL, info_buf);
-		printf("Shader info (%s):\n%s\n", shader_info, info_buf);
+		esLog(ES_INFO, "Shader info (%s):\n%s\n", shader_info, info_buf);
 		esCheckGlError();
 		return 1;
 	}
@@ -40,13 +40,13 @@ int esShaderLoad(esShader *shader,
 		const char *vertFile, const char *fragFile) {
 	int idvert = shader_load(vertFile, GL_VERTEX_SHADER, "Vertex shader");
 	if (idvert == 0) {
-		printf("Invalid vertex shader file (%s)\n", vertFile);
+		esLog(ES_ERRO, "Invalid vertex shader file (%s)\n", vertFile);
 		return 1;
 	}
 
 	int idfrag = shader_load(fragFile, GL_FRAGMENT_SHADER, "Fragment shader");
 	if (idfrag == 0) {
-		printf("Invalid fragment shader file (%s)\n", fragFile);
+		esLog(ES_ERRO, "Invalid fragment shader file (%s)\n", fragFile);
 		return 1;
 	}
 
