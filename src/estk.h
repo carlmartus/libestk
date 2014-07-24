@@ -66,7 +66,7 @@ int esShaderUniformRegister(esShader *shader,
 int esShaderUniformGl(esShader *shader, esUniform reg);
 
 // }}}
-// Geometry buffer {{{
+// Geometry {{{
 
 #define GEOBUFS_MAX 8
 
@@ -197,9 +197,10 @@ void esMusicHalt(void);
 // }}}
 // Sprites {{{
 
-void es2dSpritesInit(esTexture *sprites, int palettDim, int maxSprites);
+void es2dSpritesInit(int palettDim, int maxSprites);
 void es2dSpritesClear(void);
-void es2dSpritesPut(esVec2 loc, int spriteX, int spriteY);
+void es2dSpritesPut(float x, float y, float radius, int spriteX, int spriteY);
+void es2dSpritePrepear(void);
 void es2dSpritesRender(void);
 
 // }}}
