@@ -3,10 +3,10 @@
 #include <SDL/SDL.h>
 #include "estk.h"
 
-int
-main(int argc, char **argv)
-{
+int main() {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -20,8 +20,8 @@ main(int argc, char **argv)
 
 	esShader shad;
 	if (esShaderLoad(&shad,
-				"demores/font_vert.shader",
-				"demores/font_frag.shader")) {
+				"demores/font.vert",
+				"demores/font.frag")) {
 		printf("Cannot open shader\n");
 		return 1;
 	}

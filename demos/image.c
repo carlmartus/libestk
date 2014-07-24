@@ -3,10 +3,10 @@
 #include <GL/glew.h>
 #include "estk.h"
 
-int
-main(int argc, char **argv)
-{
+int main() {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	esTexture tex;
 	if (esTextureLoad(&tex, "demores/img.png", TEX_LINEAR, TEX_NONE)) {
@@ -15,7 +15,7 @@ main(int argc, char **argv)
 	}
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/img_vert.shader", "demores/img_frag.shader")) {
+	if (esShaderLoad(&shad, "demores/img.vert", "demores/img.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

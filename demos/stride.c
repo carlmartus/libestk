@@ -3,13 +3,13 @@
 #include <GL/glew.h>
 #include "estk.h"
 
-int
-main(int argc, char **argv)
-{
+int main() {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/attr_vert.shader", "demores/attr_frag.shader")) {
+	if (esShaderLoad(&shad, "demores/attr.vert", "demores/attr.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

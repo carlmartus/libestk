@@ -3,13 +3,13 @@
 #include <SDL/SDL.h>
 #include "estk.h"
 
-int
-main(int argc, char **argv)
-{
+int main() {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/red_vert.shader", "demores/red_frag.shader")) {
+	if (esShaderLoad(&shad, "demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

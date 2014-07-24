@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
+#define ESTK_VERSION "2.1.0"
+
 // Misc {{{
 
 typedef struct { float x, y; } esVec2;
@@ -32,6 +34,7 @@ typedef void (*esLogMessage) (int class, const char *message);
 
 void esLogCallback(esLogMessage callback);
 void esLog(int class, const char *fmt, ...);
+#define esLogVersion() esLog(ES_DEBU, "libestk Version " ESTK_VERSION)
 
 // }}}
 // Game loop {{{
@@ -197,6 +200,7 @@ void esMusicHalt(void);
 void es2dSpritesInit(esTexture *sprites, int palettDim, int maxSprites);
 void es2dSpritesClear(void);
 void es2dSpritesPut(esVec2 loc, int spriteX, int spriteY);
+void es2dSpritesRender(void);
 
 // }}}
 

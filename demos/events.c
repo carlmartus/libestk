@@ -2,27 +2,21 @@
 #include <SDL/SDL.h>
 #include "estk.h"
 
-static void
-loop_frame(float fr)
-{
+static void loop_frame(float fr) {
 }
 
-static void
-callback_quit(int sdlkey, int down)
-{
+static void callback_quit(int sdlkey, int down) {
 	esGameLoopQuit();
 }
 
-static void
-callback_message(int sdlkey, int down)
-{
+static void callback_message(int sdlkey, int down) {
 	printf("Message! down=%d\n", down);
 }
 
-int
-main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	esGameRegisterKey(SDLK_q, callback_quit);
 	printf("Press 'q' to exit\n");

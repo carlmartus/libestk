@@ -7,25 +7,21 @@
 static esSound sfx;
 static esMusic mus;
 
-static void
-frame(float time)
-{
+static void frame(float time) {
 	static int frame_count = 0;
 	if (++frame_count > 300) esGameLoopQuit();
 }
 
-static void
-loop_exit()
-{
+static void loop_exit() {
 	esSoundUnLoad(&sfx);
 	printf("Good bye!\n");
 	SDL_Quit();
 }
 
-int
-main(int argc, char **argv)
-{
+int main() {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	if (esSoundLoad(&sfx, "demores/sound.ogg")) {
 		printf("Cannot load sound file\n");

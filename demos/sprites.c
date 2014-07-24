@@ -1,26 +1,17 @@
-#include <stdio.h>
-#include <SDL/SDL.h>
-#include <GL/glew.h>
 #include "estk.h"
+#include <GL/glew.h>
+#include <SDL/SDL.h>
 
-int main(int argc, char **argv) {
+int main() {
 
 	esGameInit(400, 300);
 	esLogVersion();
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/uni.vert", "demores/uni.frag")) {
+	if (esShaderLoad(&shad, "demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
-
-	if (esShaderUniformRegister(&shad, 0, "un_base")) {
-		printf("Cannot get uniform constant\n");
-		return 1;
-	}
-
-	esShaderUse(&shad);
-	glUniform4f(esShaderUniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
 
 	static const float red_lo[] = {
 		0.0f, 0.0f,
@@ -43,12 +34,12 @@ int main(int argc, char **argv) {
 	esGeoRender(&geo, 3);
 
 	esGameGlSwap();
-
 	esGeoBufDelete(&geobuf);
 	esShaderUnload(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();
+
 	return 0;
 }
 

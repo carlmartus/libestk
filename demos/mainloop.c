@@ -8,9 +8,7 @@ static esShader shad;
 static esGeo geo;
 static esGeoBuf geobuf;
 
-static void
-frame(float time)
-{
+static void frame(float time) {
 	static int frame_count = 0;
 
 	printf("Frame %3.3f\n", time);
@@ -36,21 +34,19 @@ frame(float time)
 	if (++frame_count > 100) esGameLoopQuit();
 }
 
-static void
-loop_exit()
-{
+static void loop_exit() {
 	printf("Good bye!\n");
 	esGeoBufDelete(&geobuf);
 	esShaderUnload(&shad);
 	SDL_Quit();
 }
 
-int
-main(int argc, char **argv)
-{
-	esGameInit(400, 300);
+int main() {
 
-	if (esShaderLoad(&shad, "demores/cam_vert.shader", "demores/red_frag.shader")) {
+	esGameInit(400, 300);
+	esLogVersion();
+
+	if (esShaderLoad(&shad, "demores/cam.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

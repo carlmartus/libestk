@@ -3,14 +3,14 @@
 #include <SDL/SDL.h>
 #include "estk.h"
 
-int
-main(int argc, char **argv)
-{
+int main() {
+
 	esGameInit(400, 300);
+	esLogVersion();
 
 	esShader shad_red;
 	if (esShaderLoad(&shad_red,
-				"demores/red_vert.shader", "demores/red_frag.shader")) {
+				"demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
 	}
@@ -26,7 +26,7 @@ main(int argc, char **argv)
 
 	esShader shad_tex;
 	if (esShaderLoad(&shad_tex,
-				"demores/img_vert.shader", "demores/img_frag.shader")) {
+				"demores/img.vert", "demores/img.frag")) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
 	}
