@@ -19,7 +19,7 @@ int main() {
 	}
 
 	esShader shad;
-	if (esShaderLoad(&shad,
+	if (esShaderDual(&shad,
 				"demores/font.vert",
 				"demores/font.frag")) {
 		printf("Cannot open shader\n");

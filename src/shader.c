@@ -36,49 +36,75 @@ int loadShader(const char *fileName,
 	return shad;
 }
 
-int esShaderLoad(esShader *shader,
-		const char *vertFile, const char *fragFile) {
-	int idvert = loadShader(vertFile, GL_VERTEX_SHADER, "Vertex shader");
-	if (idvert == 0) {
-		esLog(ES_ERRO, "Invalid vertex shader file (%s)\n", vertFile);
-		return 1;
-	}
+void esShaderReset(esShader *shader) {
+	shader->shaderCount = 0;
+}
 
-	int idfrag = loadShader(fragFile, GL_FRAGMENT_SHADER, "Fragment shader");
-	if (idfrag == 0) {
+int esShaderLoadFrag(esShader *shader, const char *fragFile) {
+	int idFrag = loadShader(fragFile,
+			GL_FRAGMENT_SHADER, "Fragment shader");
+	if (idFrag == 0) {
 		esLog(ES_ERRO, "Invalid fragment shader file (%s)\n", fragFile);
 		return 1;
 	}
+	shader->glShaders[shader->shaderCount++] = idFrag;
+	return 0;
+}
+
+int esShaderLoadVert(esShader *shader, const char *vertFile) {
+	int idVert = loadShader(vertFile,
+			GL_VERTEX_SHADER, "Vertex shader");
+	if (idVert == 0) {
+		esLog(ES_ERRO, "Invalid vertex shader file (%s)\n", vertFile);
+		return 1;
+	}
+	shader->glShaders[shader->shaderCount++] = idVert;
+	return 0;
+}
+
+int esShaderCompile(esShader *shader) {
 
 	int program = glCreateProgram();
 
-	glAttachShader(program, idvert);
-	esCheckGlError();
-	glAttachShader(program, idfrag);
-	esCheckGlError();
+	int i;
+	for (i=0; i<shader->shaderCount; i++) {
+		glAttachShader(program, shader->glShaders[i]);
+		esCheckGlError();
+	}
 
 	glLinkProgram(program);
 	esCheckGlError();
 
-	glDeleteShader(idvert);
-	glDeleteShader(idfrag);
+	for (i=0; i<shader->shaderCount; i++) {
+		glDeleteShader(shader->glShaders[i]);
+		esCheckGlError();
+	}
 
-	shader->glprogram = program;
+	shader->glProgram = program;
 	return 0;
 }
 
+int esShaderDual(esShader *shader,
+		const char *vertFile, const char *fragFile) {
+	esShaderReset(shader);
+
+	if (esShaderLoadVert(shader, vertFile)) return 1;
+	if (esShaderLoadFrag(shader, fragFile)) return 1;
+	return esShaderCompile(shader);
+}
+
 void esShaderUse(const esShader *shader) {
-	glUseProgram(shader->glprogram);
+	glUseProgram(shader->glProgram);
 }
 
 void esShaderUnload(esShader *shader) {
-	glDeleteShader(shader->glprogram);
+	glDeleteShader(shader->glProgram);
 }
 
 int esShaderUniformRegister(esShader *shader,
 		esUniform reg, const char *name) {
 
-	int loc = glGetUniformLocation(shader->glprogram, name);
+	int loc = glGetUniformLocation(shader->glProgram, name);
 	if (loc < 0) return 1;
 
 	shader->uniforms[reg] = loc;

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "2.1.0"
+#define ESTK_VERSION "2.2.0"
 
 // Misc {{{
 
@@ -51,13 +51,20 @@ void esGameWindowSize(int *w, int *h);
 
 typedef int esUniform;
 #define UNIFORMS_MAX 10
+#define SHADERS_MAX 10
 
 typedef struct {
-	int glprogram;
+	int glProgram;
 	esUniform uniforms[UNIFORMS_MAX];
+	int glShaders[SHADERS_MAX];
+	int shaderCount;
 } esShader;
 
-int esShaderLoad(esShader *shader,
+void esShaderReset(esShader *shader);
+int esShaderLoadFrag(esShader *shader, const char *fragFile);
+int esShaderLoadVert(esShader *shader, const char *vertFile);
+int esShaderCompile(esShader *shader);
+int esShaderDual(esShader *shader,
 		const char *vertFile, const char *fragFile);
 void esShaderUse(const esShader *shader);
 void esShaderUnload(esShader *shader);

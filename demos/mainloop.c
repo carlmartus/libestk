@@ -46,7 +46,7 @@ int main() {
 	esGameInit(400, 300);
 	esLogVersion();
 
-	if (esShaderLoad(&shad, "demores/cam.vert", "demores/red.frag")) {
+	if (esShaderDual(&shad, "demores/cam.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

@@ -9,7 +9,7 @@ int main() {
 	esLogVersion();
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/attr.vert", "demores/attr.frag")) {
+	if (esShaderDual(&shad, "demores/attr.vert", "demores/attr.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

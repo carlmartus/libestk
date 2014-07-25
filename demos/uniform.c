@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/uni.vert", "demores/uni.frag")) {
+	if (esShaderDual(&shad, "demores/uni.vert", "demores/uni.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

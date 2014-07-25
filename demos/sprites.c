@@ -14,7 +14,7 @@ int main() {
 	}
 
 	esShader shad;
-	if (esShaderLoad(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
+	if (esShaderDual(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
