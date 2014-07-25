@@ -8,10 +8,10 @@ static const GLenum mipmap_map[] = {
 	[TEX_LINEAR] = GL_LINEAR,
 };
 
-int esTextureLoad(esTexture *tex, const char *file_name,
+esErr esTextureLoad(esTexture *tex, const char *file_name,
 		enum esTextureMipmap min, enum esTextureMipmap mag) {
 	SDL_Surface *surf = IMG_Load(file_name);
-	if (surf == NULL) return 1;
+	if (surf == NULL) return ES_FAIL;
 
 	tex->w = surf->w;
 	tex->h = surf->h;
@@ -30,7 +30,7 @@ int esTextureLoad(esTexture *tex, const char *file_name,
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mipmap_map[mag]);
 
 	SDL_FreeSurface(surf);
-	return 0;
+	return ES_OK;
 }
 
 void esTextureUse(esTexture *tex) {

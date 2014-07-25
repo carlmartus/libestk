@@ -9,7 +9,7 @@ int main() {
 	esLogVersion();
 
 	esShader shad_red;
-	if (esShaderDual(&shad_red,
+	if (!esShaderDual(&shad_red,
 				"demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
@@ -25,13 +25,13 @@ int main() {
 	};
 
 	esShader shad_tex;
-	if (esShaderDual(&shad_tex,
+	if (!esShaderDual(&shad_tex,
 				"demores/img.vert", "demores/img.frag")) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
 	}
 
-	if (esShaderUniformRegister(&shad_tex, 0, "un_tex0")) {
+	if (!esShaderUniformRegister(&shad_tex, 0, "un_tex0")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
@@ -40,7 +40,7 @@ int main() {
 	glUniform1i(esShaderUniformGl(&shad_tex, 0), 0);
 
 	esFrameBuffer fb;
-	if (esFrameBufferCreate(&fb, 64, TEX_NONE, TEX_LINEAR)) {
+	if (!esFrameBufferCreate(&fb, 64, TEX_NONE, TEX_LINEAR)) {
 		printf("Cannot create frame buffer\n");
 		return 1;
 	}

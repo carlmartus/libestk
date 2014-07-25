@@ -6,7 +6,7 @@ static const GLenum mipmap_map[] = {
 	[TEX_LINEAR] = GL_LINEAR,
 };
 
-int esFrameBufferCreate(esFrameBuffer *fb, int dimension,
+esErr esFrameBufferCreate(esFrameBuffer *fb, int dimension,
 		enum esTextureMipmap min, enum esTextureMipmap mag) {
 	GLuint glfb, gltex, gldepth;
 	glGenFramebuffers(1, &glfb);
@@ -46,7 +46,7 @@ int esFrameBufferCreate(esFrameBuffer *fb, int dimension,
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	return 0;
+	return ES_OK;
 }
 
 void esFrameBufferDelete(esFrameBuffer *fb) {

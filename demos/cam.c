@@ -9,12 +9,12 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (esShaderDual(&shad, "demores/cam.vert", "demores/red.frag")) {
+	if (!esShaderDual(&shad, "demores/cam.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (esShaderUniformRegister(&shad, 0, "un_view")) {
+	if (!esShaderUniformRegister(&shad, 0, "un_view")) {
 		printf("Cannot get uniform\n");
 		return 1;
 	}

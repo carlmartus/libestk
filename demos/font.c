@@ -12,21 +12,21 @@ int main() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esTexture bitmap;
-	if (esTextureLoad(&bitmap,
+	if (!esTextureLoad(&bitmap,
 				"demores/font.png", TEX_LINEAR, TEX_LINEAR)) {
 		printf("Cannot open bitmap font\n");
 		return 1;
 	}
 
 	esShader shad;
-	if (esShaderDual(&shad,
+	if (!esShaderDual(&shad,
 				"demores/font.vert",
 				"demores/font.frag")) {
 		printf("Cannot open shader\n");
 		return 1;
 	}
 
-	if (esShaderUniformRegister(&shad, 0, "un_mvp")) {
+	if (!esShaderUniformRegister(&shad, 0, "un_mvp")) {
 		printf("Cannot register mvp uniform\n");
 		return 1;
 	} else {
@@ -36,7 +36,7 @@ int main() {
 		glUniformMatrix4fv(esShaderUniformGl(&shad, 0), 1, 0, mat);
 	}
 
-	if (esShaderUniformRegister(&shad, 1, "un_tex0")) {
+	if (!esShaderUniformRegister(&shad, 1, "un_tex0")) {
 		printf("Cannot register texture uniform\n");
 		return 1;
 	} else {

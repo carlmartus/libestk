@@ -9,12 +9,12 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (esShaderDual(&shad, "demores/uni.vert", "demores/uni.frag")) {
+	if (!esShaderDual(&shad, "demores/uni.vert", "demores/uni.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (esShaderUniformRegister(&shad, 0, "un_base")) {
+	if (!esShaderUniformRegister(&shad, 0, "un_base")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}

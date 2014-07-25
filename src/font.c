@@ -12,7 +12,7 @@ struct font_vert {
 	float u, v;
 };
 
-int esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
+esErr esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
 		int attrib_loc, int attrib_uv, int addition_attribs) {
 	ft->texture = tex;
 	ft->shader = shad;
@@ -32,7 +32,7 @@ int esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
 			offsetof(struct font_vert, u),
 			sizeof(struct font_vert), ES_TRUE);
 
-	return 1;
+	return ES_OK;
 }
 
 static void buf_check(esFont *ft, int add) {

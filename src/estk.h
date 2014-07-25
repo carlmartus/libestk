@@ -3,9 +3,14 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "2.2.0"
+#define ESTK_VERSION "2.2.1"
 
 // Misc {{{
+
+typedef enum {
+	ES_FAIL=0,
+	ES_OK=1,
+} esErr;
 
 typedef struct { float x, y; } esVec2;
 typedef struct { float x, y, z; } esVec3;
@@ -35,6 +40,7 @@ typedef void (*esLogMessage) (int class, const char *message);
 void esLogCallback(esLogMessage callback);
 void esLog(int class, const char *fmt, ...);
 #define esLogVersion() esLog(ES_DEBU, "libestk Version " ESTK_VERSION)
+#define esLogUnimplemented() esLog(ES_DEBU, "Unimplemented %s:%d", __FILE__, __LINE__)
 
 // }}}
 // Game loop {{{
@@ -61,16 +67,16 @@ typedef struct {
 } esShader;
 
 void esShaderReset(esShader *shader);
-int esShaderLoadFrag(esShader *shader, const char *fragFile);
-int esShaderLoadVert(esShader *shader, const char *vertFile);
-int esShaderCompile(esShader *shader);
-int esShaderDual(esShader *shader,
+esErr esShaderLoadFrag(esShader *shader, const char *fragFile);
+esErr esShaderLoadVert(esShader *shader, const char *vertFile);
+esErr esShaderCompile(esShader *shader);
+esErr esShaderDual(esShader *shader,
 		const char *vertFile, const char *fragFile);
 void esShaderUse(const esShader *shader);
 void esShaderUnload(esShader *shader);
-int esShaderUniformRegister(esShader *shader,
+esErr esShaderUniformRegister(esShader *shader,
 		esUniform reg, const char *name);
-int esShaderUniformGl(esShader *shader, esUniform reg);
+esErr esShaderUniformGl(esShader *shader, esUniform reg);
 
 // }}}
 // Geometry {{{
@@ -139,7 +145,7 @@ typedef struct {
 	int gltexture;
 } esTexture;
 
-int esTextureLoad(esTexture *tex, const char *file_name,
+esErr esTextureLoad(esTexture *tex, const char *file_name,
 		enum esTextureMipmap min, enum esTextureMipmap mag);
 void esTextureUse(esTexture *tex);
 void esTextureUnload(esTexture *tex);
@@ -158,7 +164,7 @@ typedef struct {
 	void *buf;
 } esFont;
 
-int esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
+esErr esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
 		int attrib_loc, int attrib_uv, int addition_attribs);
 void esFontDelete(esFont *ft);
 void esFontAddText(esFont *ft, float offset_x, float offset_y,
@@ -174,7 +180,7 @@ typedef struct {
 	int gl_fb, gl_tex, gl_depth;
 } esFrameBuffer;
 
-int esFrameBufferCreate(esFrameBuffer *fb, int dimension,
+esErr esFrameBufferCreate(esFrameBuffer *fb, int dimension,
 		enum esTextureMipmap min, enum esTextureMipmap mag);
 void esFrameBufferDelete(esFrameBuffer *fb);
 void esFrameBufferSet(esFrameBuffer *fb);
@@ -188,7 +194,7 @@ typedef struct {
 	Mix_Chunk *chunk;
 } esSound;
 
-int esSoundLoad(esSound *sn, const char *file_name);
+esErr esSoundLoad(esSound *sn, const char *file_name);
 void esSoundUnLoad(esSound *sn);
 void esSoundPlay(esSound *sn);
 
@@ -196,7 +202,7 @@ typedef struct {
 	Mix_Music *music;
 } esMusic;
 
-int esMusicLoad(esMusic *mu, const char *file_name);
+esErr esMusicLoad(esMusic *mu, const char *file_name);
 void esMusicUnLoad(esMusic *mu);
 void esMusicPlay(esMusic *mu);
 void esMusicHalt(void);

@@ -1,9 +1,9 @@
 #include "estk.h"
 #include <SDL/SDL_mixer.h>
 
-int esSoundLoad(esSound *sn, const char *file_name) {
+esErr esSoundLoad(esSound *sn, const char *file_name) {
 	sn->chunk = Mix_LoadWAV(file_name);
-	return sn->chunk == 0;
+	return (sn->chunk) ? ES_OK : ES_FAIL;
 }
 
 void esSoundUnLoad(esSound *sn) {
@@ -15,9 +15,9 @@ void esSoundPlay(esSound *sn) {
 	Mix_PlayChannel(-1, sn->chunk, 0);
 }
 
-int esMusicLoad(esMusic *mu, const char *file_name) {
+esErr esMusicLoad(esMusic *mu, const char *file_name) {
 	mu->music = Mix_LoadMUS(file_name);
-	return mu->music == 0;
+	return (mu->music) ? ES_OK : ES_FAIL;
 }
 
 void esMusicUnLoad(esMusic *mu) {

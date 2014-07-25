@@ -9,7 +9,7 @@ int main() {
 	esLogVersion();
 
 	esShader shad;
-	if (esShaderDual(&shad, "demores/red.vert", "demores/red.frag")) {
+	if (!esShaderDual(&shad, "demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

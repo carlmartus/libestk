@@ -8,18 +8,18 @@ int main() {
 	esLogVersion();
 
 	esTexture tex;
-	if (esTextureLoad(&tex, "demores/img.png", TEX_LINEAR, TEX_LINEAR)) {
+	if (!esTextureLoad(&tex, "demores/img.png", TEX_LINEAR, TEX_LINEAR)) {
 		printf("Cannot load image!\n");
 		return 1;
 	}
 
 	esShader shad;
-	if (esShaderDual(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
-		printf("Cannot load shaders!\n");
+	if (!esShaderDual(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
+		esLog(ES_ERRO, "Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (esShaderUniformRegister(&shad, 0, "un_tex0")) {
+	if (!esShaderUniformRegister(&shad, 0, "un_tex0")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}

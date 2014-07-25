@@ -10,10 +10,10 @@ static int checkShader(GLuint id, const char *shaderInfo) {
 		char info_buf[500];
 		glGetShaderInfoLog(id, sizeof(info_buf)-1, NULL, info_buf);
 		esCheckGlError();
-		return 1;
+		return ES_FAIL;
 	}
 
-	return 0;
+	return ES_OK;
 }
 
 int loadShader(const char *fileName,
@@ -30,7 +30,7 @@ int loadShader(const char *fileName,
 	esCheckGlError();
 	free(content);
 
-	if (checkShader(shad, shaderInfo)) return 0;
+	if (!checkShader(shad, shaderInfo)) return 0;
 
 	esLog(ES_INFO, "Loaded shader %s", fileName);
 	return shad;
@@ -40,29 +40,33 @@ void esShaderReset(esShader *shader) {
 	shader->shaderCount = 0;
 }
 
-int esShaderLoadFrag(esShader *shader, const char *fragFile) {
+esErr esShaderLoadFrag(esShader *shader, const char *fragFile) {
 	int idFrag = loadShader(fragFile,
 			GL_FRAGMENT_SHADER, "Fragment shader");
+
 	if (idFrag == 0) {
 		esLog(ES_ERRO, "Invalid fragment shader file (%s)\n", fragFile);
-		return 1;
+		return ES_FAIL;
 	}
+
 	shader->glShaders[shader->shaderCount++] = idFrag;
-	return 0;
+	return ES_OK;
 }
 
-int esShaderLoadVert(esShader *shader, const char *vertFile) {
+esErr esShaderLoadVert(esShader *shader, const char *vertFile) {
 	int idVert = loadShader(vertFile,
 			GL_VERTEX_SHADER, "Vertex shader");
+
 	if (idVert == 0) {
 		esLog(ES_ERRO, "Invalid vertex shader file (%s)\n", vertFile);
-		return 1;
+		return ES_FAIL;
 	}
+
 	shader->glShaders[shader->shaderCount++] = idVert;
-	return 0;
+	return ES_OK;
 }
 
-int esShaderCompile(esShader *shader) {
+esErr esShaderCompile(esShader *shader) {
 
 	int program = glCreateProgram();
 
@@ -81,15 +85,15 @@ int esShaderCompile(esShader *shader) {
 	}
 
 	shader->glProgram = program;
-	return 0;
+	return ES_OK;
 }
 
-int esShaderDual(esShader *shader,
+esErr esShaderDual(esShader *shader,
 		const char *vertFile, const char *fragFile) {
 	esShaderReset(shader);
 
-	if (esShaderLoadVert(shader, vertFile)) return 1;
-	if (esShaderLoadFrag(shader, fragFile)) return 1;
+	if (!esShaderLoadVert(shader, vertFile)) return ES_FAIL;
+	if (!esShaderLoadFrag(shader, fragFile)) return ES_FAIL;
 	return esShaderCompile(shader);
 }
 
@@ -101,17 +105,17 @@ void esShaderUnload(esShader *shader) {
 	glDeleteShader(shader->glProgram);
 }
 
-int esShaderUniformRegister(esShader *shader,
+esErr esShaderUniformRegister(esShader *shader,
 		esUniform reg, const char *name) {
 
 	int loc = glGetUniformLocation(shader->glProgram, name);
-	if (loc < 0) return 1;
+	if (loc < 0) return ES_FAIL;
 
 	shader->uniforms[reg] = loc;
-	return 0;
+	return ES_OK;
 }
 
-int esShaderUniformGl(esShader *shader, esUniform reg) {
+esErr esShaderUniformGl(esShader *shader, esUniform reg) {
 	return shader->uniforms[reg];
 }
 
