@@ -110,8 +110,8 @@ void esFontRender(esFont *ft) {
 
 	if (ft->vert_count > 0) {
 
-		esGeoBufCopy(&ft->geo_buf, ft->buf, ft->buf_size, GEOBUF_STREAM);
-		esGeoRender(&ft->geo, ft->vert_count);
+		esGeoBufArray(&ft->geo_buf, ft->buf, ft->buf_size, GEOBUF_STREAM);
+		esGeoRenderArray(&ft->geo, ft->vert_count);
 	}
 }
 

@@ -1,37 +1,56 @@
 #include "estk.h"
 #include <GL/glew.h>
 
+static const unsigned int map_type[] = {
+	[GEODATA_FLOAT] = GL_FLOAT,
+	[GEODATA_INT] = GL_INT,
+	[GEODATA_UINT] = GL_UNSIGNED_INT,
+	[GEODATA_BYTE] = GL_BYTE,
+	[GEODATA_UBYTE] = GL_UNSIGNED_BYTE,
+};
+
+static const unsigned int map_draw[] = {
+	[GEOBUF_STATIC] = GL_STATIC_DRAW,
+	[GEOBUF_DYNAMIC] = GL_DYNAMIC_DRAW,
+	[GEOBUF_STREAM] = GL_STREAM_DRAW,
+};
+
 void esGeoBufCreate(esGeoBuf *buf) {
-	glGenBuffers(1, &buf->glbuf);
+	glGenBuffers(1, &buf->glBuf);
 	esCheckGlError();
 }
 
-void esGeoBufCopy(esGeoBuf *buf,
-		const void *data, size_t size, enum esGeoBufType type) {
-	static const unsigned int map[] = {
-		[GEOBUF_STATIC] = GL_STATIC_DRAW,
-		[GEOBUF_DYNAMIC] = GL_DYNAMIC_DRAW,
-		[GEOBUF_STREAM] = GL_STREAM_DRAW,
-	};
+void esGeoBufArray(esGeoBuf *buf,
+		const void *data, size_t size, esGeoBufType type) {
 
-	glBindBuffer(GL_ARRAY_BUFFER, buf->glbuf);
+	glBindBuffer(GL_ARRAY_BUFFER, buf->glBuf);
 	esCheckGlError();
 
-	glBufferData(GL_ARRAY_BUFFER, size, data, map[type]);
+	glBufferData(GL_ARRAY_BUFFER, size, data, map_draw[type]);
+	esCheckGlError();
+}
+
+void esGeoBufElement(esGeoBuf *buf,
+		const void *data, size_t size, esGeoBufType type) {
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buf->glBuf);
+	esCheckGlError();
+
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, map_draw[type]);
 	esCheckGlError();
 }
 
 void esGeoBufDelete(esGeoBuf *buf) {
-	glDeleteBuffers(1, &buf->glbuf);
+	glDeleteBuffers(1, &buf->glBuf);
 	esCheckGlError();
 }
 
-void esGeoReset(esGeo *geo, int bufcount) {
-	geo->bufcount = bufcount;
+void esGeoReset(esGeo *geo, int bufCount) {
+	geo->bufCount = bufCount;
 }
 
 void esGeoPoint(esGeo *geo, int id, esGeoBuf *geobuf,
-		enum esGeoDataType datatype, int elements,
+		esGeoDataType datatype, int elements,
 		size_t offset, size_t stride, enum esBool normalized)
 {
 	geo->buf[id].geobuf = geobuf;
@@ -42,39 +61,51 @@ void esGeoPoint(esGeo *geo, int id, esGeoBuf *geobuf,
 	geo->buf[id].normalized = normalized;
 }
 
-void esGeoRender(const esGeo *geo, int vertices) {
-	static const unsigned int map[] = {
-		[GEODATA_FLOAT] = GL_FLOAT,
-		[GEODATA_INT] = GL_INT,
-		[GEODATA_BYTE] = GL_BYTE,
-		[GEODATA_UBYTE] = GL_UNSIGNED_BYTE,
-	};
+static void preRender(const esGeo *geo) {
 
-	int bufcount = geo->bufcount;
+	int i, bufCount = geo->bufCount;
 	const esGeoBuf *last = NULL;
 
-	int i;
-	for (i=0; i<bufcount; i++) {
+	for (i=0; i<bufCount; i++) {
 		glEnableVertexAttribArray(i);
 
 		if (last != geo->buf[i].geobuf) {
 			last = geo->buf[i].geobuf;
-			glBindBuffer(GL_ARRAY_BUFFER, last->glbuf);
+			glBindBuffer(GL_ARRAY_BUFFER, last->glBuf);
 		}
 
 		glVertexAttribPointer(i,
 				geo->buf[i].elements,
-				map[geo->buf[i].datatype],
+				map_type[geo->buf[i].datatype],
 				geo->buf[i].normalized == ES_TRUE ? GL_TRUE : GL_FALSE,
 				geo->buf[i].stride,
 				(void*) geo->buf[i].offset);
 		esCheckGlError();
 	}
+}
 
+static void postRender(const esGeo *geo) {
+	int i, bufCount = geo->bufCount;
+	for (i=0; i<bufCount; i++) glDisableVertexAttribArray(i);
+	esCheckGlError();
+}
+
+void esGeoRenderArray(const esGeo *geo, int vertices) {
+	preRender(geo);
 	glDrawArrays(GL_TRIANGLES, 0, vertices);
 	esCheckGlError();
+	postRender(geo);
+}
 
-	for (i=0; i<bufcount; i++) glDisableVertexAttribArray(i);
+void esGeoRenderElements(const esGeo *geo, const esGeoBuf *indices,
+		esGeoDataType dataType, int vertexCount) {
+
+	preRender(geo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices->glBuf);
 	esCheckGlError();
+	glDrawElements(GL_TRIANGLES, vertexCount,
+			map_type[dataType], (void*) 0);
+	esCheckGlError();
+	postRender(geo);
 }
 

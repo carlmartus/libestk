@@ -48,7 +48,7 @@ int main() {
 	// Red cube
 	esGeoBuf cubebuf;
 	esGeoBufCreate(&cubebuf);
-	esGeoBufCopy(&cubebuf, cube_lo, sizeof(cube_lo), GEOBUF_STATIC);
+	esGeoBufArray(&cubebuf, cube_lo, sizeof(cube_lo), GEOBUF_STATIC);
 
 	esGeo cube;
 	esGeoReset(&cube, 1);
@@ -71,7 +71,7 @@ int main() {
 
 	esGeoBuf geobuf;
 	esGeoBufCreate(&geobuf);
-	esGeoBufCopy(&geobuf, data, sizeof(data), GEOBUF_STATIC);
+	esGeoBufArray(&geobuf, data, sizeof(data), GEOBUF_STATIC);
 
 	esGeo texgeo;
 	esGeoReset(&texgeo, 3);
@@ -88,13 +88,13 @@ int main() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShaderUse(&shad_red);
-	esGeoRender(&cube, 6);
+	esGeoRenderArray(&cube, 6);
 	esFrameBufferUnSet();
 
 	// Render geometry
 	esFrameBufferBind(&fb);
 	esShaderUse(&shad_tex);
-	esGeoRender(&texgeo, 6);
+	esGeoRenderArray(&texgeo, 6);
 
 	esGameGlSwap();
 	esFrameBufferDelete(&fb);

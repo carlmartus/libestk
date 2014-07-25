@@ -25,7 +25,7 @@ int main() {
 
 	esGeoBuf geobuf;
 	esGeoBufCreate(&geobuf);
-	esGeoBufCopy(&geobuf, data, sizeof(data), GEOBUF_STATIC);
+	esGeoBufArray(&geobuf, data, sizeof(data), GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeoReset(&geo, 2);
@@ -36,7 +36,7 @@ int main() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShaderUse(&shad);
-	esGeoRender(&geo, 3);
+	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 

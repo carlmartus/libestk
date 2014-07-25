@@ -20,6 +20,7 @@ Features
 
 Todo
 ====
- * OpenGL index array
+ * OpenGL index array (fix rendering)
  * Sphinx documentation
+ * Sprite flipping, rotating
 

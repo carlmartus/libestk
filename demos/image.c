@@ -40,7 +40,7 @@ int main() {
 
 	esGeoBuf geobuf;
 	esGeoBufCreate(&geobuf);
-	esGeoBufCopy(&geobuf, data, sizeof(data), GEOBUF_STATIC);
+	esGeoBufArray(&geobuf, data, sizeof(data), GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeoReset(&geo, 3);
@@ -57,7 +57,7 @@ int main() {
 
 	esShaderUse(&shad);
 	esTextureUse(&tex);
-	esGeoRender(&geo, 3);
+	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 

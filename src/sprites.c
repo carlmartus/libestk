@@ -86,7 +86,7 @@ void es2dSpritesPut(float x, float y,
 }
 
 void es2dSpritePrepear(void) {
-	esGeoBufCopy(&geoBuf, vertices,
+	esGeoBufArray(&geoBuf, vertices,
 			count*6*sizeof(SpriteVertex), GEOBUF_STREAM);
 	renderCount = count*6;
 	count = 0;
@@ -94,7 +94,7 @@ void es2dSpritePrepear(void) {
 
 void es2dSpritesRender(void) {
 	if (renderCount) {
-		esGeoRender(&geo, renderCount);
+		esGeoRenderArray(&geo, renderCount);
 	}
 }
 

@@ -28,11 +28,11 @@ int main(int argc, char **argv) {
 
 	esGeoBuf bufLo;
 	esGeoBufCreate(&bufLo);
-	esGeoBufCopy(&bufLo, attrLo, sizeof(attrLo), GEOBUF_STATIC);
+	esGeoBufArray(&bufLo, attrLo, sizeof(attrLo), GEOBUF_STATIC);
 
 	esGeoBuf bufCo;
 	esGeoBufCreate(&bufCo);
-	esGeoBufCopy(&bufCo, attrCo, sizeof(attrCo), GEOBUF_STATIC);
+	esGeoBufArray(&bufCo, attrCo, sizeof(attrCo), GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeoReset(&geo, 2);
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShaderUse(&shad);
-	esGeoRender(&geo, 3);
+	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 

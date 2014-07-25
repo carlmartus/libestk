@@ -27,7 +27,7 @@ static void frame(float time) {
 
 	glUniformMatrix4fv(esShaderUniformGl(&shad, 0), 1, 0, mat);
 
-	esGeoRender(&geo, 3);
+	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 
@@ -63,7 +63,7 @@ int main() {
 	};
 
 	esGeoBufCreate(&geobuf);
-	esGeoBufCopy(&geobuf, lo, sizeof(lo), GEOBUF_STATIC);
+	esGeoBufArray(&geobuf, lo, sizeof(lo), GEOBUF_STATIC);
 
 	esGeoReset(&geo, 1);
 	esGeoPoint(&geo, 0, &geobuf, GEODATA_FLOAT, 3, 0, 0, ES_FALSE);

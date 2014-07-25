@@ -22,6 +22,7 @@ enum esBool {
 
 void _esCheckGlError();
 #define esCheckGlError() _esCheckGlError(__FILE__, __LINE__)
+//#define esCheckGlError()
 
 void *esFileAlloc(const char *file_name);
 
@@ -83,46 +84,51 @@ esErr esShaderUniformGl(esShader *shader, esUniform reg);
 
 #define GEOBUFS_MAX 8
 
-enum esGeoBufType {
+typedef enum {
 	GEOBUF_STATIC,
 	GEOBUF_DYNAMIC,
 	GEOBUF_STREAM,
-};
+} esGeoBufType;
+
+typedef enum {
+	GEODATA_FLOAT,
+	GEODATA_INT,
+	GEODATA_UINT,
+	GEODATA_BYTE,
+	GEODATA_UBYTE,
+} esGeoDataType;
 
 typedef struct {
-	unsigned int glbuf;
+	esGeoDataType dataType;
+	unsigned int glBuf;
 } esGeoBuf;
 
 void esGeoBufCreate(esGeoBuf *buf);
-void esGeoBufCopy(esGeoBuf *buf,
-		const void *data, size_t size, enum esGeoBufType type);
+void esGeoBufArray(esGeoBuf *buf,
+		const void *data, size_t size, esGeoBufType type);
+void esGeoBufElement(esGeoBuf *buf,
+		const void *data, size_t size, esGeoBufType type);
 void esGeoBufDelete(esGeoBuf *buf);
 
-// Geometry
-enum esGeoDataType {
-	GEODATA_FLOAT,
-	GEODATA_INT,
-	GEODATA_BYTE,
-	GEODATA_UBYTE,
-};
-
 typedef struct {
-	int bufcount;
+	int bufCount;
 
 	struct {
 		esGeoBuf *geobuf;
-		enum esGeoDataType datatype;
+		esGeoDataType datatype;
 		int elements;
 		size_t offset, stride;
 		enum esBool normalized;
 	} buf[GEOBUFS_MAX];
 } esGeo;
 
-void esGeoReset(esGeo *geo, int bufcount);
+void esGeoReset(esGeo *geo, int bufCount);
 void esGeoPoint(esGeo *geo, int id, esGeoBuf *geobuf,
-		enum esGeoDataType datatype, int elements,
+		esGeoDataType datatype, int elements,
 		size_t offset, size_t stride, enum esBool normalized);
-void esGeoRender(const esGeo *geo, int vertices);
+void esGeoRenderArray(const esGeo *geo, int vertices);
+void esGeoRenderElements(const esGeo *geo, const esGeoBuf *indices,
+		esGeoDataType dataType, int vertexCount);
 
 // }}}
 // Projection {{{

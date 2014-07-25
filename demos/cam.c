@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 
 	esGeoBuf geobuf;
 	esGeoBufCreate(&geobuf);
-	esGeoBufCopy(&geobuf, lo, sizeof(lo), GEOBUF_STATIC);
+	esGeoBufArray(&geobuf, lo, sizeof(lo), GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeoReset(&geo, 1);
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 	//esProjOrtho(mat, 0.0f, 0.0f, 4.0f, 3.0f);
 	glUniformMatrix4fv(esShaderUniformGl(&shad, 0), 1, 0, mat);
 
-	esGeoRender(&geo, 3);
+	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 
