@@ -21,5 +21,4 @@ Features
 Todo
 ====
  * Sphinx documentation
- * Sprite flipping
 

@@ -14,8 +14,10 @@ static void loop_frame(float time) {
 	esShaderUse(&shad);
 	glUniform1i(esShaderUniformGl(&shad, 0), 0);
 
-	es2dSpritesPut(0.0f, 0.0f, accu*0.1f, -2.0f*accu, 0, 0, 0);
-	es2dSpritesPut(0.5f, 0.5f, 0.1f, accu, 0, 0, ES_SPRITE_FLIPX);
+	int step = 3.0f*accu;
+	es2dSpritesPut(0.0f, 0.0f, accu*0.01f+0.1f, -accu,
+			1, 0, step&1?ES_SPRITE_FLIPXY:0);
+	es2dSpritesPut(0.5f, 0.5f, 0.1f, accu, 0, 1, ES_SPRITE_FLIPX);
 
 	esTextureUse(&tex);
 	es2dSpritePrepear();
@@ -23,7 +25,7 @@ static void loop_frame(float time) {
 
 	esGameGlSwap();
 
-	if (accu > 2.0f) {
+	if (accu > 3.0f) {
 		esGameLoopQuit();
 	}
 }
@@ -54,7 +56,7 @@ int main() {
 		return 1;
 	}
 
-	es2dSpritesInit(1, 100);
+	es2dSpritesInit(2, 100);
 
 	glClearColor(0.3, 0.4, 0.5, 1.0);
 

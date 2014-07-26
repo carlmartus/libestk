@@ -44,6 +44,18 @@ void es2dSpritesPut(float x, float y, float radius,
 	float u1 = u0 + uv_step;
 	float v1 = u0 + uv_step;
 
+	if (flags & ES_SPRITE_FLIPX) {
+		float swap = u0;
+		u0 = u1;
+		u1 = swap;
+	}
+
+	if (flags & ES_SPRITE_FLIPY) {
+		float swap = v0;
+		v0 = v1;
+		v1 = swap;
+	}
+
 	//float bx = sinf(rotate)*M_SQRT2*radius;
 	//float by = cosf(rotate)*M_SQRT2*radius;
 	float cr = cosf(rotate);
