@@ -5,6 +5,8 @@ static const unsigned int map_type[] = {
 	[GEODATA_FLOAT] = GL_FLOAT,
 	[GEODATA_INT] = GL_INT,
 	[GEODATA_UINT] = GL_UNSIGNED_INT,
+	[GEODATA_SHORT] = GL_SHORT,
+	[GEODATA_USHORT] = GL_UNSIGNED_SHORT,
 	[GEODATA_BYTE] = GL_BYTE,
 	[GEODATA_UBYTE] = GL_UNSIGNED_BYTE,
 };
@@ -103,9 +105,11 @@ void esGeoRenderElements(const esGeo *geo, const esGeoBuf *indices,
 	preRender(geo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices->glBuf);
 	esCheckGlError();
+
 	glDrawElements(GL_TRIANGLES, vertexCount,
 			map_type[dataType], (void*) 0);
 	esCheckGlError();
+
 	postRender(geo);
 }
 

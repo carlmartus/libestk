@@ -24,7 +24,7 @@ int main() {
 	esGeoBufCreate(&geoBuf);
 	esGeoBufArray(&geoBuf, red_lo, sizeof(red_lo), GEOBUF_STATIC);
 
-	static int red_el[] = {
+	static uint16_t red_el[] = {
 		0, 1, 2,
 	};
 
@@ -40,7 +40,7 @@ int main() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShaderUse(&shad);
-	esGeoRenderElements(&geo, &geoElements, GEODATA_INT, 3);
+	esGeoRenderElements(&geo, &geoElements, GEODATA_USHORT, 3);
 	//esGeoRenderArray(&geo, 3);
 	esCheckGlError();
 
