@@ -218,9 +218,14 @@ void esMusicHalt(void);
 // }}}
 // Sprites {{{
 
+#define ES_SPRITE_FLIPX 1
+#define ES_SPRITE_FLIPY 2
+#define ES_SPRITE_FLIPXY (ES_SPRITE_FLIPX | ES_SPRITE_FLIPY)
+
 void es2dSpritesInit(int palettDim, int maxSprites);
 void es2dSpritesClear(void);
-void es2dSpritesPut(float x, float y, float radius, int spriteX, int spriteY);
+void es2dSpritesPut(float x, float y, float radius,
+		float rotate, int spriteX, int spriteY, unsigned flags);
 void es2dSpritePrepear(void);
 void es2dSpritesRender(void);
 

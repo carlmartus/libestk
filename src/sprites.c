@@ -1,4 +1,5 @@
 #include "estk.h"
+#include <math.h>
 #include <stdlib.h>
 
 typedef struct {
@@ -35,49 +36,59 @@ void es2dSpritesClear(void) {
 	vertices = NULL;
 }
 
-void es2dSpritesPut(float x, float y,
-		float radius, int spriteX, int spriteY) {
+void es2dSpritesPut(float x, float y, float radius,
+		float rotate, int spriteX, int spriteY, unsigned flags) {
 
 	float u0 = (float) spriteX * uv_step;
 	float v0 = (float) spriteY * uv_step;
 	float u1 = u0 + uv_step;
 	float v1 = u0 + uv_step;
+
+	//float bx = sinf(rotate)*M_SQRT2*radius;
+	//float by = cosf(rotate)*M_SQRT2*radius;
+	float cr = cosf(rotate);
+	float sr = sinf(rotate);
+	float bx = (cr - sr) * radius;
+	float by = (sr + cr) * radius;
+
 	SpriteVertex *ptr = vertices + count*6;
 
 	// Triangle 1
-	ptr->x = x - radius;
-	ptr->y = y - radius;
+	ptr->x = x - by;
+	ptr->y = y + bx;
 	ptr->u = u0;
 	ptr->v = v0;
 	ptr++;
 
-	ptr->x = x + radius;
-	ptr->y = y - radius;
+	ptr->x = x + bx;
+	ptr->y = y + by;
 	ptr->u = u1;
 	ptr->v = v0;
 	ptr++;
 
-	ptr->x = x - radius;
-	ptr->y = y + radius;
+	ptr->x = x - bx;
+	ptr->y = y - by;
 	ptr->u = u0;
 	ptr->v = v1;
 	ptr++;
+
+	count++;
 
 	// Triangle 2
-	ptr->x = x + radius;
-	ptr->y = y + radius;
+	ptr->x = x + by;
+	ptr->y = y - bx;
 	ptr->u = u1;
 	ptr->v = v1;
 	ptr++;
 
-	ptr->x = x - radius;
-	ptr->y = y + radius;
+	ptr->x = x - bx;
+	ptr->y = y - by;
 	ptr->u = u0;
 	ptr->v = v1;
 	ptr++;
 
-	ptr->x = x + radius;
-	ptr->y = y - radius;
+	ptr->x = x + bx;
+	ptr->y = y + by;
 	ptr->u = u1;
 	ptr->v = v0;
 	ptr++;
@@ -89,6 +100,7 @@ void es2dSpritePrepear(void) {
 	esGeoBufArray(&geoBuf, vertices,
 			count*6*sizeof(SpriteVertex), GEOBUF_STREAM);
 	renderCount = count*6;
+	//renderCount = count*3;
 	count = 0;
 }
 
