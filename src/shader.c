@@ -1,6 +1,9 @@
 #include "estk.h"
 #include <GL/glew.h>
 
+// Normal shaders
+// ==============
+
 static int checkShader(GLuint id, const char *shaderInfo) {
 	GLint result = GL_FALSE;
 
@@ -36,11 +39,11 @@ int loadShader(const char *fileName,
 	return shad;
 }
 
-void esShaderReset(esShader *shader) {
+void esShader_Reset(esShader *shader) {
 	shader->shaderCount = 0;
 }
 
-esErr esShaderLoadFrag(esShader *shader, const char *fragFile) {
+esErr esShader_LoadFrag(esShader *shader, const char *fragFile) {
 	int idFrag = loadShader(fragFile,
 			GL_FRAGMENT_SHADER, "Fragment shader");
 
@@ -53,7 +56,7 @@ esErr esShaderLoadFrag(esShader *shader, const char *fragFile) {
 	return ES_OK;
 }
 
-esErr esShaderLoadVert(esShader *shader, const char *vertFile) {
+esErr esShader_LoadVert(esShader *shader, const char *vertFile) {
 	int idVert = loadShader(vertFile,
 			GL_VERTEX_SHADER, "Vertex shader");
 
@@ -66,7 +69,7 @@ esErr esShaderLoadVert(esShader *shader, const char *vertFile) {
 	return ES_OK;
 }
 
-esErr esShaderCompile(esShader *shader) {
+esErr esShader_Compile(esShader *shader) {
 
 	int program = glCreateProgram();
 
@@ -88,24 +91,24 @@ esErr esShaderCompile(esShader *shader) {
 	return ES_OK;
 }
 
-esErr esShaderDual(esShader *shader,
+esErr esShader_Dual(esShader *shader,
 		const char *vertFile, const char *fragFile) {
-	esShaderReset(shader);
+	esShader_Reset(shader);
 
-	if (!esShaderLoadVert(shader, vertFile)) return ES_FAIL;
-	if (!esShaderLoadFrag(shader, fragFile)) return ES_FAIL;
-	return esShaderCompile(shader);
+	if (!esShader_LoadVert(shader, vertFile)) return ES_FAIL;
+	if (!esShader_LoadFrag(shader, fragFile)) return ES_FAIL;
+	return esShader_Compile(shader);
 }
 
-void esShaderUse(const esShader *shader) {
+void esShader_Use(const esShader *shader) {
 	glUseProgram(shader->glProgram);
 }
 
-void esShaderUnload(esShader *shader) {
+void esShader_Unload(esShader *shader) {
 	glDeleteShader(shader->glProgram);
 }
 
-esErr esShaderUniformRegister(esShader *shader,
+esErr esShader_UniformRegister(esShader *shader,
 		esUniform reg, const char *name) {
 
 	int loc = glGetUniformLocation(shader->glProgram, name);
@@ -115,7 +118,37 @@ esErr esShaderUniformRegister(esShader *shader,
 	return ES_OK;
 }
 
-esErr esShaderUniformGl(esShader *shader, esUniform reg) {
+esErr esShader_UniformGl(esShader *shader, esUniform reg) {
 	return shader->uniforms[reg];
+}
+
+
+// Shader base
+// ===========
+
+void esShaderBase_Reset(esShaderBase *sb) {
+	sb->shaderCount = 0;
+}
+
+esErr esShaderBase_AddVert(esShaderBase *sb, const char *vertFile) {
+	GLint id = loadShader(vertFile, GL_VERTEX_SHADER, "Vertex shader");
+	sb->glShaders[sb->shaderCount++] = id;
+	return id == 0 ? ES_FAIL : ES_OK;
+}
+
+esErr esShaderBase_AddFrag(esShaderBase *sb, const char *fragFile) {
+	GLint id = loadShader(fragFile, GL_FRAGMENT_SHADER, "Fragment shader");
+	sb->glShaders[sb->shaderCount++] = id;
+	return id == 0 ? ES_FAIL : ES_OK;
+}
+
+esErr esShaderBase_Link(esShaderBase *sb, esShaderBaseType type) {
+	switch (type) {
+		case ES_SHBASE_COLOR :
+			break;
+
+		default : return ES_FAIL;
+	}
+	return ES_FAIL;
 }
 

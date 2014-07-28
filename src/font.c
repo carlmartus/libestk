@@ -105,7 +105,7 @@ void esFontDelete(esFont *ft) {
 
 void esFontRender(esFont *ft) {
 	if (ft->shader) {
-		esShaderUse(ft->shader);
+		esShader_Use(ft->shader);
 	}
 
 	if (ft->vert_count > 0) {

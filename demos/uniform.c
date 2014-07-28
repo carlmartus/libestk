@@ -9,18 +9,18 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (!esShaderDual(&shad, "demores/uni.vert", "demores/uni.frag")) {
+	if (!esShader_Dual(&shad, "demores/uni.vert", "demores/uni.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad, 0, "un_base")) {
+	if (!esShader_UniformRegister(&shad, 0, "un_base")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
 
-	esShaderUse(&shad);
-	glUniform4f(esShaderUniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
+	esShader_Use(&shad);
+	glUniform4f(esShader_UniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
 
 	static const float red_lo[] = {
 		0.0f, 0.0f,
@@ -39,13 +39,13 @@ int main(int argc, char **argv) {
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShaderUse(&shad);
+	esShader_Use(&shad);
 	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 
 	esGeoBufDelete(&geobuf);
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();

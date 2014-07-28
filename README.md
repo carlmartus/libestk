@@ -21,4 +21,5 @@ Features
 Todo
 ====
  * Sphinx documentation
+ * Abstract shader system (Camera etc)
 

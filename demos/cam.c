@@ -9,12 +9,12 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (!esShaderDual(&shad, "demores/cam.vert", "demores/red.frag")) {
+	if (!esShader_Dual(&shad, "demores/cam.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad, 0, "un_view")) {
+	if (!esShader_UniformRegister(&shad, 0, "un_view")) {
 		printf("Cannot get uniform\n");
 		return 1;
 	}
@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShaderUse(&shad);
+	esShader_Use(&shad);
 
 	float mat[16];
 
@@ -45,14 +45,14 @@ int main(int argc, char **argv) {
 	esVec3 cam_up = { 0.0f, 0.0f, 1.0f };
 	esProjPerspective(mat, 1.3f, 1.333f, 0.1f, 20.0f, cam_ey, cam_at, cam_up);
 	//esProjOrtho(mat, 0.0f, 0.0f, 4.0f, 3.0f);
-	glUniformMatrix4fv(esShaderUniformGl(&shad, 0), 1, 0, mat);
+	glUniformMatrix4fv(esShader_UniformGl(&shad, 0), 1, 0, mat);
 
 	esGeoRenderArray(&geo, 3);
 
 	esGameGlSwap();
 
 	esGeoBufDelete(&geobuf);
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();

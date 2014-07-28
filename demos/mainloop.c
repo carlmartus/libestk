@@ -15,7 +15,7 @@ static void frame(float time) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShaderUse(&shad);
+	esShader_Use(&shad);
 
 	float v = 0.01f * (float) frame_count;
 	esVec3 cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 1.0f };
@@ -25,7 +25,7 @@ static void frame(float time) {
 	float mat[16];
 	esProjPerspective(mat, 0.9f+v, 1.333f, 0.1f, 20.0f, cam_ey, cam_at, cam_up);
 
-	glUniformMatrix4fv(esShaderUniformGl(&shad, 0), 1, 0, mat);
+	glUniformMatrix4fv(esShader_UniformGl(&shad, 0), 1, 0, mat);
 
 	esGeoRenderArray(&geo, 3);
 
@@ -37,7 +37,7 @@ static void frame(float time) {
 static void loop_exit() {
 	printf("Good bye!\n");
 	esGeoBufDelete(&geobuf);
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 	SDL_Quit();
 }
 
@@ -46,12 +46,12 @@ int main() {
 	esGameInit(400, 300);
 	esLogVersion();
 
-	if (!esShaderDual(&shad, "demores/cam.vert", "demores/red.frag")) {
+	if (!esShader_Dual(&shad, "demores/cam.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad, 0, "un_view")) {
+	if (!esShader_UniformRegister(&shad, 0, "un_view")) {
 		printf("Cannot get uniform\n");
 		return 1;
 	}

@@ -56,6 +56,7 @@ void esGameWindowSize(int *w, int *h);
 // }}}
 // Shader {{{
 
+// Normal shaders
 typedef int esUniform;
 #define UNIFORMS_MAX 10
 #define SHADERS_MAX 10
@@ -67,17 +68,37 @@ typedef struct {
 	int shaderCount;
 } esShader;
 
-void esShaderReset(esShader *shader);
-esErr esShaderLoadFrag(esShader *shader, const char *fragFile);
-esErr esShaderLoadVert(esShader *shader, const char *vertFile);
-esErr esShaderCompile(esShader *shader);
-esErr esShaderDual(esShader *shader,
+void esShader_Reset(esShader *shader);
+esErr esShader_LoadFrag(esShader *shader, const char *fragFile);
+esErr esShader_LoadVert(esShader *shader, const char *vertFile);
+esErr esShader_Compile(esShader *shader);
+esErr esShader_Dual(esShader *shader,
 		const char *vertFile, const char *fragFile);
-void esShaderUse(const esShader *shader);
-void esShaderUnload(esShader *shader);
-esErr esShaderUniformRegister(esShader *shader,
+void esShader_Use(const esShader *shader);
+void esShader_Unload(esShader *shader);
+esErr esShader_UniformRegister(esShader *shader,
 		esUniform reg, const char *name);
-esErr esShaderUniformGl(esShader *shader, esUniform reg);
+esErr esShader_UniformGl(esShader *shader, esUniform reg);
+
+// Shader base abstraction
+typedef struct {
+	float x, y, z;
+	uint8_t r, g, b, a;
+} esShaderBaseColor;
+
+typedef enum {
+	ES_SHBASE_COLOR,
+} esShaderBaseType;
+
+typedef struct {
+	int glShaders[SHADERS_MAX+2];
+	int shaderCount;
+} esShaderBase;
+
+void esShaderBase_Reset(esShaderBase *sb);
+esErr esShaderBase_AddVert(esShaderBase *sb, const char *vertFile);
+esErr esShaderBase_AddFrag(esShaderBase *sb, const char *fragFile);
+esErr esShaderBase_Link(esShaderBase *sb, esShaderBaseType type);
 
 // }}}
 // Geometry {{{

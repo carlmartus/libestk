@@ -9,7 +9,7 @@ int main() {
 	esLogVersion();
 
 	esShader shad;
-	if (!esShaderDual(&shad, "demores/red.vert", "demores/red.frag")) {
+	if (!esShader_Dual(&shad, "demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
@@ -39,7 +39,7 @@ int main() {
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShaderUse(&shad);
+	esShader_Use(&shad);
 	esGeoRenderElements(&geo, &geoElements, GEODATA_USHORT, 3);
 	//esGeoRenderArray(&geo, 3);
 	esCheckGlError();
@@ -47,7 +47,7 @@ int main() {
 	esGameGlSwap();
 	esGeoBufDelete(&geoElements);
 	esGeoBufDelete(&geoBuf);
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();

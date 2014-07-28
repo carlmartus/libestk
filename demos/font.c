@@ -19,28 +19,28 @@ int main() {
 	}
 
 	esShader shad;
-	if (!esShaderDual(&shad,
+	if (!esShader_Dual(&shad,
 				"demores/font.vert",
 				"demores/font.frag")) {
 		printf("Cannot open shader\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad, 0, "un_mvp")) {
+	if (!esShader_UniformRegister(&shad, 0, "un_mvp")) {
 		printf("Cannot register mvp uniform\n");
 		return 1;
 	} else {
-		esShaderUse(&shad);
+		esShader_Use(&shad);
 		float mat[16];
 		esProjOrtho(mat, -10.0f, 10.0f, 10.0f, -10.0f);
-		glUniformMatrix4fv(esShaderUniformGl(&shad, 0), 1, 0, mat);
+		glUniformMatrix4fv(esShader_UniformGl(&shad, 0), 1, 0, mat);
 	}
 
-	if (!esShaderUniformRegister(&shad, 1, "un_tex0")) {
+	if (!esShader_UniformRegister(&shad, 1, "un_tex0")) {
 		printf("Cannot register texture uniform\n");
 		return 1;
 	} else {
-		glUniform1i(esShaderUniformGl(&shad, 1), 0);
+		glUniform1i(esShader_UniformGl(&shad, 1), 0);
 	}
 
 	esFont font;
@@ -57,7 +57,7 @@ int main() {
 	esGameGlSwap();
 
 	esFontDelete(&font);
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 	esTextureUnload(&bitmap);
 
 	SDL_Delay(800);

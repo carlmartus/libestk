@@ -15,18 +15,18 @@ int main() {
 	}
 
 	esShader shad;
-	if (!esShaderDual(&shad, "demores/img.vert", "demores/img.frag")) {
+	if (!esShader_Dual(&shad, "demores/img.vert", "demores/img.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad, 0, "un_tex0")) {
+	if (!esShader_UniformRegister(&shad, 0, "un_tex0")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
 
-	esShaderUse(&shad);
-	glUniform1i(esShaderUniformGl(&shad, 0), 0);
+	esShader_Use(&shad);
+	glUniform1i(esShader_UniformGl(&shad, 0), 0);
 
 	static const struct data {
 		float x, y;
@@ -55,7 +55,7 @@ int main() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	esShaderUse(&shad);
+	esShader_Use(&shad);
 	esTextureUse(&tex);
 	esGeoRenderArray(&geo, 3);
 
@@ -63,7 +63,7 @@ int main() {
 
 	esTextureUnload(&tex);
 	esGeoBufDelete(&geobuf);
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();

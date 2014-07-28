@@ -9,7 +9,7 @@ int main() {
 	esLogVersion();
 
 	esShader shad_red;
-	if (!esShaderDual(&shad_red,
+	if (!esShader_Dual(&shad_red,
 				"demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
@@ -25,19 +25,19 @@ int main() {
 	};
 
 	esShader shad_tex;
-	if (!esShaderDual(&shad_tex,
+	if (!esShader_Dual(&shad_tex,
 				"demores/img.vert", "demores/img.frag")) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad_tex, 0, "un_tex0")) {
+	if (!esShader_UniformRegister(&shad_tex, 0, "un_tex0")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
 
-	esShaderUse(&shad_tex);
-	glUniform1i(esShaderUniformGl(&shad_tex, 0), 0);
+	esShader_Use(&shad_tex);
+	glUniform1i(esShader_UniformGl(&shad_tex, 0), 0);
 
 	esFrameBuffer fb;
 	if (!esFrameBufferCreate(&fb, 64, TEX_NONE, TEX_LINEAR)) {
@@ -87,19 +87,19 @@ int main() {
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShaderUse(&shad_red);
+	esShader_Use(&shad_red);
 	esGeoRenderArray(&cube, 6);
 	esFrameBufferUnSet();
 
 	// Render geometry
 	esFrameBufferBind(&fb);
-	esShaderUse(&shad_tex);
+	esShader_Use(&shad_tex);
 	esGeoRenderArray(&texgeo, 6);
 
 	esGameGlSwap();
 	esFrameBufferDelete(&fb);
 	esGeoBufDelete(&cubebuf);
-	esShaderUnload(&shad_red);
+	esShader_Unload(&shad_red);
 
 	SDL_Delay(800);
 	SDL_Quit();

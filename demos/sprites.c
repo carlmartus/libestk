@@ -11,8 +11,8 @@ static void loop_frame(float time) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShaderUse(&shad);
-	glUniform1i(esShaderUniformGl(&shad, 0), 0);
+	esShader_Use(&shad);
+	glUniform1i(esShader_UniformGl(&shad, 0), 0);
 
 	int step = 3.0f*accu;
 	es2dSpritesPut(0.0f, 0.0f, accu*0.01f+0.1f, -accu,
@@ -32,7 +32,7 @@ static void loop_frame(float time) {
 
 static void loop_exit() {
 	es2dSpritesClear();
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 	esTextureUnload(&tex);
 }
 
@@ -46,12 +46,12 @@ int main() {
 		return 1;
 	}
 
-	if (!esShaderDual(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
+	if (!esShader_Dual(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
 		esLog(ES_ERRO, "Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShaderUniformRegister(&shad, 0, "un_tex0")) {
+	if (!esShader_UniformRegister(&shad, 0, "un_tex0")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}

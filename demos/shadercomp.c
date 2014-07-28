@@ -9,11 +9,11 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (!esShaderDual(&shad, "demores/red.vert", "demores/red.frag")) {
+	if (!esShader_Dual(&shad, "demores/red.vert", "demores/red.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
-	esShaderUnload(&shad);
+	esShader_Unload(&shad);
 
 	SDL_Quit();
 	return 0;
