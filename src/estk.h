@@ -61,6 +61,11 @@ typedef int esUniform;
 #define UNIFORMS_MAX 10
 #define SHADERS_MAX 10
 
+typedef enum {
+	ES_SHADER_VERT,
+	ES_SHADER_FRAG,
+} esShaderType;
+
 typedef struct {
 	int glProgram;
 	esUniform uniforms[UNIFORMS_MAX];
@@ -91,14 +96,16 @@ typedef enum {
 } esShaderBaseType;
 
 typedef struct {
-	int glShaders[SHADERS_MAX+2];
-	int shaderCount;
+	esShaderBaseType type;
+	int uniMask;
+	esShader sh;
 } esShaderBase;
 
-void esShaderBase_Reset(esShaderBase *sb);
-esErr esShaderBase_AddVert(esShaderBase *sb, const char *vertFile);
-esErr esShaderBase_AddFrag(esShaderBase *sb, const char *fragFile);
-esErr esShaderBase_Link(esShaderBase *sb, esShaderBaseType type);
+esErr esShaderBase_Reset(esShaderBase *sb, esShaderBaseType type);
+esErr esShaderBase_AddVert(esShaderBase *sb,
+		esShaderType type, const char *vertFile);
+esErr esShaderBase_Link(esShaderBase *sb);
+esErr esShaderBase_Camera(esShaderBase *sb, float *mat);
 
 // }}}
 // Geometry {{{

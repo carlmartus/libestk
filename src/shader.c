@@ -1,6 +1,11 @@
 #include "estk.h"
 #include <GL/glew.h>
 
+static GLenum map_type[] = {
+	[ES_SHADER_VERT] = GL_VERTEX_SHADER,
+	[ES_SHADER_FRAG] = GL_FRAGMENT_SHADER,
+};
+
 // Normal shaders
 // ==============
 
@@ -126,29 +131,60 @@ esErr esShader_UniformGl(esShader *shader, esUniform reg) {
 // Shader base
 // ===========
 
-void esShaderBase_Reset(esShaderBase *sb) {
-	sb->shaderCount = 0;
-}
+#define UNI_MVP_VAR "mvp"
+#define BS(x) (1<<x)
 
-esErr esShaderBase_AddVert(esShaderBase *sb, const char *vertFile) {
-	GLint id = loadShader(vertFile, GL_VERTEX_SHADER, "Vertex shader");
-	sb->glShaders[sb->shaderCount++] = id;
-	return id == 0 ? ES_FAIL : ES_OK;
-}
+enum {
+	UNI_NONE,
+	UNI_MVP,
+};
 
-esErr esShaderBase_AddFrag(esShaderBase *sb, const char *fragFile) {
-	GLint id = loadShader(fragFile, GL_FRAGMENT_SHADER, "Fragment shader");
-	sb->glShaders[sb->shaderCount++] = id;
-	return id == 0 ? ES_FAIL : ES_OK;
-}
+esErr esShaderBase_Reset(esShaderBase *sb, esShaderBaseType type) {
+	sb->type = type;
 
-esErr esShaderBase_Link(esShaderBase *sb, esShaderBaseType type) {
 	switch (type) {
 		case ES_SHBASE_COLOR :
+			sb->uniMask = BS(UNI_MVP);
 			break;
 
 		default : return ES_FAIL;
 	}
+
+	sb->sh.shaderCount = 0;
+	return ES_OK;
+}
+
+esErr esShaderBase_AddVert(esShaderBase *sb,
+		esShaderType type, const char *vertFile) {
+	GLint id = loadShader(vertFile, map_type[type], "Shader base");
+	sb->sh.glShaders[sb->sh.shaderCount++] = id;
+	return id == 0 ? ES_FAIL : ES_OK;
+}
+
+static inline esErr processUniform(esShaderBase *sb,
+		int id, const char *var) {
+	if (sb->uniMask & BS(id)) {
+		if (!esShader_UniformRegister(&sb->sh, id, var)) {
+			return ES_FAIL;
+		}
+	}
+	return ES_OK;
+}
+
+esErr esShaderBase_Link(esShaderBase *sb) {
+	if (!esShader_Compile(&sb->sh)) {
+		return ES_FAIL;
+	}
+
+	if (
+			processUniform(sb, UNI_MVP, UNI_MVP_VAR)
+	   ) {
+		return ES_OK;
+	}
+	return ES_FAIL;
+}
+
+esErr esShaderBase_Camera(esShaderBase *sb, float *mat) {
 	return ES_FAIL;
 }
 

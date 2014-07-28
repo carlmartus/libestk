@@ -29,7 +29,7 @@ target_link_libraries(${ESTK} m GLEW SDL SDL_image SDL_mixer)
 
 set(DEMOS_SOURCE
 	attr cam clear events fb font image mainloop red
-	shadercomp sound sprites stride uniform)
+	shaderbase shadercomp sound sprites stride uniform)
 
 foreach(FILE ${DEMOS_SOURCE})
 	add_executable(${FILE} "demos/${FILE}.c")
