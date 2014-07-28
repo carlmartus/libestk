@@ -17,7 +17,7 @@ static struct {
 	void (*callback) (int key, int down);
 } keys[MAX_KEYS];
 
-void esGameInit(int screen_width, int screen_height) {
+void esGame_init(int screen_width, int screen_height) {
 	window_w = screen_width;
 	window_h = screen_height;
 
@@ -49,7 +49,7 @@ static void events(void) {
 	}
 }
 
-void esGameGlSwap(void) {
+void esGame_glSwap(void) {
 	SDL_GL_SwapBuffers();
 }
 
@@ -60,7 +60,7 @@ static void (*emscripten_exit)();
 
 static void emscripten_mainloop(void) {
 	if (!loop_run) {
-		esMusicHalt();
+		esMusic_halt();
 		if (emscripten_exit) emscripten_exit();
 		emscripten_cancel_main_loop();
 		return;
@@ -77,7 +77,7 @@ static void emscripten_mainloop(void) {
 
 #endif
 
-void esGameLoop(
+void esGame_loop(
 		void (*frame)(float t),
 		void (*exit)(),
 		int frame_rate) {
@@ -115,16 +115,16 @@ void esGameLoop(
 		start = SDL_GetTicks();
 	}
 
-	esMusicHalt();
+	esMusic_halt();
 	if (exit) exit();
 #endif
 }
 
-void esGameLoopQuit(void) {
+void esGame_loopQuit(void) {
 	loop_run = 0;
 }
 
-void esGameRegisterKey(int sdlkey,
+void esGame_registerKey(int sdlkey,
 		void (*callback)(int key, int down)) {
 	if (key_regs == 0) {
 		memset(keys, 0, sizeof(keys));
@@ -134,7 +134,7 @@ void esGameRegisterKey(int sdlkey,
 	keys[sdlkey].callback = callback;
 }
 
-void esGameWindowSize(int *w, int *h) {
+void esGame_windowSize(int *w, int *h) {
 	*w = window_w;
 	*h = window_h;
 }

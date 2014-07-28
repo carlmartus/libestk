@@ -6,7 +6,7 @@ static void loop_frame(float fr) {
 }
 
 static void callback_quit(int sdlkey, int down) {
-	esGameLoopQuit();
+	esGame_loopQuit();
 }
 
 static void callback_message(int sdlkey, int down) {
@@ -15,16 +15,16 @@ static void callback_message(int sdlkey, int down) {
 
 int main(int argc, char **argv) {
 
-	esGameInit(400, 300);
+	esGame_init(400, 300);
 	esLogVersion();
 
-	esGameRegisterKey(SDLK_q, callback_quit);
+	esGame_registerKey(SDLK_q, callback_quit);
 	printf("Press 'q' to exit\n");
 
-	esGameRegisterKey(SDLK_m, callback_message);
+	esGame_registerKey(SDLK_m, callback_message);
 	printf("Press 'm' to print message\n");
 
-	esGameLoop(loop_frame, NULL, 0);
+	esGame_loop(loop_frame, NULL, 0);
 	return 0;
 }
 

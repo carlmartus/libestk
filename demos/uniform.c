@@ -5,22 +5,22 @@
 
 int main(int argc, char **argv) {
 
-	esGameInit(400, 300);
+	esGame_init(400, 300);
 	esLogVersion();
 
 	esShader shad;
-	if (!esShader_Dual(&shad, "demores/uni.vert", "demores/uni.frag")) {
+	if (!esShader_dual(&shad, "demores/uni.vert", "demores/uni.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShader_UniformRegister(&shad, 0, "un_base")) {
+	if (!esShader_uniformRegister(&shad, 0, "un_base")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
 
-	esShader_Use(&shad);
-	glUniform4f(esShader_UniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
+	esShader_use(&shad);
+	glUniform4f(esShader_uniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
 
 	static const float red_lo[] = {
 		0.0f, 0.0f,
@@ -29,23 +29,23 @@ int main(int argc, char **argv) {
 	};
 
 	esGeoBuf geobuf;
-	esGeoBufCreate(&geobuf);
-	esGeoBufArray(&geobuf, red_lo, sizeof(red_lo), GEOBUF_STATIC);
+	esGeoBuf_create(&geobuf);
+	esGeoBuf_array(&geobuf, red_lo, sizeof(red_lo), GEOBUF_STATIC);
 
 	esGeo geo;
-	esGeoReset(&geo, 1);
-	esGeoPoint(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
+	esGeo_reset(&geo, 1);
+	esGeo_point(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
 
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShader_Use(&shad);
-	esGeoRenderArray(&geo, 3);
+	esShader_use(&shad);
+	esGeo_renderArray(&geo, 3);
 
-	esGameGlSwap();
+	esGame_glSwap();
 
-	esGeoBufDelete(&geobuf);
-	esShader_Unload(&shad);
+	esGeoBuf_free(&geobuf);
+	esShader_free(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();

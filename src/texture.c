@@ -8,7 +8,7 @@ static const GLenum mipmap_map[] = {
 	[TEX_LINEAR] = GL_LINEAR,
 };
 
-esErr esTextureLoad(esTexture *tex, const char *file_name,
+esErr esTexture_load(esTexture *tex, const char *file_name,
 		enum esTextureMipmap min, enum esTextureMipmap mag) {
 	SDL_Surface *surf = IMG_Load(file_name);
 	if (surf == NULL) return ES_FAIL;
@@ -33,11 +33,11 @@ esErr esTextureLoad(esTexture *tex, const char *file_name,
 	return ES_OK;
 }
 
-void esTextureUse(esTexture *tex) {
+void esTexture_use(esTexture *tex) {
 	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
 }
 
-void esTextureUnload(esTexture *tex) {
+void esTexture_free(esTexture *tex) {
 	GLuint gltex = tex->gltexture;
 	glDeleteTextures(1, &gltex);
 }

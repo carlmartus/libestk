@@ -17,12 +17,12 @@ static const unsigned int map_draw[] = {
 	[GEOBUF_STREAM] = GL_STREAM_DRAW,
 };
 
-void esGeoBufCreate(esGeoBuf *buf) {
+void esGeoBuf_create(esGeoBuf *buf) {
 	glGenBuffers(1, &buf->glBuf);
 	esCheckGlError();
 }
 
-void esGeoBufArray(esGeoBuf *buf,
+void esGeoBuf_array(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, buf->glBuf);
@@ -32,7 +32,7 @@ void esGeoBufArray(esGeoBuf *buf,
 	esCheckGlError();
 }
 
-void esGeoBufElement(esGeoBuf *buf,
+void esGeoBuf_element(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type) {
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buf->glBuf);
@@ -42,16 +42,16 @@ void esGeoBufElement(esGeoBuf *buf,
 	esCheckGlError();
 }
 
-void esGeoBufDelete(esGeoBuf *buf) {
+void esGeoBuf_free(esGeoBuf *buf) {
 	glDeleteBuffers(1, &buf->glBuf);
 	esCheckGlError();
 }
 
-void esGeoReset(esGeo *geo, int bufCount) {
+void esGeo_reset(esGeo *geo, int bufCount) {
 	geo->bufCount = bufCount;
 }
 
-void esGeoPoint(esGeo *geo, int id, esGeoBuf *geobuf,
+void esGeo_point(esGeo *geo, int id, esGeoBuf *geobuf,
 		esGeoDataType datatype, int elements,
 		size_t offset, size_t stride, enum esBool normalized)
 {
@@ -92,14 +92,14 @@ static void postRender(const esGeo *geo) {
 	esCheckGlError();
 }
 
-void esGeoRenderArray(const esGeo *geo, int vertices) {
+void esGeo_renderArray(const esGeo *geo, int vertices) {
 	preRender(geo);
 	glDrawArrays(GL_TRIANGLES, 0, vertices);
 	esCheckGlError();
 	postRender(geo);
 }
 
-void esGeoRenderElements(const esGeo *geo, const esGeoBuf *indices,
+void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 		esGeoDataType dataType, int vertexCount) {
 
 	preRender(geo);

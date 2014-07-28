@@ -44,11 +44,11 @@ int loadShader(const char *fileName,
 	return shad;
 }
 
-void esShader_Reset(esShader *shader) {
+void esShader_reset(esShader *shader) {
 	shader->shaderCount = 0;
 }
 
-esErr esShader_LoadFrag(esShader *shader, const char *fragFile) {
+esErr esShader_loadFrag(esShader *shader, const char *fragFile) {
 	int idFrag = loadShader(fragFile,
 			GL_FRAGMENT_SHADER, "Fragment shader");
 
@@ -61,7 +61,7 @@ esErr esShader_LoadFrag(esShader *shader, const char *fragFile) {
 	return ES_OK;
 }
 
-esErr esShader_LoadVert(esShader *shader, const char *vertFile) {
+esErr esShader_loadVert(esShader *shader, const char *vertFile) {
 	int idVert = loadShader(vertFile,
 			GL_VERTEX_SHADER, "Vertex shader");
 
@@ -74,7 +74,7 @@ esErr esShader_LoadVert(esShader *shader, const char *vertFile) {
 	return ES_OK;
 }
 
-esErr esShader_Compile(esShader *shader) {
+esErr esShader_compile(esShader *shader) {
 
 	int program = glCreateProgram();
 
@@ -96,24 +96,24 @@ esErr esShader_Compile(esShader *shader) {
 	return ES_OK;
 }
 
-esErr esShader_Dual(esShader *shader,
+esErr esShader_dual(esShader *shader,
 		const char *vertFile, const char *fragFile) {
-	esShader_Reset(shader);
+	esShader_reset(shader);
 
-	if (!esShader_LoadVert(shader, vertFile)) return ES_FAIL;
-	if (!esShader_LoadFrag(shader, fragFile)) return ES_FAIL;
-	return esShader_Compile(shader);
+	if (!esShader_loadVert(shader, vertFile)) return ES_FAIL;
+	if (!esShader_loadFrag(shader, fragFile)) return ES_FAIL;
+	return esShader_compile(shader);
 }
 
-void esShader_Use(const esShader *shader) {
+void esShader_use(const esShader *shader) {
 	glUseProgram(shader->glProgram);
 }
 
-void esShader_Unload(esShader *shader) {
+void esShader_free(esShader *shader) {
 	glDeleteShader(shader->glProgram);
 }
 
-esErr esShader_UniformRegister(esShader *shader,
+esErr esShader_uniformRegister(esShader *shader,
 		esUniform reg, const char *name) {
 
 	int loc = glGetUniformLocation(shader->glProgram, name);
@@ -123,7 +123,7 @@ esErr esShader_UniformRegister(esShader *shader,
 	return ES_OK;
 }
 
-esErr esShader_UniformGl(esShader *shader, esUniform reg) {
+esErr esShader_uniformGl(esShader *shader, esUniform reg) {
 	return shader->uniforms[reg];
 }
 
@@ -139,7 +139,7 @@ enum {
 	UNI_MVP,
 };
 
-esErr esShaderBase_Reset(esShaderBase *sb, esShaderBaseType type) {
+esErr esShaderBase_reset(esShaderBase *sb, esShaderBaseType type) {
 	sb->type = type;
 
 	switch (type) {
@@ -154,7 +154,7 @@ esErr esShaderBase_Reset(esShaderBase *sb, esShaderBaseType type) {
 	return ES_OK;
 }
 
-esErr esShaderBase_AddVert(esShaderBase *sb,
+esErr esShaderBase_addShader(esShaderBase *sb,
 		esShaderType type, const char *vertFile) {
 	GLint id = loadShader(vertFile, map_type[type], "Shader base");
 	sb->sh.glShaders[sb->sh.shaderCount++] = id;
@@ -164,15 +164,15 @@ esErr esShaderBase_AddVert(esShaderBase *sb,
 static inline esErr processUniform(esShaderBase *sb,
 		int id, const char *var) {
 	if (sb->uniMask & BS(id)) {
-		if (!esShader_UniformRegister(&sb->sh, id, var)) {
+		if (!esShader_uniformRegister(&sb->sh, id, var)) {
 			return ES_FAIL;
 		}
 	}
 	return ES_OK;
 }
 
-esErr esShaderBase_Link(esShaderBase *sb) {
-	if (!esShader_Compile(&sb->sh)) {
+esErr esShaderBase_link(esShaderBase *sb) {
+	if (!esShader_compile(&sb->sh)) {
 		return ES_FAIL;
 	}
 
@@ -184,7 +184,7 @@ esErr esShaderBase_Link(esShaderBase *sb) {
 	return ES_FAIL;
 }
 
-esErr esShaderBase_Camera(esShaderBase *sb, float *mat) {
+esErr esShaderBase_camera(esShaderBase *sb, float *mat) {
 	return ES_FAIL;
 }
 

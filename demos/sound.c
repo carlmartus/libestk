@@ -9,37 +9,37 @@ static esMusic mus;
 
 static void frame(float time) {
 	static int frame_count = 0;
-	if (++frame_count > 300) esGameLoopQuit();
+	if (++frame_count > 300) esGame_loopQuit();
 }
 
 static void loop_exit() {
-	esSoundUnLoad(&sfx);
+	esSound_free(&sfx);
 	printf("Good bye!\n");
 	SDL_Quit();
 }
 
 int main() {
 
-	esGameInit(400, 300);
+	esGame_init(400, 300);
 	esLogVersion();
 
-	if (!esSoundLoad(&sfx, "demores/sound.ogg")) {
+	if (!esSound_create(&sfx, "demores/sound.ogg")) {
 		printf("Cannot load sound file\n");
 		return 1;
 	}
 
-	if (!esMusicLoad(&mus, "demores/music.ogg")) {
+	if (!esMusic_create(&mus, "demores/music.ogg")) {
 		printf("Cannot load music file\n");
 		return 1;
 	}
 
 	printf("Play music\n");
-	esMusicPlay(&mus);
+	esMusic_play(&mus);
 
 	printf("Play sound\n");
-	esSoundPlay(&sfx);
+	esSound_play(&sfx);
 
-	esGameLoop(frame, loop_exit, 0);
+	esGame_loop(frame, loop_exit, 0);
 	return 0;
 }
 

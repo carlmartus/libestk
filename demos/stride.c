@@ -5,11 +5,11 @@
 
 int main() {
 
-	esGameInit(400, 300);
+	esGame_init(400, 300);
 	esLogVersion();
 
 	esShader shad;
-	if (!esShader_Dual(&shad, "demores/attr.vert", "demores/attr.frag")) {
+	if (!esShader_dual(&shad, "demores/attr.vert", "demores/attr.frag")) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
@@ -24,24 +24,24 @@ int main() {
 	};
 
 	esGeoBuf geobuf;
-	esGeoBufCreate(&geobuf);
-	esGeoBufArray(&geobuf, data, sizeof(data), GEOBUF_STATIC);
+	esGeoBuf_create(&geobuf);
+	esGeoBuf_array(&geobuf, data, sizeof(data), GEOBUF_STATIC);
 
 	esGeo geo;
-	esGeoReset(&geo, 2);
-	esGeoPoint(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
-	esGeoPoint(&geo, 1, &geobuf, GEODATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
+	esGeo_reset(&geo, 2);
+	esGeo_point(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
+	esGeo_point(&geo, 1, &geobuf, GEODATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
 
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShader_Use(&shad);
-	esGeoRenderArray(&geo, 3);
+	esShader_use(&shad);
+	esGeo_renderArray(&geo, 3);
 
-	esGameGlSwap();
+	esGame_glSwap();
 
-	esGeoBufDelete(&geobuf);
-	esShader_Unload(&shad);
+	esGeoBuf_free(&geobuf);
+	esShader_free(&shad);
 
 	SDL_Delay(800);
 	SDL_Quit();

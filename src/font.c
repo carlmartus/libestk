@@ -12,7 +12,7 @@ struct font_vert {
 	float u, v;
 };
 
-esErr esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
+esErr esFont_create(esFont *ft, esTexture *tex, esShader *shad,
 		int attrib_loc, int attrib_uv, int addition_attribs) {
 	ft->texture = tex;
 	ft->shader = shad;
@@ -23,12 +23,12 @@ esErr esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
 	ft->buf_size = 0;
 	ft->buf_alloc = FONT_INIT;
 
-	esGeoBufCreate(&ft->geo_buf);
+	esGeoBuf_create(&ft->geo_buf);
 
-	esGeoReset(&ft->geo, 2 + addition_attribs);
-	esGeoPoint(&ft->geo, 0, &ft->geo_buf, GEODATA_FLOAT, 2, 0,
+	esGeo_reset(&ft->geo, 2 + addition_attribs);
+	esGeo_point(&ft->geo, 0, &ft->geo_buf, GEODATA_FLOAT, 2, 0,
 			sizeof(struct font_vert), ES_FALSE);
-	esGeoPoint(&ft->geo, 1, &ft->geo_buf, GEODATA_FLOAT, 2,
+	esGeo_point(&ft->geo, 1, &ft->geo_buf, GEODATA_FLOAT, 2,
 			offsetof(struct font_vert, u),
 			sizeof(struct font_vert), ES_TRUE);
 
@@ -46,7 +46,7 @@ static void buf_check(esFont *ft, int add) {
 	ft->buf = realloc(ft->buf, ft->buf_alloc);
 }
 
-void esFontAddText(esFont *ft,
+void esFont_addText(esFont *ft,
 		float offset_x, float offset_y, const char *fmt, ...) {
 	va_list args;
 	char buf[MAX_STRING];
@@ -96,26 +96,26 @@ void esFontAddText(esFont *ft,
 	ft->buf_size += size;
 }
 
-void esFontDelete(esFont *ft) {
+void esFont_delete(esFont *ft) {
 	free(ft->buf);
 	ft->buf = NULL;
 
-	esGeoBufDelete(&ft->geo_buf);
+	esGeoBuf_free(&ft->geo_buf);
 }
 
-void esFontRender(esFont *ft) {
+void esFont_render(esFont *ft) {
 	if (ft->shader) {
-		esShader_Use(ft->shader);
+		esShader_use(ft->shader);
 	}
 
 	if (ft->vert_count > 0) {
 
-		esGeoBufArray(&ft->geo_buf, ft->buf, ft->buf_size, GEOBUF_STREAM);
-		esGeoRenderArray(&ft->geo, ft->vert_count);
+		esGeoBuf_array(&ft->geo_buf, ft->buf, ft->buf_size, GEOBUF_STREAM);
+		esGeo_renderArray(&ft->geo, ft->vert_count);
 	}
 }
 
-void esFontClearBuf(esFont *ft) {
+void esFont_clearBuf(esFont *ft) {
 	ft->vert_count = 0;
 }
 

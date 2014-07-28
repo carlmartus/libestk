@@ -46,12 +46,12 @@ void esLog(int class, const char *fmt, ...);
 // }}}
 // Game loop {{{
 
-void esGameInit(int screen_width, int screen_height);
-void esGameGlSwap(void);
-void esGameLoop(void (*frame)(float t), void (*exit)(), int frame_rate);
-void esGameLoopQuit(void);
-void esGameRegisterKey(int sdlkey, void (*callback)(int key, int down));
-void esGameWindowSize(int *w, int *h);
+void esGame_init(int screen_width, int screen_height);
+void esGame_glSwap(void);
+void esGame_loop(void (*frame)(float t), void (*exit)(), int frame_rate);
+void esGame_loopQuit(void);
+void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
+void esGame_windowSize(int *w, int *h);
 
 // }}}
 // Shader {{{
@@ -73,17 +73,17 @@ typedef struct {
 	int shaderCount;
 } esShader;
 
-void esShader_Reset(esShader *shader);
-esErr esShader_LoadFrag(esShader *shader, const char *fragFile);
-esErr esShader_LoadVert(esShader *shader, const char *vertFile);
-esErr esShader_Compile(esShader *shader);
-esErr esShader_Dual(esShader *shader,
+void esShader_reset(esShader *shader);
+esErr esShader_loadFrag(esShader *shader, const char *fragFile);
+esErr esShader_loadVert(esShader *shader, const char *vertFile);
+esErr esShader_compile(esShader *shader);
+esErr esShader_dual(esShader *shader,
 		const char *vertFile, const char *fragFile);
-void esShader_Use(const esShader *shader);
-void esShader_Unload(esShader *shader);
-esErr esShader_UniformRegister(esShader *shader,
+void esShader_use(const esShader *shader);
+void esShader_free(esShader *shader);
+esErr esShader_uniformRegister(esShader *shader,
 		esUniform reg, const char *name);
-esErr esShader_UniformGl(esShader *shader, esUniform reg);
+esErr esShader_uniformGl(esShader *shader, esUniform reg);
 
 // Shader base abstraction
 typedef struct {
@@ -101,11 +101,11 @@ typedef struct {
 	esShader sh;
 } esShaderBase;
 
-esErr esShaderBase_Reset(esShaderBase *sb, esShaderBaseType type);
-esErr esShaderBase_AddVert(esShaderBase *sb,
+esErr esShaderBase_reset(esShaderBase *sb, esShaderBaseType type);
+esErr esShaderBase_addShader(esShaderBase *sb,
 		esShaderType type, const char *vertFile);
-esErr esShaderBase_Link(esShaderBase *sb);
-esErr esShaderBase_Camera(esShaderBase *sb, float *mat);
+esErr esShaderBase_link(esShaderBase *sb);
+esErr esShaderBase_camera(esShaderBase *sb, float *mat);
 
 // }}}
 // Geometry {{{
@@ -133,12 +133,12 @@ typedef struct {
 	unsigned int glBuf;
 } esGeoBuf;
 
-void esGeoBufCreate(esGeoBuf *buf);
-void esGeoBufArray(esGeoBuf *buf,
+void esGeoBuf_create(esGeoBuf *buf);
+void esGeoBuf_array(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type);
-void esGeoBufElement(esGeoBuf *buf,
+void esGeoBuf_element(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type);
-void esGeoBufDelete(esGeoBuf *buf);
+void esGeoBuf_free(esGeoBuf *buf);
 
 typedef struct {
 	int bufCount;
@@ -152,19 +152,19 @@ typedef struct {
 	} buf[GEOBUFS_MAX];
 } esGeo;
 
-void esGeoReset(esGeo *geo, int bufCount);
-void esGeoPoint(esGeo *geo, int id, esGeoBuf *geobuf,
+void esGeo_reset(esGeo *geo, int bufCount);
+void esGeo_point(esGeo *geo, int id, esGeoBuf *geobuf,
 		esGeoDataType datatype, int elements,
 		size_t offset, size_t stride, enum esBool normalized);
-void esGeoRenderArray(const esGeo *geo, int vertices);
-void esGeoRenderElements(const esGeo *geo, const esGeoBuf *indices,
+void esGeo_renderArray(const esGeo *geo, int vertices);
+void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 		esGeoDataType dataType, int vertexCount);
 
 // }}}
 // Projection {{{
 
-void esProjOrtho(float *mat, float x0, float y0, float x1, float y1);
-void esProjPerspective(
+void esProj_ortho(float *mat, float x0, float y0, float x1, float y1);
+void esProj_perspective(
 		float *mat, float fov, float screenratio, float near, float far,
 		esVec3 eye, esVec3 at, esVec3 up);
 
@@ -181,10 +181,10 @@ typedef struct {
 	int gltexture;
 } esTexture;
 
-esErr esTextureLoad(esTexture *tex, const char *file_name,
+esErr esTexture_load(esTexture *tex, const char *file_name,
 		enum esTextureMipmap min, enum esTextureMipmap mag);
-void esTextureUse(esTexture *tex);
-void esTextureUnload(esTexture *tex);
+void esTexture_use(esTexture *tex);
+void esTexture_free(esTexture *tex);
 
 // }}}
 // Font {{{
@@ -200,13 +200,13 @@ typedef struct {
 	void *buf;
 } esFont;
 
-esErr esFontCreate(esFont *ft, esTexture *tex, esShader *shad,
+esErr esFont_create(esFont *ft, esTexture *tex, esShader *shad,
 		int attrib_loc, int attrib_uv, int addition_attribs);
-void esFontDelete(esFont *ft);
-void esFontAddText(esFont *ft, float offset_x, float offset_y,
+void esFont_delete(esFont *ft);
+void esFont_addText(esFont *ft, float offset_x, float offset_y,
 		const char *fmt, ...);
-void esFontRender(esFont *ft);
-void esFontClearBuf(esFont *ft);
+void esFont_render(esFont *ft);
+void esFont_clearBuf(esFont *ft);
 
 // }}}
 // Framebuffer {{{
@@ -216,12 +216,12 @@ typedef struct {
 	int gl_fb, gl_tex, gl_depth;
 } esFrameBuffer;
 
-esErr esFrameBufferCreate(esFrameBuffer *fb, int dimension,
+esErr esFb_create(esFrameBuffer *fb, int dimension,
 		enum esTextureMipmap min, enum esTextureMipmap mag);
-void esFrameBufferDelete(esFrameBuffer *fb);
-void esFrameBufferSet(esFrameBuffer *fb);
-void esFrameBufferUnSet(void);
-void esFrameBufferBind(esFrameBuffer *fb);
+void esFb_free(esFrameBuffer *fb);
+void esFb_set(esFrameBuffer *fb);
+void esFb_unSet(void);
+void esFb_bind(esFrameBuffer *fb);
 
 // }}}
 // Audio {{{
@@ -230,18 +230,18 @@ typedef struct {
 	Mix_Chunk *chunk;
 } esSound;
 
-esErr esSoundLoad(esSound *sn, const char *file_name);
-void esSoundUnLoad(esSound *sn);
-void esSoundPlay(esSound *sn);
+esErr esSound_create(esSound *sn, const char *file_name);
+void esSound_free(esSound *sn);
+void esSound_play(esSound *sn);
 
 typedef struct {
 	Mix_Music *music;
 } esMusic;
 
-esErr esMusicLoad(esMusic *mu, const char *file_name);
-void esMusicUnLoad(esMusic *mu);
-void esMusicPlay(esMusic *mu);
-void esMusicHalt(void);
+esErr esMusic_create(esMusic *mu, const char *file_name);
+void esMusic_free(esMusic *mu);
+void esMusic_play(esMusic *mu);
+void esMusic_halt(void);
 
 // }}}
 // Sprites {{{
@@ -250,12 +250,12 @@ void esMusicHalt(void);
 #define ES_SPRITE_FLIPY 2
 #define ES_SPRITE_FLIPXY (ES_SPRITE_FLIPX | ES_SPRITE_FLIPY)
 
-void es2dSpritesInit(int palettDim, int maxSprites);
-void es2dSpritesClear(void);
-void es2dSpritesPut(float x, float y, float radius,
+void esSprites2d_init(int palettDim, int maxSprites);
+void esSprites2d_clear(void);
+void esSprites2d_put(float x, float y, float radius,
 		float rotate, int spriteX, int spriteY, unsigned flags);
-void es2dSpritePrepear(void);
-void es2dSpritesRender(void);
+void esSprites2d_prepear(void);
+void esSprites2d_render(void);
 
 // }}}
 

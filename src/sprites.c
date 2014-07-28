@@ -15,7 +15,7 @@ static esGeo geo;
 
 static SpriteVertex *vertices;
 
-void es2dSpritesInit(int palettDim, int maxSprites) {
+void esSprites2d_init(int palettDim, int maxSprites) {
 
 	uv_step = 1.0f / (float) palettDim;
 	count = 0;
@@ -24,19 +24,19 @@ void es2dSpritesInit(int palettDim, int maxSprites) {
 
 	vertices = malloc(sizeof(SpriteVertex)*max*4);
 
-	esGeoBufCreate(&geoBuf);
+	esGeoBuf_create(&geoBuf);
 
-	esGeoReset(&geo, 2);
-	esGeoPoint(&geo, 0, &geoBuf, GEODATA_FLOAT, 2, 0, sizeof(SpriteVertex), ES_FALSE);
-	esGeoPoint(&geo, 1, &geoBuf, GEODATA_FLOAT, 2, 8, sizeof(SpriteVertex), ES_TRUE);
+	esGeo_reset(&geo, 2);
+	esGeo_point(&geo, 0, &geoBuf, GEODATA_FLOAT, 2, 0, sizeof(SpriteVertex), ES_FALSE);
+	esGeo_point(&geo, 1, &geoBuf, GEODATA_FLOAT, 2, 8, sizeof(SpriteVertex), ES_TRUE);
 }
 
-void es2dSpritesClear(void) {
+void esSprites2d_clear(void) {
 	free(vertices);
 	vertices = NULL;
 }
 
-void es2dSpritesPut(float x, float y, float radius,
+void esSprites2d_put(float x, float y, float radius,
 		float rotate, int spriteX, int spriteY, unsigned flags) {
 
 	float u0 = (float) spriteX * uv_step;
@@ -108,17 +108,17 @@ void es2dSpritesPut(float x, float y, float radius,
 	count++;
 }
 
-void es2dSpritePrepear(void) {
-	esGeoBufArray(&geoBuf, vertices,
+void esSprites2d_prepear(void) {
+	esGeoBuf_array(&geoBuf, vertices,
 			count*6*sizeof(SpriteVertex), GEOBUF_STREAM);
 	renderCount = count*6;
 	//renderCount = count*3;
 	count = 0;
 }
 
-void es2dSpritesRender(void) {
+void esSprites2d_render(void) {
 	if (renderCount) {
-		esGeoRenderArray(&geo, renderCount);
+		esGeo_renderArray(&geo, renderCount);
 	}
 }
 

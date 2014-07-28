@@ -6,7 +6,7 @@ static const GLenum mipmap_map[] = {
 	[TEX_LINEAR] = GL_LINEAR,
 };
 
-esErr esFrameBufferCreate(esFrameBuffer *fb, int dimension,
+esErr esFb_create(esFrameBuffer *fb, int dimension,
 		enum esTextureMipmap min, enum esTextureMipmap mag) {
 	GLuint glfb, gltex, gldepth;
 	glGenFramebuffers(1, &glfb);
@@ -49,7 +49,7 @@ esErr esFrameBufferCreate(esFrameBuffer *fb, int dimension,
 	return ES_OK;
 }
 
-void esFrameBufferDelete(esFrameBuffer *fb) {
+void esFb_free(esFrameBuffer *fb) {
 	GLuint glfb, gltex, gldepth;
 	glfb = fb->gl_fb;
 	gltex = fb->gl_tex;
@@ -60,19 +60,19 @@ void esFrameBufferDelete(esFrameBuffer *fb) {
 	glDeleteRenderbuffers(1, &gldepth);
 }
 
-void esFrameBufferSet(esFrameBuffer *fb) {
+void esFb_set(esFrameBuffer *fb) {
 	glViewport(0, 0, fb->dimension, fb->dimension);
 	glBindFramebuffer(GL_FRAMEBUFFER, fb->gl_fb);
 }
 
-void esFrameBufferUnSet(void) {
+void esFb_unSet(void) {
 	int w, h;
-	esGameWindowSize(&w, &h);
+	esGame_windowSize(&w, &h);
 	glViewport(0, 0, w, h);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void esFrameBufferBind(esFrameBuffer *fb) {
+void esFb_bind(esFrameBuffer *fb) {
 	glBindTexture(GL_TEXTURE_2D, fb->gl_tex);
 }
 

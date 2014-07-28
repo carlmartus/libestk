@@ -5,7 +5,7 @@
 
 int main() {
 
-	esGameInit(400, 300);
+	esGame_init(400, 300);
 	esLogVersion();
 
 	SDL_Delay(800);

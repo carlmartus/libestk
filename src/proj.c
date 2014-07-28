@@ -4,7 +4,7 @@
 #define P0 (0.0f)
 #define P1 (1.0f)
 
-void esProjOrtho(float *mat, float x0, float y0, float x1, float y1) {
+void esProj_ortho(float *mat, float x0, float y0, float x1, float y1) {
 	mat[ 1]=P0; mat[ 2]=P0;
 	mat[ 4]=P0; mat[ 6]=P0;
 	mat[ 8]=P0; mat[ 9]=P0;
@@ -139,7 +139,7 @@ void lookat_matrix(float *mat, esVec3 eye, esVec3 at, esVec3 up) {
 	mul_matrix(mat, m1, m0);
 }
 
-void esProjPerspective(
+void esProj_perspective(
 		float *mat, float fov, float screenratio, float near, float far,
 		esVec3 eye, esVec3 at, esVec3 up) {
 	float persp[16];
