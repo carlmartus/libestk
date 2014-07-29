@@ -191,14 +191,14 @@ void esFont_clearBuf(esFont *ft);
 typedef struct {
 	int dimension;
 	int gl_fb, gl_tex, gl_depth;
-} esFrameBuffer;
+} esFb;
 
-esErr esFb_create(esFrameBuffer *fb, int dimension,
+esErr esFb_create(esFb *fb, int dimension,
 		enum esTextureMipmap min, enum esTextureMipmap mag);
-void esFb_free(esFrameBuffer *fb);
-void esFb_set(esFrameBuffer *fb);
+void esFb_free(esFb *fb);
+void esFb_set(esFb *fb);
 void esFb_unSet(void);
-void esFb_bind(esFrameBuffer *fb);
+void esFb_bind(esFb *fb);
 
 // }}}
 // Audio {{{

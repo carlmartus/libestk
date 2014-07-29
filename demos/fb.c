@@ -39,7 +39,7 @@ int main() {
 	esShader_use(&shad_tex);
 	glUniform1i(esShader_uniformGl(&shad_tex, 0), 0);
 
-	esFrameBuffer fb;
+	esFb fb;
 	if (!esFb_create(&fb, 64, TEX_NONE, TEX_LINEAR)) {
 		printf("Cannot create frame buffer\n");
 		return 1;

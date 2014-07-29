@@ -6,7 +6,7 @@ static const GLenum mipmap_map[] = {
 	[TEX_LINEAR] = GL_LINEAR,
 };
 
-esErr esFb_create(esFrameBuffer *fb, int dimension,
+esErr esFb_create(esFb *fb, int dimension,
 		enum esTextureMipmap min, enum esTextureMipmap mag) {
 	GLuint glfb, gltex, gldepth;
 	glGenFramebuffers(1, &glfb);
@@ -49,7 +49,7 @@ esErr esFb_create(esFrameBuffer *fb, int dimension,
 	return ES_OK;
 }
 
-void esFb_free(esFrameBuffer *fb) {
+void esFb_free(esFb *fb) {
 	GLuint glfb, gltex, gldepth;
 	glfb = fb->gl_fb;
 	gltex = fb->gl_tex;
@@ -60,7 +60,7 @@ void esFb_free(esFrameBuffer *fb) {
 	glDeleteRenderbuffers(1, &gldepth);
 }
 
-void esFb_set(esFrameBuffer *fb) {
+void esFb_set(esFb *fb) {
 	glViewport(0, 0, fb->dimension, fb->dimension);
 	glBindFramebuffer(GL_FRAMEBUFFER, fb->gl_fb);
 }
@@ -72,7 +72,7 @@ void esFb_unSet(void) {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void esFb_bind(esFrameBuffer *fb) {
+void esFb_bind(esFb *fb) {
 	glBindTexture(GL_TEXTURE_2D, fb->gl_tex);
 }
 
