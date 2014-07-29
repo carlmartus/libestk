@@ -1,7 +1,7 @@
 libestk
 =======
 
-OpenGL ES Toolkit v2.2.1.
+OpenGL ES Toolkit v3.0.0.
 
 This project is a continuation of [ESTK](https://github.com/carlmartus/estk) which can be considered version 1.0 of libestk.
 
@@ -20,6 +20,5 @@ Features
 
 Todo
 ====
- * Sphinx documentation
- * Abstract shader system (Camera etc)
+ * Documentation
 

@@ -6,9 +6,9 @@ add_definitions("-Wall -O2 -std=gnu11")
 # Version/Naming
 # ==============
 
-set(MAJOR 2)
-set(MINOR 2)
-set(PATCH 1)
+set(MAJOR 3)
+set(MINOR 0)
+set(PATCH 0)
 set(VERSION ${MAJOR}.${MINOR}.${PATCH})
 set(ESTK estk${MAJOR})
 
@@ -29,7 +29,7 @@ target_link_libraries(${ESTK} m GLEW SDL SDL_image SDL_mixer)
 
 set(DEMOS_SOURCE
 	attr cam clear events fb font image mainloop red
-	shaderbase shadercomp sound sprites stride uniform)
+	shadercomp sound sprites stride uniform)
 
 foreach(FILE ${DEMOS_SOURCE})
 	add_executable(${FILE} "demos/${FILE}.c")

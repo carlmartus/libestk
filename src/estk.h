@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "2.2.1"
+#define ESTK_VERSION "3.0.0"
 
 // Misc {{{
 
@@ -56,7 +56,6 @@ void esGame_windowSize(int *w, int *h);
 // }}}
 // Shader {{{
 
-// Normal shaders
 typedef int esUniform;
 #define UNIFORMS_MAX 10
 #define SHADERS_MAX 10
@@ -74,8 +73,8 @@ typedef struct {
 } esShader;
 
 void esShader_reset(esShader *shader);
-esErr esShader_loadFrag(esShader *shader, const char *fragFile);
-esErr esShader_loadVert(esShader *shader, const char *vertFile);
+esErr esShader_load(esShader *shader,
+		esShaderType type, const char *fileName);
 esErr esShader_compile(esShader *shader);
 esErr esShader_dual(esShader *shader,
 		const char *vertFile, const char *fragFile);
@@ -84,28 +83,6 @@ void esShader_free(esShader *shader);
 esErr esShader_uniformRegister(esShader *shader,
 		esUniform reg, const char *name);
 esErr esShader_uniformGl(esShader *shader, esUniform reg);
-
-// Shader base abstraction
-typedef struct {
-	float x, y, z;
-	uint8_t r, g, b, a;
-} esShaderBaseColor;
-
-typedef enum {
-	ES_SHBASE_COLOR,
-} esShaderBaseType;
-
-typedef struct {
-	esShaderBaseType type;
-	int uniMask;
-	esShader sh;
-} esShaderBase;
-
-esErr esShaderBase_reset(esShaderBase *sb, esShaderBaseType type);
-esErr esShaderBase_addShader(esShaderBase *sb,
-		esShaderType type, const char *vertFile);
-esErr esShaderBase_link(esShaderBase *sb);
-esErr esShaderBase_camera(esShaderBase *sb, float *mat);
 
 // }}}
 // Geometry {{{

@@ -1,14 +1,6 @@
 #include "estk.h"
 #include <GL/glew.h>
 
-static GLenum map_type[] = {
-	[ES_SHADER_VERT] = GL_VERTEX_SHADER,
-	[ES_SHADER_FRAG] = GL_FRAGMENT_SHADER,
-};
-
-// Normal shaders
-// ==============
-
 static int checkShader(GLuint id, const char *shaderInfo) {
 	GLint result = GL_FALSE;
 
@@ -48,29 +40,31 @@ void esShader_reset(esShader *shader) {
 	shader->shaderCount = 0;
 }
 
-esErr esShader_loadFrag(esShader *shader, const char *fragFile) {
-	int idFrag = loadShader(fragFile,
-			GL_FRAGMENT_SHADER, "Fragment shader");
+esErr esShader_load(esShader *shader,
+		esShaderType type, const char *fileName) {
 
-	if (idFrag == 0) {
-		esLog(ES_ERRO, "Invalid fragment shader file (%s)\n", fragFile);
+	int id;
+	switch (type) {
+		case ES_SHADER_FRAG :
+			id = loadShader(fileName,
+					GL_FRAGMENT_SHADER,
+					"Fragment shader");
+			break;
+
+		default :
+		case ES_SHADER_VERT :
+			id = loadShader(fileName,
+					GL_VERTEX_SHADER,
+					"Vertex shader");
+			break;
+	}
+
+	if (id == 0) {
+		esLog(ES_ERRO, "Invalid shader file (%s)\n", fileName);
 		return ES_FAIL;
 	}
 
-	shader->glShaders[shader->shaderCount++] = idFrag;
-	return ES_OK;
-}
-
-esErr esShader_loadVert(esShader *shader, const char *vertFile) {
-	int idVert = loadShader(vertFile,
-			GL_VERTEX_SHADER, "Vertex shader");
-
-	if (idVert == 0) {
-		esLog(ES_ERRO, "Invalid vertex shader file (%s)\n", vertFile);
-		return ES_FAIL;
-	}
-
-	shader->glShaders[shader->shaderCount++] = idVert;
+	shader->glShaders[shader->shaderCount++] = id;
 	return ES_OK;
 }
 
@@ -100,8 +94,8 @@ esErr esShader_dual(esShader *shader,
 		const char *vertFile, const char *fragFile) {
 	esShader_reset(shader);
 
-	if (!esShader_loadVert(shader, vertFile)) return ES_FAIL;
-	if (!esShader_loadFrag(shader, fragFile)) return ES_FAIL;
+	if (!esShader_load(shader, ES_SHADER_VERT, vertFile)) return ES_FAIL;
+	if (!esShader_load(shader, ES_SHADER_FRAG, fragFile)) return ES_FAIL;
 	return esShader_compile(shader);
 }
 
@@ -125,66 +119,5 @@ esErr esShader_uniformRegister(esShader *shader,
 
 esErr esShader_uniformGl(esShader *shader, esUniform reg) {
 	return shader->uniforms[reg];
-}
-
-
-// Shader base
-// ===========
-
-#define UNI_MVP_VAR "mvp"
-#define BS(x) (1<<x)
-
-enum {
-	UNI_NONE,
-	UNI_MVP,
-};
-
-esErr esShaderBase_reset(esShaderBase *sb, esShaderBaseType type) {
-	sb->type = type;
-
-	switch (type) {
-		case ES_SHBASE_COLOR :
-			sb->uniMask = BS(UNI_MVP);
-			break;
-
-		default : return ES_FAIL;
-	}
-
-	sb->sh.shaderCount = 0;
-	return ES_OK;
-}
-
-esErr esShaderBase_addShader(esShaderBase *sb,
-		esShaderType type, const char *vertFile) {
-	GLint id = loadShader(vertFile, map_type[type], "Shader base");
-	sb->sh.glShaders[sb->sh.shaderCount++] = id;
-	return id == 0 ? ES_FAIL : ES_OK;
-}
-
-static inline esErr processUniform(esShaderBase *sb,
-		int id, const char *var) {
-	if (sb->uniMask & BS(id)) {
-		if (!esShader_uniformRegister(&sb->sh, id, var)) {
-			return ES_FAIL;
-		}
-	}
-	return ES_OK;
-}
-
-esErr esShaderBase_link(esShaderBase *sb) {
-	if (!esShader_compile(&sb->sh)) {
-		return ES_FAIL;
-	}
-
-	if (
-			processUniform(sb, UNI_MVP, UNI_MVP_VAR)
-	   ) {
-		return ES_OK;
-	}
-	return ES_FAIL;
-}
-
-esErr esShaderBase_camera(esShaderBase *sb, float *mat) {
-	return ES_FAIL;
 }
 
