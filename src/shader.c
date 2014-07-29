@@ -18,6 +18,8 @@ static int checkShader(GLuint id, const char *shaderInfo) {
 
 int loadShader(const char *fileName,
 		GLenum shaderType, const char *shaderInfo) {
+	esLog(ES_INFO, "Loaded shader [] %s", fileName);
+	esCheckGlError();
 
 	char *content = esFileAlloc(fileName);
 	if (content == NULL) {
@@ -27,12 +29,16 @@ int loadShader(const char *fileName,
 	int shad = glCreateShader(shaderType);
 	glShaderSource(shad, 1, (const char**) &content , NULL);
 	glCompileShader(shad);
-	esCheckGlError();
 	free(content);
 
-	if (!checkShader(shad, shaderInfo)) return 0;
+	if (!checkShader(shad, shaderInfo)) {
+		esCheckGlError();
+		return 0;
+	}
+	esCheckGlError();
 
 	esLog(ES_INFO, "Loaded shader %s", fileName);
+	esCheckGlError();
 	return shad;
 }
 
@@ -104,7 +110,8 @@ void esShader_use(const esShader *shader) {
 }
 
 void esShader_free(esShader *shader) {
-	glDeleteShader(shader->glProgram);
+	glDeleteProgram(shader->glProgram);
+	esCheckGlError();
 }
 
 esErr esShader_uniformRegister(esShader *shader,
