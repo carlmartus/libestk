@@ -19,9 +19,9 @@ static void frame(float fr) {
 	};
 
 	esQuatf q = {
-		.x = 0.5f,
-		.y = 0.0f,
-		.z = 0.1f,
+		.x = 0.0f,
+		.y = 1.0f,
+		.z = 0.0f,
 		.w = 0.0f,
 	};
 	q = esQuatf_normalize(q);
@@ -36,7 +36,6 @@ static void frame(float fr) {
 	esVec3f p[3];
 	for (i=0; i<3; i++) {
 		p[i] = esMat3f_MulVec3f(&mat, points[i]);
-		//p[i] = points[i];
 	}
 
 	//esLog(ES_INFO, "P[0] %f %f %f", p[0].x, p[0].y, p[0].z);
