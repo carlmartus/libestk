@@ -7,7 +7,7 @@ static const GLenum mipmap_map[] = {
 };
 
 esErr esFb_create(esFb *fb, int dimension,
-		enum esTextureMipmap min, enum esTextureMipmap mag) {
+		esTextureMipmap min, esTextureMipmap mag) {
 	GLuint glfb, gltex, gldepth;
 	glGenFramebuffers(1, &glfb);
 	glGenTextures(1, &gltex);

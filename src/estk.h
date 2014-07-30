@@ -148,10 +148,10 @@ void esProj_perspective(
 // }}}
 // Texture {{{
 
-enum esTextureMipmap {
+typedef enum {
 	TEX_NONE,
 	TEX_LINEAR,
-};
+} esTextureMipmap;
 
 typedef struct {
 	int w, h;
@@ -159,7 +159,7 @@ typedef struct {
 } esTexture;
 
 esErr esTexture_load(esTexture *tex, const char *file_name,
-		enum esTextureMipmap min, enum esTextureMipmap mag);
+		esTextureMipmap min, esTextureMipmap mag);
 void esTexture_use(esTexture *tex);
 void esTexture_free(esTexture *tex);
 
@@ -194,7 +194,7 @@ typedef struct {
 } esFb;
 
 esErr esFb_create(esFb *fb, int dimension,
-		enum esTextureMipmap min, enum esTextureMipmap mag);
+		esTextureMipmap min, esTextureMipmap mag);
 void esFb_free(esFb *fb);
 void esFb_set(esFb *fb);
 void esFb_unSet(void);

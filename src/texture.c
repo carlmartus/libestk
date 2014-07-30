@@ -9,7 +9,7 @@ static const GLenum mipmap_map[] = {
 };
 
 esErr esTexture_load(esTexture *tex, const char *file_name,
-		enum esTextureMipmap min, enum esTextureMipmap mag) {
+		esTextureMipmap min, esTextureMipmap mag) {
 	SDL_Surface *surf = IMG_Load(file_name);
 	if (surf == NULL) return ES_FAIL;
 
