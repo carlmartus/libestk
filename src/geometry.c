@@ -53,7 +53,7 @@ void esGeo_reset(esGeo *geo, int bufCount) {
 
 void esGeo_point(esGeo *geo, int id, esGeoBuf *geobuf,
 		esGeoDataType datatype, int elements,
-		size_t offset, size_t stride, enum esBool normalized)
+		size_t offset, size_t stride, esBool normalized)
 {
 	geo->buf[id].geobuf = geobuf;
 	geo->buf[id].datatype = datatype;

@@ -15,10 +15,10 @@ typedef enum {
 typedef struct { float x, y; } esVec2;
 typedef struct { float x, y, z; } esVec3;
 
-enum esBool {
+typedef enum {
 	ES_FALSE = 0,
 	ES_TRUE = 1,
-};
+} esBool;
 
 void _esCheckGlError();
 #define esCheckGlError() _esCheckGlError(__FILE__, __LINE__)
@@ -29,14 +29,14 @@ void *esFileAlloc(const char *file_name);
 // }}}
 // Logging {{{
 
-enum {
+typedef enum {
 	ES_INFO, // Information
 	ES_WARN, // Warning
 	ES_ERRO, // Error
 	ES_DEBU, // Debug
-};
+} esLogClass;
 
-typedef void (*esLogMessage) (int class, const char *message);
+typedef void (*esLogMessage) (esLogClass class, const char *message);
 
 void esLogCallback(esLogMessage callback);
 void esLog(int class, const char *fmt, ...);
@@ -125,14 +125,14 @@ typedef struct {
 		esGeoDataType datatype;
 		int elements;
 		size_t offset, stride;
-		enum esBool normalized;
+		esBool normalized;
 	} buf[GEOBUFS_MAX];
 } esGeo;
 
 void esGeo_reset(esGeo *geo, int bufCount);
 void esGeo_point(esGeo *geo, int id, esGeoBuf *geobuf,
 		esGeoDataType datatype, int elements,
-		size_t offset, size_t stride, enum esBool normalized);
+		size_t offset, size_t stride, esBool normalized);
 void esGeo_renderArray(const esGeo *geo, int vertices);
 void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 		esGeoDataType dataType, int vertexCount);
