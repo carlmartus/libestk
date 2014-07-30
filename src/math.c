@@ -1,7 +1,17 @@
 #include "estk.h"
 #include <math.h>
 
-esQuatf esQuatf_Normalize(esQuatf q) {
+// Matrices
+esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v) {
+	return (esVec3f) {
+		v.x*m->mat[0] + v.y*m->mat[1] + v.z*m->mat[2],
+		v.y*m->mat[3] + v.y*m->mat[4] + v.y*m->mat[5],
+		v.z*m->mat[6] + v.z*m->mat[7] + v.z*m->mat[8],
+	};
+}
+
+// Quaternions
+esQuatf esQuatf_normalize(esQuatf q) {
 	float mag = sqrtf(q.w*q.w + q.x*q.x + q.y*q.y + q.z*q.z);
 
 	if (mag > 0.0) {
@@ -14,7 +24,7 @@ esQuatf esQuatf_Normalize(esQuatf q) {
 	return q;
 }
 
-esQuatf esQuatf_Mul(esQuatf q0, esQuatf q1) {
+esQuatf esQuatf_mul(esQuatf q0, esQuatf q1) {
 	return (esQuatf) {
 		.x = q0.w*q1.x + q0.x*q1.w + q0.y*q1.z - q0.z*q1.y,
 		.y = q0.w*q1.y - q0.x*q1.z + q0.y*q1.w + q0.z*q1.x,
@@ -23,7 +33,7 @@ esQuatf esQuatf_Mul(esQuatf q0, esQuatf q1) {
 	};
 }
 
-esQuatf esQuatf_Local(esQuatf q, float angle) {
+esQuatf esQuatf_local(esQuatf q, float angle) {
 	float c = cosf(angle*0.5f);
 	float s = sinf(angle*0.5f);
 	return (esQuatf) {
@@ -34,7 +44,7 @@ esQuatf esQuatf_Local(esQuatf q, float angle) {
 	};
 }
 
-void esQuatf_Matrix(esMat3f *dst, esQuatf q) {
+void esQuatf_matrix(esMat3f *dst, esQuatf q) {
 	float x = q.x;
 	float y = q.y;
 	float z = q.z;

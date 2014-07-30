@@ -34,7 +34,7 @@ static void frame(float time) {
 	if (++frame_count > 100) esGame_loopQuit();
 }
 
-static void loop_exit() {
+static void loop_exit(void) {
 	printf("Good bye!\n");
 	esGeoBuf_free(&geobuf);
 	esShader_free(&shad);
@@ -42,7 +42,6 @@ static void loop_exit() {
 }
 
 int main() {
-
 	esGame_init(400, 300);
 	esLogVersion();
 

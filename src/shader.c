@@ -18,7 +18,6 @@ static int checkShader(GLuint id, const char *shaderInfo) {
 
 int loadShader(const char *fileName,
 		GLenum shaderType, const char *shaderInfo) {
-	esLog(ES_INFO, "Loaded shader [] %s", fileName);
 	esCheckGlError();
 
 	char *content = esFileAlloc(fileName);

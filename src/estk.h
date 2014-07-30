@@ -35,15 +35,17 @@ typedef struct {
 	float mat[3*3];
 } esMat3f;
 
+esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v);
+
 // Quaternions
 typedef struct {
 	float x, y, z, w;
 } esQuatf;
 
-esQuatf esQuatf_Normalize(esQuatf q);
-esQuatf esQuatf_Mul(esQuatf q0, esQuatf q1);
-esQuatf esQuatf_Local(esQuatf q, float angle);
-void esQuatf_Matrix(esMat3f *dst, esQuatf q);
+esQuatf esQuatf_normalize(esQuatf q);
+esQuatf esQuatf_mul(esQuatf q0, esQuatf q1);
+esQuatf esQuatf_local(esQuatf q, float angle);
+void esQuatf_matrix(esMat3f *dst, esQuatf q);
 
 // }}}
 // Logging {{{
