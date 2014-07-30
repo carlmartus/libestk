@@ -2,11 +2,12 @@
 
  - [Misc](#misc)
 	- type [esErr](#eserr)
-	- type [esVec2](#esvec2)
-	- type [esVec3](#esvec3)
 	- type [esBool](#esbool)
 	- func [esCheckGlError](#escheckglerror)
 	- func [esFileAlloc](#esfilealloc)
+ - [Math](#math)
+	- type [esVec2f](#esvec2)
+	- type [esVec3f](#esvec3)
  - [Logging](#logging)
 	- type [esLogClass](#esLogClass)
 	- fptr [esLogMessage](#eslogmessage)
@@ -98,16 +99,6 @@ typedef enum {
 } esErr;
 ```
 
-## `esVec2`
-```c
-typedef struct { float x, y; } esVec2;
-```
-
-## `esVec3`
-```c
-typedef struct { float x, y, z; } esVec3;
-```
-
 ## `esBool`
 ```c
 typedef enum {
@@ -124,6 +115,19 @@ void esCheckGlError(void);
 ## `esFileAlloc`
 ```c
 void *esFileAlloc(const char *file_name);
+```
+
+
+# Math
+
+## `esVec2f`
+```c
+typedef struct { float x, y; } esVec2f;
+```
+
+## `esVec3f`
+```c
+typedef struct { float x, y, z; } esVec3f;
 ```
 
 
@@ -370,7 +374,7 @@ void esProj_ortho(float *mat, float x0, float y0, float x1, float y1);
 ```c
 void esProj_perspective(
 		float *mat, float fov, float screenratio, float near, float far,
-		esVec3 eye, esVec3 at, esVec3 up);
+		esVec3f eye, esVec3f at, esVec3f up);
 ```
 
 

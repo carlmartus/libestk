@@ -12,9 +12,6 @@ typedef enum {
 	ES_OK=1,
 } esErr;
 
-typedef struct { float x, y; } esVec2;
-typedef struct { float x, y, z; } esVec3;
-
 typedef enum {
 	ES_FALSE = 0,
 	ES_TRUE = 1,
@@ -25,6 +22,28 @@ void _esCheckGlError();
 //#define esCheckGlError()
 
 void *esFileAlloc(const char *file_name);
+
+// }}}
+// Math {{{
+
+// Vectors
+typedef struct { float x, y; } esVec2f;
+typedef struct { float x, y, z; } esVec3f;
+
+// Matrices
+typedef struct {
+	float mat[3*3];
+} esMat3f;
+
+// Quaternions
+typedef struct {
+	float x, y, z, w;
+} esQuatf;
+
+esQuatf esQuatf_Normalize(esQuatf q);
+esQuatf esQuatf_Mul(esQuatf q0, esQuatf q1);
+esQuatf esQuatf_Local(esQuatf q, float angle);
+void esQuatf_Matrix(esMat3f *dst, esQuatf q);
 
 // }}}
 // Logging {{{
@@ -143,7 +162,7 @@ void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 void esProj_ortho(float *mat, float x0, float y0, float x1, float y1);
 void esProj_perspective(
 		float *mat, float fov, float screenratio, float near, float far,
-		esVec3 eye, esVec3 at, esVec3 up);
+		esVec3f eye, esVec3f at, esVec3f up);
 
 // }}}
 // Texture {{{

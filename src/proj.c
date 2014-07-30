@@ -57,15 +57,15 @@ static void perspective_matrix(float *mat,
 }
 
 
-static esVec3 cross(esVec3 a, esVec3 b) {
-	return (esVec3) {
+static esVec3f cross(esVec3f a, esVec3f b) {
+	return (esVec3f) {
 		a.y*b.z - a.z*b.y,
 		a.z*b.x - a.x*b.z,
 		a.x*b.y - a.y*b.x,
 	};
 }
 
-static void normalize(esVec3 *v) {
+static void normalize(esVec3f *v) {
     float r;
 
     r = sqrtf(v->x*v->x + v->y*v->y + v->z*v->z);
@@ -79,7 +79,7 @@ static void normalize(esVec3 *v) {
 
 /*
 static float
-dot(esVec3 a, esVec3 b)
+dot(esVec3f a, esVec3f b)
 {
 	return a.x*b.x + a.y*b.y + a.z*b.z;
 }*/
@@ -101,15 +101,15 @@ void mul_matrix(float *res, float *a, float *b) {
 	}
 }
 
-void lookat_matrix(float *mat, esVec3 eye, esVec3 at, esVec3 up) {
-	esVec3 forw = {
+void lookat_matrix(float *mat, esVec3f eye, esVec3f at, esVec3f up) {
+	esVec3f forw = {
 		at.x - eye.x,
 		at.y - eye.y,
 		at.z - eye.z,
 	};
 
 	normalize(&forw);
-	esVec3 side = cross(up, forw);
+	esVec3f side = cross(up, forw);
 	normalize(&side);
 
 	up = cross(forw, side);
@@ -141,7 +141,7 @@ void lookat_matrix(float *mat, esVec3 eye, esVec3 at, esVec3 up) {
 
 void esProj_perspective(
 		float *mat, float fov, float screenratio, float near, float far,
-		esVec3 eye, esVec3 at, esVec3 up) {
+		esVec3f eye, esVec3f at, esVec3f up) {
 	float persp[16];
 	perspective_matrix(persp, fov, screenratio, near, far);
 

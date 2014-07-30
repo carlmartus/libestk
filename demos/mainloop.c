@@ -18,9 +18,9 @@ static void frame(float time) {
 	esShader_use(&shad);
 
 	float v = 0.01f * (float) frame_count;
-	esVec3 cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 1.0f };
-	esVec3 cam_at = { 0.0f, 0.0f, 0.0f };
-	esVec3 cam_up = { 0.0f, 0.0f, 1.0f };
+	esVec3f cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 1.0f };
+	esVec3f cam_at = { 0.0f, 0.0f, 0.0f };
+	esVec3f cam_up = { 0.0f, 0.0f, 1.0f };
 
 	float mat[16];
 	esProj_perspective(mat, 0.9f+v, 1.333f, 0.1f, 20.0f, cam_ey, cam_at, cam_up);
