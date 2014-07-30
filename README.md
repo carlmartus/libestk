@@ -20,5 +20,4 @@ Features
 
 Todo
 ====
- * Documentation
 
