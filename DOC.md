@@ -80,11 +80,11 @@
 	- func [esMusic_play](#esmusic_play)
 	- func [esMusic_halt](#esmusic_halt)
  - [Sprites](#sprites)
-	- xxxx [esSprites2d_init](#essprites2d_init)
-	- xxxx [esSprites2d_clear](#essprites2d_clear)
-	- xxxx [esSprites2d_put](#essprites2d_put)
-	- xxxx [esSprites2d_prepear](#essprites2d_prepear)
-	- xxxx [esSprites2d_render](#essprites2d_render)
+	- func [esSprites2d_init](#essprites2d_init)
+	- func [esSprites2d_clear](#essprites2d_clear)
+	- func [esSprites2d_put](#essprites2d_put)
+	- func [esSprites2d_prepear](#essprites2d_prepear)
+	- func [esSprites2d_render](#essprites2d_render)
 
 
 
