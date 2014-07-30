@@ -1,8 +1,8 @@
 # libESTK v3.0.0 documentation
 
  - [Misc](#Misc)
-	- [type esVec2](#esVec2)
-	- [type esVec3](#esVec3)
+	- [type esVec2](#esvec2)
+	- [type esVec3](#esvec3)
 
 
 
