@@ -79,14 +79,15 @@ int main() {
 		return 1;
 	}
 
-	float mat[16];
+	esMat4f mat;
 	esVec3f cam_ey = { -2.0f, -1.5f, 2.5f };
 	esVec3f cam_at = { 0.0f, 0.0f, 0.0f, };
 	esVec3f cam_up = { 0.0f, 0.0f, 1.0f };
-	esProj_perspective(mat,
+	esProj_perspective(&mat,
 			1.3f, 1.333f, 0.1f, 20.0f,
 			cam_ey, cam_at, cam_up);
-	glUniformMatrix4fv(esShader_uniformGl(&shader, 0), 1, 0, mat);
+	glUniformMatrix4fv(esShader_uniformGl(&shader, 0),
+			1, 0, (const float*) &mat);
 
 	// Loop
 	glClearColor(0.3, 0.4, 0.6, 1.0);

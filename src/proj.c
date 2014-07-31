@@ -4,20 +4,22 @@
 #define P0 (0.0f)
 #define P1 (1.0f)
 
-void esProj_ortho(float *mat, float x0, float y0, float x1, float y1) {
-	mat[ 1]=P0; mat[ 2]=P0;
-	mat[ 4]=P0; mat[ 6]=P0;
-	mat[ 8]=P0; mat[ 9]=P0;
-	mat[12]=P0; mat[13]=P0; mat[14] = P0;
+void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1) {
+	float *m = mat->mat;
 
-	mat[ 0] = 2.0f / (x1-x0);
-	mat[ 5] = 2.0f / (y1-y0);
-	mat[10] = -1.0f;
-	mat[15] = P1;
+	m[ 1]=P0; m[ 2]=P0;
+	m[ 4]=P0; m[ 6]=P0;
+	m[ 8]=P0; m[ 9]=P0;
+	m[12]=P0; m[13]=P0; m[14] = P0;
 
-	mat[12] = -(x1+x0)/(x1-x0);
-	mat[13] = -(y1+y0)/(y1-y0);
-	mat[14] = 0.0f;
+	m[ 0] = 2.0f / (x1-x0);
+	m[ 5] = 2.0f / (y1-y0);
+	m[10] = -1.0f;
+	m[15] = P1;
+
+	m[12] = -(x1+x0)/(x1-x0);
+	m[13] = -(y1+y0)/(y1-y0);
+	m[14] = 0.0f;
 }
 
 void identity_matrix(float *mat) {
@@ -140,7 +142,7 @@ void lookat_matrix(float *mat, esVec3f eye, esVec3f at, esVec3f up) {
 }
 
 void esProj_perspective(
-		float *mat, float fov, float screenratio, float near, float far,
+		esMat4f *mat, float fov, float screenratio, float near, float far,
 		esVec3f eye, esVec3f at, esVec3f up) {
 	float persp[16];
 	perspective_matrix(persp, fov, screenratio, near, far);
@@ -148,6 +150,6 @@ void esProj_perspective(
 	float look[16];
 	lookat_matrix(look, eye, at, up);
 
-	mul_matrix(mat, look, persp);
+	mul_matrix(mat->mat, look, persp);
 }
 

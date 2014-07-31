@@ -35,6 +35,10 @@ typedef struct {
 	float mat[3*3];
 } esMat3f;
 
+typedef struct {
+	float mat[4*4];
+} esMat4f;
+
 esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v);
 
 // Quaternions
@@ -161,9 +165,9 @@ void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 // }}}
 // Projection {{{
 
-void esProj_ortho(float *mat, float x0, float y0, float x1, float y1);
+void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1);
 void esProj_perspective(
-		float *mat, float fov, float screenratio, float near, float far,
+		esMat4f *mat, float fov, float screenratio, float near, float far,
 		esVec3f eye, esVec3f at, esVec3f up);
 
 // }}}

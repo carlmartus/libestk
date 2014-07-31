@@ -31,9 +31,10 @@ int main() {
 		return 1;
 	} else {
 		esShader_use(&shad);
-		float mat[16];
-		esProj_ortho(mat, -10.0f, 10.0f, 10.0f, -10.0f);
-		glUniformMatrix4fv(esShader_uniformGl(&shad, 0), 1, 0, mat);
+		esMat4f mat;
+		esProj_ortho(&mat, -10.0f, 10.0f, 10.0f, -10.0f);
+		glUniformMatrix4fv(esShader_uniformGl(&shad, 0),
+				1, 0, (const float*) &mat);
 	}
 
 	if (!esShader_uniformRegister(&shad, 1, "un_tex0")) {

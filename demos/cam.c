@@ -38,14 +38,15 @@ int main(int argc, char **argv) {
 
 	esShader_use(&shad);
 
-	float mat[16];
+	esMat4f mat;
 
 	esVec3f cam_ey = { -1.0f, -0.8f, 0.5f };
 	esVec3f cam_at = { 0.0f, 0.0f, -0.5f, };
 	esVec3f cam_up = { 0.0f, 0.0f, 1.0f };
-	esProj_perspective(mat, 1.3f, 1.333f, 0.1f, 20.0f, cam_ey, cam_at, cam_up);
-	//esProj_ortho(mat, 0.0f, 0.0f, 4.0f, 3.0f);
-	glUniformMatrix4fv(esShader_uniformGl(&shad, 0), 1, 0, mat);
+	esProj_perspective(&mat, 1.3f, 1.333f, 0.1f, 20.0f, cam_ey, cam_at, cam_up);
+	//esProj_ortho(&mat, 0.0f, 0.0f, 4.0f, 3.0f);
+	glUniformMatrix4fv(esShader_uniformGl(&shad, 0),
+			1, 0, (const float*) &mat);
 
 	esGeo_renderArray(&geo, 3);
 

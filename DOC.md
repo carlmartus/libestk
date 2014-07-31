@@ -8,6 +8,14 @@
  - [Math](#math)
 	- type [esVec2f](#esvec2)
 	- type [esVec3f](#esvec3)
+	- type [esMat3f](#esmat3f)
+	- type [esMat4f](#esmat4f)
+	- func [esMat3f_MulVec3f](#esmat3f_mulvec3f)
+	- type [esQuatf](#esquatf)
+	- func [esQuatf_normalize](#esquatf_normalize)
+	- func [esQuatf_mul](#esquatf_mul)
+	- func [esQuatf_local](#esquatf_local)
+	- func [esQuatf_matrix](#esquatf_matrix)
  - [Logging](#logging)
 	- type [esLogClass](#esLogClass)
 	- fptr [esLogMessage](#eslogmessage)
@@ -128,6 +136,52 @@ typedef struct { float x, y; } esVec2f;
 ## `esVec3f`
 ```c
 typedef struct { float x, y, z; } esVec3f;
+```
+
+## esMat3f
+```c
+typedef struct {
+	float mat[3*3];
+} esMat3f;
+```
+
+## esMat4f
+```c
+typedef struct {
+	float mat[4*4];
+} esMat4f;
+```
+
+## esMat3f_MulVec3f
+```c
+esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v);
+```
+
+## esQuatf
+```c
+typedef struct {
+	float x, y, z, w;
+} esQuatf;
+```
+
+## esQuatf_normalize
+```c
+esQuatf esQuatf_normalize(esQuatf q);
+```
+
+## esQuatf_mul
+```c
+esQuatf esQuatf_mul(esQuatf q0, esQuatf q1);
+```
+
+## esQuatf_local
+```c
+esQuatf esQuatf_local(esQuatf q, float angle);
+```
+
+## esQuatf_matrix
+```c
+void esQuatf_matrix(esMat3f *dst, esQuatf q);
 ```
 
 
@@ -367,13 +421,13 @@ void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 
 ## `esProj_ortho`
 ```c
-void esProj_ortho(float *mat, float x0, float y0, float x1, float y1);
+void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1);
 ```
 
 ## `esProj_perspective`
 ```c
 void esProj_perspective(
-		float *mat, float fov, float screenratio, float near, float far,
+		esMat4f *mat, float fov, float screenratio, float near, float far,
 		esVec3f eye, esVec3f at, esVec3f up);
 ```
 

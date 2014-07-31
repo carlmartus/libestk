@@ -20,8 +20,5 @@ Features
 
 Todo
 ====
- * Quaternions
- * Use matrices in projection
- * Matrix 4x4
  * Doc Matrix, projection, quat
 
