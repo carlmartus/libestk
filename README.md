@@ -20,5 +20,4 @@ Features
 
 Todo
 ====
- * Doc Matrix, projection, quat
 
