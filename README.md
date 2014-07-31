@@ -17,6 +17,7 @@ Features
  * Texture file loading
  * Bitmap font rendering
  * 2D sprite rendering
+ * Quaternion rotations
 
 Todo
 ====
