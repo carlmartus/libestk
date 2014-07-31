@@ -18,13 +18,14 @@ static void frame(float fr) {
 		{ 0.0f, 1.0f, 0.0f },
 	};
 
-	esQuatf q = {
-		.x = 0.0f,
-		.y = 0.0f,
-		.z = 1.0f,
-		.w = 0.0f,
-	};
-	q = esQuatf_normalize(q);
+	esQuatf q = { };
+	int id = (int) (time*0.25f);
+	switch (id % 3) {
+		default :
+		case 0 : q.x = 1.0f; break;
+		case 1 : q.y = 1.0f; break;
+		case 2 : q.z = 1.0f; break;
+	}
 
 	esQuatf local = esQuatf_local(q, time);
 
