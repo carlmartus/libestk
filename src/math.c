@@ -5,7 +5,7 @@
 esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v) {
 	return (esVec3f) {
 		v.x*m->mat[0] + v.y*m->mat[3] + v.z*m->mat[6],
-		v.x*m->mat[1] + v.y*m->mat[4] + v.y*m->mat[7],
+		v.x*m->mat[1] + v.y*m->mat[4] + v.z*m->mat[7],
 		v.x*m->mat[2] + v.y*m->mat[5] + v.z*m->mat[8],
 	};
 }
@@ -26,10 +26,10 @@ esQuatf esQuatf_normalize(esQuatf q) {
 
 esQuatf esQuatf_mul(esQuatf q0, esQuatf q1) {
 	return (esQuatf) {
-		.w = q0.w*q1.w - q0.x*q1.x - q0.y*q1.y - q0.z*q1.z,
 		.x = q0.w*q1.x + q0.x*q1.w + q0.y*q1.z - q0.z*q1.y,
 		.y = q0.w*q1.y - q0.x*q1.z + q0.y*q1.w + q0.z*q1.x,
 		.z = q0.w*q1.z + q0.x*q1.y - q0.y*q1.x + q0.z*q1.w,
+		.w = q0.w*q1.w - q0.x*q1.x - q0.y*q1.y - q0.z*q1.z,
 	};
 }
 
@@ -49,40 +49,29 @@ void esQuatf_matrix(esMat3f *dst, esQuatf q) {
 	float y = q.y;
 	float z = q.z;
 	float w = q.w;
-	float x2 = x*x;
-	float y2 = y*y;
-	float z2 = z*z;
-	float w2 = w*w;
-
-	/*
-	// Row 1
-	dst->mat[0] = 1.0f - 2.0f*(y2 + z2);
-	dst->mat[1] = 2.0f*(x*y - w*z);
-	dst->mat[2] = 2.0f*(x*z + w*y);
-
-	// Row 2
-	dst->mat[3] = 2.0f*(x*y + w*z);
-	dst->mat[4] = 1.0f - 2.0f*(x2 + z2);
-	dst->mat[5] = 2.0f*(y*z + w*x);
-
-	// Row 3
-	dst->mat[6] = 2.0f*(x*z - w*y);
-	dst->mat[7] = 2.0f*(y*z - w*x);
-	dst->mat[8] = 1.0f - 2.0f*(x2 + y2);*/
+	float xx = x*x;
+	float xy = x*y;
+	float xz = x*z;
+	float xw = x*w;
+	float yy = y*y;
+	float yz = y*z;
+	float yw = y*w;
+	float zz = z*z;
+	float zw = z*w;
 
 	// Row 1
-	dst->mat[0] = w2 + x2 - y2 - z2;
-	dst->mat[1] = 2.0f * (x*y - w*z);
-	dst->mat[2] = 2.0f * (x*z + w*y);
+	dst->mat[0] = 1.0f - 2.0f * (yy + zz);
+	dst->mat[1] = 2.0f * (xy - zw);
+	dst->mat[2] = 2.0f * (xz + yw);
 
 	// Row 2
-	dst->mat[3] = 2.0f * (x*y + w*z);
-	dst->mat[4] = w2 - x2 + y2 - z2;
-	dst->mat[5] = 2.0f * (y*z + w*x);
+	dst->mat[3] = 2.0f * ( xy + zw);
+	dst->mat[4] = 1.0f - 2.0f * (xx + zz);
+	dst->mat[5] = 2.0f * (yz - xw);
 
 	// Row 3
-	dst->mat[6] = 2.0f * (x*z - w*y);
-	dst->mat[7] = 2.0f * (y*z - w*x);
-	dst->mat[8] = w2 - x2 - y2 + z2;
+	dst->mat[6] = 2.0f * (xz - yw);
+	dst->mat[7] = 2.0f * (yz + xw);
+	dst->mat[8] = 1.0f - 2.0f * (xx + yy);
 }
 

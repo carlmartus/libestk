@@ -19,9 +19,9 @@ static void frame(float fr) {
 	};
 
 	esQuatf q = {
-		.x = 1.0f,
+		.x = 0.0f,
 		.y = 0.0f,
-		.z = 0.0f,
+		.z = 1.0f,
 		.w = 0.0f,
 	};
 	q = esQuatf_normalize(q);
