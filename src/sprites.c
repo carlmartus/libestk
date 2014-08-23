@@ -42,7 +42,7 @@ void esSprites2d_put(float x, float y, float radius,
 	float u0 = (float) spriteX * uv_step;
 	float v0 = (float) spriteY * uv_step;
 	float u1 = u0 + uv_step;
-	float v1 = u0 + uv_step;
+	float v1 = v0 + uv_step;
 
 	if (flags & ES_SPRITE_FLIPX) {
 		float swap = u0;

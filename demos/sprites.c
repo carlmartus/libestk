@@ -16,7 +16,7 @@ static void loop_frame(float time) {
 
 	int step = 3.0f*accu;
 	esSprites2d_put(0.0f, 0.0f, accu*0.01f+0.1f, -accu,
-			1, 0, step&1?ES_SPRITE_FLIPXY:0);
+			0, 0, step&1?ES_SPRITE_FLIPXY:0);
 	esSprites2d_put(0.5f, 0.5f, 0.1f, accu, 0, 1, ES_SPRITE_FLIPX);
 
 	esTexture_use(&tex);
@@ -61,8 +61,8 @@ int main() {
 	glClearColor(0.3, 0.4, 0.5, 1.0);
 
 	// Transperancy
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	esGame_loop(loop_frame, loop_exit, 0);
 	return 0;
