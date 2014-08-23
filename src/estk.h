@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "3.1.1"
+#define ESTK_VERSION "3.2.1"
 
 // Misc {{{
 
@@ -76,6 +76,7 @@ void esGame_glSwap(void);
 void esGame_loop(void (*frame)(float t), void (*exit)(), int frame_rate);
 void esGame_loopQuit(void);
 void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
+void esGame_registerMouse(void (*callback) (int button, int down, int x, int y));
 void esGame_windowSize(int *w, int *h);
 
 // }}}

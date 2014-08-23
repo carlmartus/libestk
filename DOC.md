@@ -1,4 +1,4 @@
-# libESTK v3.1.1 documentation
+# libESTK v3.2.1 documentation
 
  - [Misc](#misc)
 	- type [esErr](#eserr)
@@ -29,6 +29,7 @@
 	- func [esGame_loop](#esgame_loop)
 	- func [esGame_loopQuit](#esgame_loopquit)
 	- func [esGame_registerKey](#esgame_registerkey)
+	- func [esGame_registerMouse](#esgame_registermouse)
 	- func [esGame_windowSize](#esgame_windowsize)
  - [Shader](#shader)
 	- type [esUniform](#esuniform)
@@ -248,6 +249,11 @@ void esGame_loopQuit(void);
 ## `esGame_registerKey`
 ```c
 void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
+```
+
+## `esGame_registerMouse`
+```c
+void esGame_registerMouse(void (*callback) (int button, int down, int x, int y));
 ```
 
 ## `esGame_windowSize`

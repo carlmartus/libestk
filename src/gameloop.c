@@ -17,6 +17,8 @@ static struct {
 	void (*callback) (int key, int down);
 } keys[MAX_KEYS];
 
+static void (*mouse_callback) (int button, int down, int x, int y) = 0;
+
 void esGame_init(int screen_width, int screen_height) {
 	window_w = screen_width;
 	window_h = screen_height;
@@ -37,14 +39,36 @@ static void event_key(int sdlkey, int down) {
 	}
 }
 
+static void event_mouse(int mouseButton, int down, int x, int y) {
+	if (mouse_callback) {
+		mouse_callback(mouseButton, down, x, y);
+	}
+}
+
 static void events(void) {
 	SDL_Event event;
+
+	static const int button_map[] = {
+		[SDL_BUTTON_LEFT] = 1,
+		[SDL_BUTTON_RIGHT] = 2,
+		[SDL_BUTTON_MIDDLE] = 3,
+	};
+
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_QUIT : loop_run = 0; break;
 
 			case SDL_KEYDOWN :	event_key(event.key.keysym.sym, 1); break;
 			case SDL_KEYUP :	event_key(event.key.keysym.sym, 0); break;
+
+			case SDL_MOUSEMOTION : event_mouse(0, 0, event.motion.x, event.motion.y); break;
+
+			case SDL_MOUSEBUTTONUP :
+			case SDL_MOUSEBUTTONDOWN :
+				event_mouse(button_map[event.button.button],
+						event.button.type == SDL_MOUSEBUTTONDOWN ? 1:0,
+						event.button.x, event.button.y); break;
+				break;
 		}
 	}
 }
@@ -132,6 +156,11 @@ void esGame_registerKey(int sdlkey,
 	key_regs++;
 
 	keys[sdlkey].callback = callback;
+}
+
+void esGame_registerMouse(
+		void (*callback) (int button, int down, int x, int y)) {
+	mouse_callback = callback;
 }
 
 void esGame_windowSize(int *w, int *h) {

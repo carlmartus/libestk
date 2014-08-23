@@ -1,5 +1,5 @@
 #!/bin/sh
 
 mkdir bin
-emcc -o bin/libestk2.bc src/*.c
+emcc -o bin/libestk3.bc src/*.c
 

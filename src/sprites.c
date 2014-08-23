@@ -39,6 +39,11 @@ void esSprites2d_clear(void) {
 void esSprites2d_put(float x, float y, float radius,
 		float rotate, int spriteX, int spriteY, unsigned flags) {
 
+	if (count >= max) {
+		esLog(ES_WARN, "Sprite count reached");
+		return;
+	}
+
 	float u0 = (float) spriteX * uv_step;
 	float v0 = (float) spriteY * uv_step;
 	float u1 = u0 + uv_step;
