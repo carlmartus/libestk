@@ -1,7 +1,7 @@
 libestk
 =======
 
-OpenGL ES Toolkit v3.0.0.
+OpenGL ES Toolkit v3.1.0.
 
 This project is a continuation of [ESTK](https://github.com/carlmartus/estk) which can be considered version 1.0 of libestk.
 
@@ -18,6 +18,12 @@ Features
  * Bitmap font rendering
  * 2D sprite rendering
  * Quaternion rotations
+
+Installation
+------------
+```cmake .```
+```make```
+```sudo make install```
 
 Todo
 ====

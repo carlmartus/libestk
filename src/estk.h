@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "3.0.0"
+#define ESTK_VERSION "3.1.0"
 
 // Misc {{{
 

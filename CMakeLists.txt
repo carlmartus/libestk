@@ -7,7 +7,7 @@ add_definitions("-Wall -O2 -std=gnu11")
 # ==============
 
 set(MAJOR 3)
-set(MINOR 0)
+set(MINOR 1)
 set(PATCH 0)
 set(VERSION ${MAJOR}.${MINOR}.${PATCH})
 set(ESTK estk${MAJOR})
@@ -36,4 +36,16 @@ foreach(FILE ${DEMOS_SOURCE})
 	target_link_libraries(${FILE} ${ESTK} GL)
 	include_directories(${FILE} src)
 endforeach(FILE)
+
+# Install
+# =======
+
+install(TARGETS ${ESTK}
+	LIBRARY DESTINATION "lib"
+	ARCHIVE DESTINATION "lib"
+	RUNTIME DESTINATION "bin"
+	COMPONENT library)
+install(FILES
+	src/estk.h
+	DESTINATION include)
 
