@@ -1,4 +1,4 @@
-# libESTK v3.2.1 documentation
+# libESTK v3.3.0 documentation
 
  - [Misc](#misc)
 	- type [esErr](#eserr)
@@ -57,6 +57,7 @@
 	- func [esGeo_renderArray](#esgeo_renderarray)
 	- func [esGeo_renderElements](#esgeo_renderelements)
  - [Projection](#projection)
+	- func [esProj_identity](#esproj_identity)
 	- func [esProj_ortho](#esproj_ortho)
 	- func [esProj_perspective](#esproj_perspective)
  - [Texture](#texture)
@@ -424,6 +425,11 @@ void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 
 
 # Projection
+
+## `esProj_identity`
+```c
+void esProj_identity(esMat4f *mat);
+```
 
 ## `esProj_ortho`
 ```c

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "3.2.1"
+#define ESTK_VERSION "3.3.0"
 
 // Misc {{{
 
@@ -166,6 +166,7 @@ void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
 // }}}
 // Projection {{{
 
+void esProj_identity(esMat4f *mat);
 void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1);
 void esProj_perspective(
 		esMat4f *mat, float fov, float screenratio, float near, float far,

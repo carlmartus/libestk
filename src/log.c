@@ -26,7 +26,9 @@ static const char *get_prefix(int class) {
 
 	if (count++ == 0) {
 #ifndef __WIN32__
+#ifndef EMSCRIPTEN
 		atty = isatty(fileno(LOG_OUTPUT));
+#endif
 #endif
 	}
 

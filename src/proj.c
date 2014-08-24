@@ -4,6 +4,18 @@
 #define P0 (0.0f)
 #define P1 (1.0f)
 
+void identity_matrix(float *mat) {
+	mat[ 0]=P1; mat[ 4]=P0; mat[ 8]=P0; mat[12]=P0;
+	mat[ 1]=P0; mat[ 5]=P1; mat[ 9]=P0; mat[13]=P0;
+	mat[ 2]=P0; mat[ 6]=P0; mat[10]=P1; mat[14]=P0;
+	mat[ 3]=P0; mat[ 7]=P0; mat[11]=P0; mat[15]=P1;
+}
+
+void esProj_identity(esMat4f *mat) {
+	float *m = mat->mat;
+	identity_matrix(m);
+}
+
 void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1) {
 	float *m = mat->mat;
 
@@ -20,13 +32,6 @@ void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1) {
 	m[12] = -(x1+x0)/(x1-x0);
 	m[13] = -(y1+y0)/(y1-y0);
 	m[14] = 0.0f;
-}
-
-void identity_matrix(float *mat) {
-	mat[ 0]=P1; mat[ 4]=P0; mat[ 8]=P0; mat[12]=P0;
-	mat[ 1]=P0; mat[ 5]=P1; mat[ 9]=P0; mat[13]=P0;
-	mat[ 2]=P0; mat[ 6]=P0; mat[10]=P1; mat[14]=P0;
-	mat[ 3]=P0; mat[ 7]=P0; mat[11]=P0; mat[15]=P1;
 }
 
 static void perspective_matrix(float *mat,
