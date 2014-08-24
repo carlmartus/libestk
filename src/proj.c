@@ -19,15 +19,12 @@ void esProj_identity(esMat4f *mat) {
 void esProj_ortho(esMat4f *mat, float x0, float y0, float x1, float y1) {
 	float *m = mat->mat;
 
-	m[ 1]=P0; m[ 2]=P0;
-	m[ 4]=P0; m[ 6]=P0;
-	m[ 8]=P0; m[ 9]=P0;
-	m[12]=P0; m[13]=P0; m[14] = P0;
+	m[1] = m[2] = m[3] = m[4] = m[6] = m[7] = m[8] = m[9] = P0;
 
 	m[ 0] = 2.0f / (x1-x0);
 	m[ 5] = 2.0f / (y1-y0);
-	m[10] = -1.0f;
-	m[15] = P1;
+	m[10] = P1;
+	m[15] = 1.0f;
 
 	m[12] = -(x1+x0)/(x1-x0);
 	m[13] = -(y1+y0)/(y1-y0);

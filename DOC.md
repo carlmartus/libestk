@@ -1,4 +1,4 @@
-# libESTK v3.3.0 documentation
+# libESTK v3.3.1 documentation
 
  - [Misc](#misc)
 	- type [esErr](#eserr)

@@ -1,7 +1,7 @@
 libestk
 =======
 
-OpenGL ES Toolkit v3.3.0.
+OpenGL ES Toolkit v3.3.1.
 
 This project is a continuation of [ESTK](https://github.com/carlmartus/estk) which can be considered version 1.0 of libestk.
 
