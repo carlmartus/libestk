@@ -1,4 +1,4 @@
-# libESTK v3.3.1 documentation
+# libESTK v4.0.0 documentation
 
  - [Misc](#misc)
 	- type [esErr](#eserr)
@@ -301,13 +301,14 @@ esErr esShader_load(esShader *shader,
 
 ## `esShader_compile`
 ```c
-esErr esShader_compile(esShader *shader);
+esErr esShader_compile(esShader *shader,
+		const esShaderAttrib *attribs, int attribCount);
 ```
 
 ## `esShader_dual`
 ```c
 esErr esShader_dual(esShader *shader,
-		const char *vertFile, const char *fragFile);
+		const char *vertFile, const char *fragFile,
 ```
 
 ## `esShader_use`
