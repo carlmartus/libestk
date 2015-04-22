@@ -62,3 +62,6 @@ If you wish to add the library to your system run this:
 make install
 ```
 
+# Todo
+ * Mip map generation support
+
