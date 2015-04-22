@@ -6,9 +6,9 @@ add_definitions("-Wall -O2 -std=gnu11")
 # Version/Naming
 # ==============
 
-set(MAJOR 3)
-set(MINOR 3)
-set(PATCH 1)
+set(MAJOR 4)
+set(MINOR 0)
+set(PATCH 0)
 set(VERSION ${MAJOR}.${MINOR}.${PATCH})
 set(ESTK estk${MAJOR})
 
