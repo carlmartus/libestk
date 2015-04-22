@@ -49,6 +49,7 @@
 	- type [esGeoBuf](#esgeobuf)
 	- func [esGeoBuf_create](#esgeobuf_create)
 	- func [esGeoBuf_array](#esgeobuf_array)
+	- func [esGeoBuf_arraySub](#esgeobuf_arraySub)
 	- func [esGeoBuf_element](#esgeobuf_element)
 	- func [esGeoBuf_free](#esgeobuf_free)
 	- type [esGeo](#esgeo)
@@ -374,6 +375,12 @@ void esGeoBuf_create(esGeoBuf *buf);
 ```c
 void esGeoBuf_array(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type);
+```
+
+## `esGeoBuf_arraySub`
+```c
+void esGeoBuf_arraySub(esGeoBuf *buf,
+		const void *data, size_t size, int bufOffset);
 ```
 
 ## `esGeoBuf_element`
