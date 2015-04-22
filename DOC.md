@@ -309,6 +309,7 @@ esErr esShader_compile(esShader *shader,
 ```c
 esErr esShader_dual(esShader *shader,
 		const char *vertFile, const char *fragFile,
+		const esShaderAttrib *attribs, int attribCount);
 ```
 
 ## `esShader_use`
