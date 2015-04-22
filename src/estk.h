@@ -98,12 +98,19 @@ typedef struct {
 	int shaderCount;
 } esShader;
 
+typedef struct {
+	int location;
+	const char *name;
+} esShaderAttrib;
+
 void esShader_reset(esShader *shader);
 esErr esShader_load(esShader *shader,
 		esShaderType type, const char *fileName);
-esErr esShader_compile(esShader *shader);
+esErr esShader_compile(esShader *shader,
+		const esShaderAttrib *attribs, int attribCount);
 esErr esShader_dual(esShader *shader,
-		const char *vertFile, const char *fragFile);
+		const char *vertFile, const char *fragFile,
+		const esShaderAttrib *attribs, int attribCount);
 void esShader_use(const esShader *shader);
 void esShader_free(esShader *shader);
 esErr esShader_uniformRegister(esShader *shader,

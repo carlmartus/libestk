@@ -46,7 +46,11 @@ int main() {
 	esGame_init(400, 300);
 	esLogVersion();
 
-	if (!esShader_dual(&shad, "demores/cam.vert", "demores/red.frag")) {
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+	};
+	if (!esShader_dual(&shad, "demores/cam.vert", "demores/red.frag",
+				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Cannot load shaders!");
 		return 1;
 	}

@@ -8,9 +8,14 @@ int main(int argc, char **argv) {
 	esGame_init(400, 300);
 	esLogVersion();
 
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+	};
+
 	// Method 1
 	esShader shad1;
-	if (!esShader_dual(&shad1, "demores/red.vert", "demores/red.frag")) {
+	if (!esShader_dual(&shad1, "demores/red.vert", "demores/red.frag",
+				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Cannot load shaders using method 1!");
 		return 1;
 	}
@@ -22,7 +27,7 @@ int main(int argc, char **argv) {
 	if (!(
 				esShader_load(&shad2, ES_SHADER_VERT, "demores/red.vert") &&
 				esShader_load(&shad2, ES_SHADER_FRAG, "demores/red.frag") &&
-				esShader_compile(&shad2))) {
+				esShader_compile(&shad2, shadAttribs, 1))) {
 		esLog(ES_ERRO, "Cannot load shaders using method 2!");
 		return 1;
 	}

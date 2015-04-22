@@ -8,9 +8,13 @@ int main() {
 	esGame_init(400, 300);
 	esLogVersion();
 
-	esShader shad_red;
-	if (!esShader_dual(&shad_red,
-				"demores/red.vert", "demores/red.frag")) {
+	esShader shadRed;
+	esShaderAttrib shadRedAttribs[] = {
+		{ 0, "in_vertex" },
+	};
+	if (!esShader_dual(&shadRed,
+				"demores/red.vert", "demores/red.frag",
+				shadRedAttribs, 1)) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
 	}
@@ -24,20 +28,26 @@ int main() {
 		-0.5f,  0.5f,
 	};
 
-	esShader shad_tex;
-	if (!esShader_dual(&shad_tex,
-				"demores/img.vert", "demores/img.frag")) {
+	esShader shadTex;
+	esShaderAttrib shadTexAttribs[] = {
+		{ 0, "in_vertex" },
+		{ 1, "in_uv" },
+		{ 2, "in_col" },
+	};
+	if (!esShader_dual(&shadTex,
+				"demores/img.vert", "demores/img.frag",
+				shadTexAttribs, 3)) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
 	}
 
-	if (!esShader_uniformRegister(&shad_tex, 0, "un_tex0")) {
+	if (!esShader_uniformRegister(&shadTex, 0, "un_tex0")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
 
-	esShader_use(&shad_tex);
-	glUniform1i(esShader_uniformGl(&shad_tex, 0), 0);
+	esShader_use(&shadTex);
+	glUniform1i(esShader_uniformGl(&shadTex, 0), 0);
 
 	esFb fb;
 	if (!esFb_create(&fb, 64, TEX_NONE, TEX_LINEAR)) {
@@ -87,19 +97,19 @@ int main() {
 	glClearColor(0.6, 0.5, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	esShader_use(&shad_red);
+	esShader_use(&shadRed);
 	esGeo_renderArray(&cube, 6);
 	esFb_unSet();
 
 	// Render geometry
 	esFb_bind(&fb);
-	esShader_use(&shad_tex);
+	esShader_use(&shadTex);
 	esGeo_renderArray(&texgeo, 6);
 
 	esGame_glSwap();
 	esFb_free(&fb);
 	esGeoBuf_free(&cubebuf);
-	esShader_free(&shad_red);
+	esShader_free(&shadRed);
 
 	SDL_Delay(800);
 	SDL_Quit();

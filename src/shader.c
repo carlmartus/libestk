@@ -16,7 +16,7 @@ static int checkShader(GLuint id, const char *shaderInfo) {
 	return ES_OK;
 }
 
-int loadShader(const char *fileName,
+static int loadShader(const char *fileName,
 		GLenum shaderType, const char *shaderInfo) {
 	esCheckGlError();
 
@@ -73,13 +73,22 @@ esErr esShader_load(esShader *shader,
 	return ES_OK;
 }
 
-esErr esShader_compile(esShader *shader) {
+esErr esShader_compile(esShader *shader,
+		const esShaderAttrib *attribs, int attribCount) {
 
 	int program = glCreateProgram();
+	shader->glProgram = program;
 
 	int i;
 	for (i=0; i<shader->shaderCount; i++) {
 		glAttachShader(program, shader->glShaders[i]);
+		esCheckGlError();
+	}
+
+	for (i=0; i<attribCount; i++) {
+		esLog(ES_INFO, "Attrib %d [%s]", attribs[i].location, attribs[i].name);
+		glBindAttribLocation(shader->glProgram,
+				attribs[i].location, attribs[i].name);
 		esCheckGlError();
 	}
 
@@ -91,17 +100,18 @@ esErr esShader_compile(esShader *shader) {
 		esCheckGlError();
 	}
 
-	shader->glProgram = program;
 	return ES_OK;
 }
 
 esErr esShader_dual(esShader *shader,
-		const char *vertFile, const char *fragFile) {
+		const char *vertFile, const char *fragFile,
+		const esShaderAttrib *attribs, int attribCount) {
+
 	esShader_reset(shader);
 
 	if (!esShader_load(shader, ES_SHADER_VERT, vertFile)) return ES_FAIL;
 	if (!esShader_load(shader, ES_SHADER_FRAG, fragFile)) return ES_FAIL;
-	return esShader_compile(shader);
+	return esShader_compile(shader, attribs, attribCount);
 }
 
 void esShader_use(const esShader *shader) {

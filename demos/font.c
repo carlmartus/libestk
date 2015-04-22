@@ -19,9 +19,13 @@ int main() {
 	}
 
 	esShader shad;
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+		{ 1, "in_uv" },
+	};
 	if (!esShader_dual(&shad,
-				"demores/font.vert",
-				"demores/font.frag")) {
+				"demores/font.vert", "demores/font.frag",
+				shadAttribs, 2)) {
 		printf("Cannot open shader\n");
 		return 1;
 	}

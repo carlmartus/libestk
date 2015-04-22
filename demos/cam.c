@@ -9,7 +9,11 @@ int main(int argc, char **argv) {
 	esLogVersion();
 
 	esShader shad;
-	if (!esShader_dual(&shad, "demores/cam.vert", "demores/red.frag")) {
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+	};
+	if (!esShader_dual(&shad, "demores/cam.vert", "demores/red.frag",
+				shadAttribs, 1)) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

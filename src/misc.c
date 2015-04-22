@@ -10,7 +10,7 @@ static void checkError(const char *file, int line) {
 		esLog(ES_ERRO, "OpenGL Error (%s:%d): %d ", file, line, err);
 
 		switch (err) {
-#define ERR_CASE_PRINT(cond) case cond : esLog(ES_ERRO, "%s\n", #cond); break
+#define ERR_CASE_PRINT(cond) case cond : esLog(ES_ERRO, "%s", #cond); break
 			ERR_CASE_PRINT(GL_INVALID_ENUM);
 			ERR_CASE_PRINT(GL_INVALID_VALUE);
 			ERR_CASE_PRINT(GL_INVALID_OPERATION);

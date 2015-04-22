@@ -67,8 +67,12 @@ int main() {
 			3, 0, sizeof(esVec3f), ES_FALSE);
 
 	// Shader dual
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+	};
 	if (!esShader_dual(&shader,
-				"demores/cam.vert", "demores/red.frag")) {
+				"demores/cam.vert", "demores/red.frag",
+				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Can't load shaders");
 	}
 

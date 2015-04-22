@@ -46,7 +46,12 @@ int main() {
 		return 1;
 	}
 
-	if (!esShader_dual(&shad, "demores/sprites.vert", "demores/sprites.frag")) {
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+		{ 1, "in_uv" },
+	};
+	if (!esShader_dual(&shad, "demores/sprites.vert", "demores/sprites.frag",
+				shadAttribs, 2)) {
 		esLog(ES_ERRO, "Cannot load shaders!\n");
 		return 1;
 	}

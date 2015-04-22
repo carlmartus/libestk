@@ -9,7 +9,12 @@ int main() {
 	esLogVersion();
 
 	esShader shad;
-	if (!esShader_dual(&shad, "demores/attr.vert", "demores/attr.frag")) {
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+		{ 1, "in_col" },
+	};
+	if (!esShader_dual(&shad, "demores/attr.vert", "demores/attr.frag",
+				shadAttribs, 2)) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}

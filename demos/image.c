@@ -15,7 +15,13 @@ int main() {
 	}
 
 	esShader shad;
-	if (!esShader_dual(&shad, "demores/img.vert", "demores/img.frag")) {
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_vertex" },
+		{ 1, "in_uv" },
+		{ 2, "in_col" },
+	};
+	if (!esShader_dual(&shad, "demores/img.vert", "demores/img.frag",
+				shadAttribs, 3)) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
