@@ -49,7 +49,7 @@
 	- type [esGeoBuf](#esgeobuf)
 	- func [esGeoBuf_create](#esgeobuf_create)
 	- func [esGeoBuf_array](#esgeobuf_array)
-	- func [esGeoBuf_arraySub](#esgeobuf_arraySub)
+	- func [esGeoBuf_arraySub](#esgeobuf_arraysub)
 	- func [esGeoBuf_element](#esgeobuf_element)
 	- func [esGeoBuf_free](#esgeobuf_free)
 	- type [esGeo](#esgeo)
