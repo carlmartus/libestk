@@ -37,7 +37,7 @@ int main() {
 	esGeo_point(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
 	esGeo_point(&geo, 1, &geobuf, GEODATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
 
-	glClearColor(0.6, 0.5, 0.6, 1.0);
+	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShader_use(&shad);

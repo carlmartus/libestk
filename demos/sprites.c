@@ -63,7 +63,7 @@ int main() {
 
 	esSprites2d_init(2, 100);
 
-	glClearColor(0.3, 0.4, 0.5, 1.0);
+	glClearColor(0.3, 0.4, 0.6, 1.0);
 
 	// Transperancy
 	glEnable(GL_BLEND);

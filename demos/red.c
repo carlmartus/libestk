@@ -40,7 +40,7 @@ int main() {
 	esGeo_reset(&geo, 1);
 	esGeo_point(&geo, 0, &geoBuf, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
 
-	glClearColor(0.6, 0.5, 0.6, 1.0);
+	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShader_use(&shad);

@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 	esGeo_point(&geo, 0, &bufLo, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
 	esGeo_point(&geo, 1, &bufCo, GEODATA_UBYTE, 4, 0, 0, ES_TRUE);
 
-	glClearColor(0.6, 0.5, 0.6, 1.0);
+	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShader_use(&shad);

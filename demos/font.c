@@ -8,7 +8,7 @@ int main() {
 	esGame_init(400, 300);
 	esLogVersion();
 
-	glClearColor(0.6, 0.5, 0.6, 1.0);
+	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esTexture bitmap;
