@@ -32,6 +32,16 @@ void esGeoBuf_array(esGeoBuf *buf,
 	esCheckGlError();
 }
 
+void esGeoBuf_arraySub(esGeoBuf *buf,
+		const void *data, size_t size, int bufOffset) {
+
+	glBindBuffer(GL_ARRAY_BUFFER, buf->glBuf);
+	esCheckGlError();
+
+	glBufferSubData(GL_ARRAY_BUFFER, bufOffset, size, data);
+	esCheckGlError();
+}
+
 void esGeoBuf_element(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type) {
 

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "3.3.1"
+#define ESTK_VERSION "4.0.0"
 
 // Misc {{{
 
@@ -146,6 +146,8 @@ typedef struct {
 void esGeoBuf_create(esGeoBuf *buf);
 void esGeoBuf_array(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type);
+void esGeoBuf_arraySub(esGeoBuf *buf,
+		const void *data, size_t size, int bufOffset);
 void esGeoBuf_element(esGeoBuf *buf,
 		const void *data, size_t size, esGeoBufType type);
 void esGeoBuf_free(esGeoBuf *buf);

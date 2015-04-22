@@ -86,7 +86,6 @@ esErr esShader_compile(esShader *shader,
 	}
 
 	for (i=0; i<attribCount; i++) {
-		esLog(ES_INFO, "Attrib %d [%s]", attribs[i].location, attribs[i].name);
 		glBindAttribLocation(shader->glProgram,
 				attribs[i].location, attribs[i].name);
 		esCheckGlError();

@@ -21,6 +21,19 @@ Documentation can be found [here](DOC.md).
  * Quaternion rotations
  * Keyboard/Mouse event wrapper
 
+# Screenshots
+![Attributes](screenshots/attr.png)
+![Camera projection](screenshots/cam.png)
+![Frame buffer, rendering to texture](screenshots/fb.png)
+![Fonts from bitmap](screenshots/font.png)
+![Image, textures](screenshots/image.png)
+![Game main loop](screenshots/mainloop.png)
+![Quaternions](screenshots/quaternion.png)
+![Simple OpenGL hello world](screenshots/red.png)
+![Sprites](screenshots/sprites.png)
+![Buffer stride](screenshots/stride.png)
+![Uniform constants](screenshots/uniform.png)
+
 # Usage
 
 ## Dependencies
@@ -48,8 +61,4 @@ If you wish to add the library to your system run this:
 ```
 make install
 ```
-
-
-Todo
-====
 
