@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/demos)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-add_definitions("-Wall -O2 -std=gnu11")
 
 # Version/Naming
 # ==============
@@ -48,6 +47,7 @@ set(LIB_SOURCE
 	)
 
 add_library(${ESTK} STATIC ${LIB_SOURCE})
+set_property(TARGET ${ESTK} PROPERTY C_STANDARD 11) # Use GNU C11
 
 set_target_properties(${ESTK}
 	PROPERTIES VERSION ${VERSION}
