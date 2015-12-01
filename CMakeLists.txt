@@ -36,7 +36,6 @@ include_directories ("${PROJECT_BINARY_DIR}")
 #file(GLOB LIB_SOURCE src/*.c)
 set(LIB_SOURCE
 	src/fb.c
-	src/font.c
 	src/gameloop.c
 	src/geometry.c
 	src/log.c
@@ -45,7 +44,6 @@ set(LIB_SOURCE
 	src/projection.c
 	src/shader.c
 	src/sound.c
-	src/sprites.c
 	src/texture.c
 	)
 
@@ -66,14 +64,12 @@ set(DEMOS_SOURCE
 	clear
 	events
 	fb
-	font
 	image
 	mainloop
 	quaternion
 	red
 	shadercomp
 	sound
-	sprites
 	stride
 	uniform
 	)

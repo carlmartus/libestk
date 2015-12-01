@@ -20,8 +20,6 @@ Documentation can be found [here](DOC.md).
  * OpenGL vertex buffer wrapper
  * Projection matrix generators
  * Texture file loading
- * Bitmap font rendering
- * 2D sprite rendering
  * Quaternion rotations
  * Keyboard/Mouse event wrapper
  * Sound file loading and playing
@@ -42,9 +40,11 @@ Documentation can be found [here](DOC.md).
 # Usage
 
 ## Dependencies
- * SDL
- * cmake
  * OpenGL ES 2.0
+ * CMake
+ * SDL
+ * SDL_image
+ * SDL_mixer
  * GLEW
 
 
@@ -65,8 +65,4 @@ If you wish to add the library to your system run this:
 ```
 make install
 ```
-
-# Future features
- * Mip map generation support
- * Better font system
 

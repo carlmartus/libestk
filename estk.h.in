@@ -208,28 +208,6 @@ void esTexture_use(esTexture *tex);
 void esTexture_free(esTexture *tex);
 
 // }}}
-// Font {{{
-
-typedef struct {
-	esTexture *texture;
-	esShader *shader;
-
-	int vert_count;
-	int buf_size, buf_alloc;
-	esGeoBuf geo_buf;
-	esGeo geo;
-	void *buf;
-} esFont;
-
-esErr esFont_create(esFont *ft, esTexture *tex, esShader *shad,
-		int attrib_loc, int attrib_uv, int addition_attribs);
-void esFont_delete(esFont *ft);
-void esFont_addText(esFont *ft, float offset_x, float offset_y,
-		const char *fmt, ...);
-void esFont_render(esFont *ft);
-void esFont_clearBuf(esFont *ft);
-
-// }}}
 // Framebuffer {{{
 
 typedef struct {
@@ -263,20 +241,6 @@ esErr esMusic_create(esMusic *mu, const char *file_name);
 void esMusic_free(esMusic *mu);
 void esMusic_play(esMusic *mu);
 void esMusic_halt(void);
-
-// }}}
-// Sprites {{{
-
-#define ES_SPRITE_FLIPX 1
-#define ES_SPRITE_FLIPY 2
-#define ES_SPRITE_FLIPXY (ES_SPRITE_FLIPX | ES_SPRITE_FLIPY)
-
-void esSprites2d_init(int palettDim, int maxSprites);
-void esSprites2d_clear(void);
-void esSprites2d_put(float x, float y, float radius,
-		float rotate, int spriteX, int spriteY, unsigned flags);
-void esSprites2d_prepear(void);
-void esSprites2d_render(void);
 
 // }}}
 
