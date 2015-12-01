@@ -81,13 +81,6 @@ static void normalize(esVec3f *v) {
     v->z *= r;
 }
 
-/*
-static float
-dot(esVec3f a, esVec3f b)
-{
-	return a.x*b.x + a.y*b.y + a.z*b.z;
-}*/
-
 void mul_matrix(float *res, float *a, float *b) {
 	int x, y, i=0;
 	for (y=0; y<4; y++) {

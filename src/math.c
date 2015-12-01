@@ -1,7 +1,10 @@
 #include "estk.h"
 #include <math.h>
 
+//=============================================================================
 // Matrices
+//=============================================================================
+
 esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v) {
 	return (esVec3f) {
 		v.x*m->mat[0] + v.y*m->mat[3] + v.z*m->mat[6],
@@ -10,7 +13,10 @@ esVec3f esMat3f_MulVec3f(const esMat3f *m, esVec3f v) {
 	};
 }
 
+//=============================================================================
 // Quaternions
+//=============================================================================
+
 esQuatf esQuatf_normalize(esQuatf q) {
 	float mag = sqrtf(q.w*q.w + q.x*q.x + q.y*q.y + q.z*q.z);
 
