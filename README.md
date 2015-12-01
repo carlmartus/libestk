@@ -44,7 +44,8 @@ Documentation can be found [here](DOC.md).
 ## Dependencies
  * SDL
  * cmake
- * OpenGL
+ * OpenGL ES 2.0
+ * GLEW
 
 
 ## Compilation

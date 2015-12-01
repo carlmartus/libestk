@@ -1,4 +1,4 @@
-#version 100
+#version 130
 precision mediump float;
 
 attribute vec2 in_vertex;

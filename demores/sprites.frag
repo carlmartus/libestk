@@ -1,4 +1,4 @@
-#version 100
+#version 130
 precision mediump float;
 
 varying vec2 va_uv;
