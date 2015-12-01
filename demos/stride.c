@@ -13,7 +13,7 @@ int main() {
 		{ 0, "in_vertex" },
 		{ 1, "in_col" },
 	};
-	if (!esShader_dual(&shad, "demores/attr.vert", "demores/attr.frag",
+	if (!esShader_dualFile(&shad, "demores/attr.vert", "demores/attr.frag",
 				shadAttribs, 2)) {
 		printf("Cannot load shaders!\n");
 		return 1;

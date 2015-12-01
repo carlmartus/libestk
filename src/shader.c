@@ -1,6 +1,10 @@
 #include "estk.h"
 #include <GL/glew.h>
 
+//==============================================================================
+// Interal shader operations
+//==============================================================================
+
 static int checkShader(GLuint id, const char *shaderInfo) {
 	GLint result = GL_FALSE;
 
@@ -16,19 +20,13 @@ static int checkShader(GLuint id, const char *shaderInfo) {
 	return ES_OK;
 }
 
-static int loadShader(const char *fileName,
+static int loadShaderText(const char *source,
 		GLenum shaderType, const char *shaderInfo) {
 	esCheckGlError();
 
-	char *content = esFileAlloc(fileName);
-	if (content == NULL) {
-		return 0;
-	}
-
 	int shad = glCreateShader(shaderType);
-	glShaderSource(shad, 1, (const char**) &content , NULL);
+	glShaderSource(shad, 1, (const char**) &source, NULL);
 	glCompileShader(shad);
-	free(content);
 
 	if (!checkShader(shad, shaderInfo)) {
 		esCheckGlError();
@@ -36,36 +34,54 @@ static int loadShader(const char *fileName,
 	}
 	esCheckGlError();
 
-	esLog(ES_INFO, "Loaded shader %s", fileName);
+	//esLog(ES_INFO, "Loaded shader %s", fileName);
 	esCheckGlError();
 	return shad;
 }
+
+
+//==============================================================================
+// API shader operations
+//==============================================================================
 
 void esShader_reset(esShader *shader) {
 	shader->shaderCount = 0;
 }
 
-esErr esShader_load(esShader *shader,
+esErr esShader_loadFile(esShader *shader,
 		esShaderType type, const char *fileName) {
 
+	char *content = esFileAlloc(fileName);
+	if (content == NULL) {
+		return ES_FAIL;
+	}
+
+	int ret = esShader_loadText(shader, type, content);
+	free(content);
+
+	return ret;
+}
+
+esErr esShader_loadText(esShader *shader,
+		esShaderType type, const char *source) {
 	int id;
 	switch (type) {
 		case ES_SHADER_FRAG :
-			id = loadShader(fileName,
+			id = loadShaderText(source,
 					GL_FRAGMENT_SHADER,
 					"Fragment shader");
 			break;
 
 		default :
 		case ES_SHADER_VERT :
-			id = loadShader(fileName,
+			id = loadShaderText(source,
 					GL_VERTEX_SHADER,
 					"Vertex shader");
 			break;
 	}
 
 	if (id == 0) {
-		esLog(ES_ERRO, "Invalid shader file (%s)\n", fileName);
+		esLog(ES_ERRO, "Invalid shader source (%s)\n", source);
 		return ES_FAIL;
 	}
 
@@ -102,14 +118,25 @@ esErr esShader_compile(esShader *shader,
 	return ES_OK;
 }
 
-esErr esShader_dual(esShader *shader,
+esErr esShader_dualFile(esShader *shader,
 		const char *vertFile, const char *fragFile,
 		const esShaderAttrib *attribs, int attribCount) {
 
 	esShader_reset(shader);
 
-	if (!esShader_load(shader, ES_SHADER_VERT, vertFile)) return ES_FAIL;
-	if (!esShader_load(shader, ES_SHADER_FRAG, fragFile)) return ES_FAIL;
+	if (!esShader_loadFile(shader, ES_SHADER_VERT, vertFile)) return ES_FAIL;
+	if (!esShader_loadFile(shader, ES_SHADER_FRAG, fragFile)) return ES_FAIL;
+	return esShader_compile(shader, attribs, attribCount);
+}
+
+esErr esShader_dualText(esShader *shader,
+		const char *vertSource, const char *fragSource,
+		const esShaderAttrib *attribs, int attribCount) {
+
+	esShader_reset(shader);
+
+	if (!esShader_loadText(shader, ES_SHADER_VERT, vertSource)) return ES_FAIL;
+	if (!esShader_loadText(shader, ES_SHADER_FRAG, fragSource)) return ES_FAIL;
 	return esShader_compile(shader, attribs, attribCount);
 }
 

@@ -20,7 +20,7 @@ int main() {
 		{ 1, "in_uv" },
 		{ 2, "in_col" },
 	};
-	if (!esShader_dual(&shad, "demores/img.vert", "demores/img.frag",
+	if (!esShader_dualFile(&shad, "demores/img.vert", "demores/img.frag",
 				shadAttribs, 3)) {
 		printf("Cannot load shaders!\n");
 		return 1;

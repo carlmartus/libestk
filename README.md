@@ -1,9 +1,13 @@
 libestk
 =======
 
-OpenGL ES Toolkit v4.0.0.
+OpenGL ES Toolkit v5.0.0-dev.
 
-This project is a continuation of [ESTK](https://github.com/carlmartus/estk) which can be considered version 1.0 of libestk.
+This project is a continuation of [ESTK](https://github.com/carlmartus/estk)
+which can be considered version 1.0 of libestk.
+
+*LibESTK* is a utility library ment to make *OpenGL ES 2.0* operations easier to
+perform with fewer calls compared to the standard *OpenGL* library.
 
 Documentation can be found [here](DOC.md).
 
@@ -20,6 +24,7 @@ Documentation can be found [here](DOC.md).
  * 2D sprite rendering
  * Quaternion rotations
  * Keyboard/Mouse event wrapper
+ * Sound file loading and playing
 
 # Screenshots
 ![Attributes](screenshots/attr.png)
@@ -48,7 +53,6 @@ Documentation can be found [here](DOC.md).
 cmake .
 ```
 
-
   Now build the projet with:
 ```
 make
@@ -56,12 +60,12 @@ make
 
 The library and all the demos can now be found in the ```bin``` directory.
 
-
 If you wish to add the library to your system run this:
 ```
 make install
 ```
 
-# Todo
+# Future features
  * Mip map generation support
+ * Better font system
 

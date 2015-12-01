@@ -12,7 +12,7 @@ int main() {
 	esShaderAttrib shadRedAttribs[] = {
 		{ 0, "in_vertex" },
 	};
-	if (!esShader_dual(&shadRed,
+	if (!esShader_dualFile(&shadRed,
 				"demores/red.vert", "demores/red.frag",
 				shadRedAttribs, 1)) {
 		printf("Cannot load shad_reders!\n");
@@ -34,7 +34,7 @@ int main() {
 		{ 1, "in_uv" },
 		{ 2, "in_col" },
 	};
-	if (!esShader_dual(&shadTex,
+	if (!esShader_dualFile(&shadTex,
 				"demores/img.vert", "demores/img.frag",
 				shadTexAttribs, 3)) {
 		printf("Cannot load shad_reders!\n");

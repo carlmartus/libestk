@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
 
 	// Method 1
 	esShader shad1;
-	if (!esShader_dual(&shad1, "demores/red.vert", "demores/red.frag",
+	if (!esShader_dualFile(&shad1, "demores/red.vert", "demores/red.frag",
 				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Cannot load shaders using method 1!");
 		return 1;
@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
 	esShader shad2;
 	esShader_reset(&shad2);
 	if (!(
-				esShader_load(&shad2, ES_SHADER_VERT, "demores/red.vert") &&
-				esShader_load(&shad2, ES_SHADER_FRAG, "demores/red.frag") &&
+				esShader_loadFile(&shad2, ES_SHADER_VERT, "demores/red.vert") &&
+				esShader_loadFile(&shad2, ES_SHADER_FRAG, "demores/red.frag") &&
 				esShader_compile(&shad2, shadAttribs, 1))) {
 		esLog(ES_ERRO, "Cannot load shaders using method 2!");
 		return 1;

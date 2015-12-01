@@ -70,7 +70,7 @@ int main() {
 	esShaderAttrib shadAttribs[] = {
 		{ 0, "in_vertex" },
 	};
-	if (!esShader_dual(&shader,
+	if (!esShader_dualFile(&shader,
 				"demores/cam.vert", "demores/red.frag",
 				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Can't load shaders");

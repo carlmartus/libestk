@@ -23,7 +23,7 @@ int main() {
 		{ 0, "in_vertex" },
 		{ 1, "in_uv" },
 	};
-	if (!esShader_dual(&shad,
+	if (!esShader_dualFile(&shad,
 				"demores/font.vert", "demores/font.frag",
 				shadAttribs, 2)) {
 		printf("Cannot open shader\n");

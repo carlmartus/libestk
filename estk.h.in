@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <SDL/SDL_mixer.h>
 
-#define ESTK_VERSION "4.0.0"
+#define ESTK_VERSION "@MAJOR@.@MINOR@.@PATCH@@NOTE@"
 
 // Misc {{{
 
@@ -103,13 +103,21 @@ typedef struct {
 	const char *name;
 } esShaderAttrib;
 
+#define ES_SHADER_SOURCE(src) "#version 100\n" #src
+
+
 void esShader_reset(esShader *shader);
-esErr esShader_load(esShader *shader,
+esErr esShader_loadFile(esShader *shader,
 		esShaderType type, const char *fileName);
+esErr esShader_loadText(esShader *shader,
+		esShaderType type, const char *source);
 esErr esShader_compile(esShader *shader,
 		const esShaderAttrib *attribs, int attribCount);
-esErr esShader_dual(esShader *shader,
+esErr esShader_dualFile(esShader *shader,
 		const char *vertFile, const char *fragFile,
+		const esShaderAttrib *attribs, int attribCount);
+esErr esShader_dualText(esShader *shader,
+		const char *vertSource, const char *fragSource,
 		const esShaderAttrib *attribs, int attribCount);
 void esShader_use(const esShader *shader);
 void esShader_free(esShader *shader);

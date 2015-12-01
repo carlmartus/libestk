@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 	esShaderAttrib shadAttribs[] = {
 		{ 0, "in_vertex" },
 	};
-	if (!esShader_dual(&shad, "demores/cam.vert", "demores/red.frag",
+	if (!esShader_dualFile(&shad, "demores/cam.vert", "demores/red.frag",
 				shadAttribs, 1)) {
 		printf("Cannot load shaders!\n");
 		return 1;

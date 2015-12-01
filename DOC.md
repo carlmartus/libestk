@@ -36,9 +36,11 @@
 	- type [esShaderType](#esshadertype)
 	- type [esShader](#esshader)
 	- func [esShader_reset](#esshader_reset)
-	- func [esShader_load](#esshader_load)
+	- func [esShader_loadFile](#esShader_loadFile)
+	- func [esShader_loadText](#esShader_loadText)
 	- func [esShader_compile](#esshader_compile)
-	- func [esShader_dual](#esshader_dual)
+	- func [esShader_dualFile](#esShader_dualFile)
+	- func [esShader_dualText](#esShader_dualText)
 	- func [esShader_use](#esShader_use)
 	- func [esShader_free](#esshader_free)
 	- func [esShader_uniformRegister](#esshader_uniformregister)
@@ -294,10 +296,16 @@ typedef struct {
 void esShader_reset(esShader *shader);
 ```
 
-## `esShader_load`
+## `esShader_loadFile`
 ```c
-esErr esShader_load(esShader *shader,
+esErr esShader_loadFile(esShader *shader,
 		esShaderType type, const char *fileName);
+```
+
+## `esShader_loadText`
+```c
+esErr esShader_loadText(esShader *shader,
+		esShaderType type, const char *source);
 ```
 
 ## `esShader_compile`
@@ -306,9 +314,16 @@ esErr esShader_compile(esShader *shader,
 		const esShaderAttrib *attribs, int attribCount);
 ```
 
-## `esShader_dual`
+## `esShader_dualFile`
 ```c
-esErr esShader_dual(esShader *shader,
+esErr esShader_dualFile(esShader *shader,
+		const char *vertFile, const char *fragFile,
+		const esShaderAttrib *attribs, int attribCount);
+```
+
+## `esShader_dualText`
+```c
+esErr esShader_dualText(esShader *shader,
 		const char *vertFile, const char *fragFile,
 		const esShaderAttrib *attribs, int attribCount);
 ```
