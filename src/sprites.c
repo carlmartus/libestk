@@ -26,11 +26,11 @@ void esSprites2d_init(int palettDim, int maxSprites) {
 	vertices = malloc(size);
 
 	esGeoBuf_create(&geoBuf);
-	esGeoBuf_array(&geoBuf, vertices, size, GEOBUF_STREAM);
+	esGeoBuf_array(&geoBuf, vertices, size, ES_GEOBUF_STREAM);
 
 	esGeo_reset(&geo, 2);
-	esGeo_point(&geo, 0, &geoBuf, GEODATA_FLOAT, 2, 0, sizeof(SpriteVertex), ES_FALSE);
-	esGeo_point(&geo, 1, &geoBuf, GEODATA_FLOAT, 2, 8, sizeof(SpriteVertex), ES_TRUE);
+	esGeo_point(&geo, 0, &geoBuf, ES_GEODATA_FLOAT, 2, 0, sizeof(SpriteVertex), ES_FALSE);
+	esGeo_point(&geo, 1, &geoBuf, ES_GEODATA_FLOAT, 2, 8, sizeof(SpriteVertex), ES_TRUE);
 }
 
 void esSprites2d_clear(void) {
@@ -118,7 +118,7 @@ void esSprites2d_put(float x, float y, float radius,
 void esSprites2d_prepear(void) {
 	/*
 	esGeoBuf_array(&geoBuf, vertices,
-			count*6*sizeof(SpriteVertex), GEOBUF_STREAM);*/
+			count*6*sizeof(SpriteVertex), ES_GEOBUF_STREAM);*/
 
 	esGeoBuf_arraySub(&geoBuf, vertices, count*6*sizeof(SpriteVertex), 0);
 	renderCount = count*6;

@@ -30,12 +30,12 @@ int main() {
 
 	esGeoBuf geobuf;
 	esGeoBuf_create(&geobuf);
-	esGeoBuf_array(&geobuf, data, sizeof(data), GEOBUF_STATIC);
+	esGeoBuf_array(&geobuf, data, sizeof(data), ES_GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeo_reset(&geo, 2);
-	esGeo_point(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
-	esGeo_point(&geo, 1, &geobuf, GEODATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
+	esGeo_point(&geo, 0, &geobuf, ES_GEODATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
+	esGeo_point(&geo, 1, &geobuf, ES_GEODATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
 
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

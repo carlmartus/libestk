@@ -42,7 +42,7 @@ static void frame(float fr) {
 	//esLog(ES_INFO, "P[0] %f %f %f", p[0].x, p[0].y, p[0].z);
 	//esLog(ES_INFO, "P[1] %f %f %f", p[1].x, p[1].y, p[1].z);
 	//esLog(ES_INFO, "P[2] %f %f %f", p[2].x, p[2].y, p[2].z);
-	esGeoBuf_array(&geoBuf, p, sizeof(p), GEOBUF_STREAM);
+	esGeoBuf_array(&geoBuf, p, sizeof(p), ES_GEOBUF_STREAM);
 	esGeo_renderArray(&geo, 3);
 
 	esGame_glSwap();
@@ -63,7 +63,7 @@ int main() {
 	// Geometric buffer
 	esGeoBuf_create(&geoBuf);
 	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &geoBuf, GEODATA_FLOAT,
+	esGeo_point(&geo, 0, &geoBuf, ES_GEODATA_FLOAT,
 			3, 0, sizeof(esVec3f), ES_FALSE);
 
 	// Shader dual

@@ -33,16 +33,16 @@ int main(int argc, char **argv) {
 
 	esGeoBuf bufLo;
 	esGeoBuf_create(&bufLo);
-	esGeoBuf_array(&bufLo, attrLo, sizeof(attrLo), GEOBUF_STATIC);
+	esGeoBuf_array(&bufLo, attrLo, sizeof(attrLo), ES_GEOBUF_STATIC);
 
 	esGeoBuf bufCo;
 	esGeoBuf_create(&bufCo);
-	esGeoBuf_array(&bufCo, attrCo, sizeof(attrCo), GEOBUF_STATIC);
+	esGeoBuf_array(&bufCo, attrCo, sizeof(attrCo), ES_GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeo_reset(&geo, 2);
-	esGeo_point(&geo, 0, &bufLo, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
-	esGeo_point(&geo, 1, &bufCo, GEODATA_UBYTE, 4, 0, 0, ES_TRUE);
+	esGeo_point(&geo, 0, &bufLo, ES_GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
+	esGeo_point(&geo, 1, &bufCo, ES_GEODATA_UBYTE, 4, 0, 0, ES_TRUE);
 
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

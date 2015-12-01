@@ -354,22 +354,22 @@ esErr esShader_uniformGl(esShader *shader, esUniform reg);
 ## `esGeoBuf`
 ```c
 typedef enum {
-	GEOBUF_STATIC,
-	GEOBUF_DYNAMIC,
-	GEOBUF_STREAM,
+	ES_GEOBUF_STATIC,
+	ES_GEOBUF_DYNAMIC,
+	ES_GEOBUF_STREAM,
 } esGeoBufType;
 ```
 
 ## `esGeoDataType`
 ```c
 typedef enum {
-	GEODATA_FLOAT,
-	GEODATA_INT,
-	GEODATA_UINT,
-	GEODATA_SHORT,
-	GEODATA_USHORT,
-	GEODATA_BYTE,
-	GEODATA_UBYTE,
+	ES_GEODATA_FLOAT,
+	ES_GEODATA_INT,
+	ES_GEODATA_UINT,
+	ES_GEODATA_SHORT,
+	ES_GEODATA_USHORT,
+	ES_GEODATA_BYTE,
+	ES_GEODATA_UBYTE,
 } esGeoDataType;
 ```
 
@@ -420,7 +420,7 @@ typedef struct {
 		int elements;
 		size_t offset, stride;
 		esBool normalized;
-	} buf[GEOBUFS_MAX];
+	} buf[ES_GEOBUFS_MAX];
 } esGeo;
 ```
 

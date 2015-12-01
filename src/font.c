@@ -26,9 +26,9 @@ esErr esFont_create(esFont *ft, esTexture *tex, esShader *shad,
 	esGeoBuf_create(&ft->geo_buf);
 
 	esGeo_reset(&ft->geo, 2 + addition_attribs);
-	esGeo_point(&ft->geo, 0, &ft->geo_buf, GEODATA_FLOAT, 2, 0,
+	esGeo_point(&ft->geo, 0, &ft->geo_buf, ES_GEODATA_FLOAT, 2, 0,
 			sizeof(struct font_vert), ES_FALSE);
-	esGeo_point(&ft->geo, 1, &ft->geo_buf, GEODATA_FLOAT, 2,
+	esGeo_point(&ft->geo, 1, &ft->geo_buf, ES_GEODATA_FLOAT, 2,
 			offsetof(struct font_vert, u),
 			sizeof(struct font_vert), ES_TRUE);
 
@@ -110,7 +110,7 @@ void esFont_render(esFont *ft) {
 
 	if (ft->vert_count > 0) {
 
-		esGeoBuf_array(&ft->geo_buf, ft->buf, ft->buf_size, GEOBUF_STREAM);
+		esGeoBuf_array(&ft->geo_buf, ft->buf, ft->buf_size, ES_GEOBUF_STREAM);
 		esGeo_renderArray(&ft->geo, ft->vert_count);
 	}
 }

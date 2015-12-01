@@ -58,11 +58,11 @@ int main() {
 	// Red cube
 	esGeoBuf cubebuf;
 	esGeoBuf_create(&cubebuf);
-	esGeoBuf_array(&cubebuf, cube_lo, sizeof(cube_lo), GEOBUF_STATIC);
+	esGeoBuf_array(&cubebuf, cube_lo, sizeof(cube_lo), ES_GEOBUF_STATIC);
 
 	esGeo cube;
 	esGeo_reset(&cube, 1);
-	esGeo_point(&cube, 0, &cubebuf, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
+	esGeo_point(&cube, 0, &cubebuf, ES_GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
 
 	// Textured cube
 	static const struct data {
@@ -81,15 +81,15 @@ int main() {
 
 	esGeoBuf geobuf;
 	esGeoBuf_create(&geobuf);
-	esGeoBuf_array(&geobuf, data, sizeof(data), GEOBUF_STATIC);
+	esGeoBuf_array(&geobuf, data, sizeof(data), ES_GEOBUF_STATIC);
 
 	esGeo texgeo;
 	esGeo_reset(&texgeo, 3);
-	esGeo_point(&texgeo, 0, &geobuf, GEODATA_FLOAT, 2,  0,
+	esGeo_point(&texgeo, 0, &geobuf, ES_GEODATA_FLOAT, 2,  0,
 			sizeof(struct data), ES_FALSE);
-	esGeo_point(&texgeo, 1, &geobuf, GEODATA_FLOAT, 2,  8,
+	esGeo_point(&texgeo, 1, &geobuf, ES_GEODATA_FLOAT, 2,  8,
 			sizeof(struct data), ES_TRUE);
-	esGeo_point(&texgeo, 2, &geobuf, GEODATA_UBYTE, 4, 16,
+	esGeo_point(&texgeo, 2, &geobuf, ES_GEODATA_UBYTE, 4, 16,
 			sizeof(struct data), ES_TRUE);
 
 	// Render to texture

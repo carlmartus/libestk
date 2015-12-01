@@ -34,11 +34,11 @@ int main(int argc, char **argv) {
 
 	esGeoBuf geobuf;
 	esGeoBuf_create(&geobuf);
-	esGeoBuf_array(&geobuf, red_lo, sizeof(red_lo), GEOBUF_STATIC);
+	esGeoBuf_array(&geobuf, red_lo, sizeof(red_lo), ES_GEOBUF_STATIC);
 
 	esGeo geo;
 	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &geobuf, GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
+	esGeo_point(&geo, 0, &geobuf, ES_GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
 
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
