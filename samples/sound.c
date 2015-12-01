@@ -23,12 +23,12 @@ int main() {
 	esGame_init(400, 300);
 	esLogVersion();
 
-	if (!esSound_create(&sfx, "demores/sound.ogg")) {
+	if (!esSound_create(&sfx, "samples/resources/sound.ogg")) {
 		printf("Cannot load sound file\n");
 		return 1;
 	}
 
-	if (!esMusic_create(&mus, "demores/music.ogg")) {
+	if (!esMusic_create(&mus, "samples/resources/music.ogg")) {
 		printf("Cannot load music file\n");
 		return 1;
 	}

@@ -13,7 +13,7 @@ int main() {
 		{ 0, "in_vertex" },
 	};
 	if (!esShader_dualFile(&shadRed,
-				"demores/red.vert", "demores/red.frag",
+				"samples/resources/red.vert", "samples/resources/red.frag",
 				shadRedAttribs, 1)) {
 		printf("Cannot load shad_reders!\n");
 		return 1;
@@ -35,7 +35,7 @@ int main() {
 		{ 2, "in_col" },
 	};
 	if (!esShader_dualFile(&shadTex,
-				"demores/img.vert", "demores/img.frag",
+				"samples/resources/img.vert", "samples/resources/img.frag",
 				shadTexAttribs, 3)) {
 		printf("Cannot load shad_reders!\n");
 		return 1;

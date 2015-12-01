@@ -49,7 +49,8 @@ int main() {
 	esShaderAttrib shadAttribs[] = {
 		{ 0, "in_vertex" },
 	};
-	if (!esShader_dualFile(&shad, "demores/cam.vert", "demores/red.frag",
+	if (!esShader_dualFile(&shad,
+				"samples/resources/cam.vert", "samples/resources/red.frag",
 				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Cannot load shaders!");
 		return 1;

@@ -68,7 +68,7 @@ int main() {
 		{ 0, "in_vertex" },
 	};
 	if (!esShader_dualFile(&shader,
-				"demores/cam.vert", "demores/red.frag",
+				"samples/resources/cam.vert", "samples/resources/red.frag",
 				shadAttribs, 1)) {
 		esLog(ES_ERRO, "Can't load shaders");
 	}

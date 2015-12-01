@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/demos)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/samples)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Version/Naming
@@ -55,10 +55,10 @@ set_target_properties(${ESTK}
 
 target_link_libraries(${ESTK} m GLEW SDL SDL_image SDL_mixer)
 
-# Demos
-# =====
+# Samples
+# =======
 
-set(DEMOS_SOURCE
+set(SAMPLES_SOURCE
 	attr
 	cam
 	clear
@@ -74,8 +74,8 @@ set(DEMOS_SOURCE
 	uniform
 	)
 
-foreach(FILE ${DEMOS_SOURCE})
-	add_executable(${FILE} "demos/${FILE}.c")
+foreach(FILE ${SAMPLES_SOURCE})
+	add_executable(${FILE} "samples/${FILE}.c")
 	target_link_libraries(${FILE} ${ESTK} GL)
 	include_directories(${FILE} src)
 endforeach(FILE)
@@ -86,7 +86,7 @@ endforeach(FILE)
 install(TARGETS ${ESTK}
 	LIBRARY DESTINATION "lib"
 	ARCHIVE DESTINATION "lib"
-	#RUNTIME DESTINATION "bin" # Don't install demo programs
+	#RUNTIME DESTINATION "bin" # Don't install sample programs
 	COMPONENT library)
 install(FILES
 	"${PROJECT_BINARY_DIR}/estk.h"

@@ -9,7 +9,8 @@ int main() {
 	esLogVersion();
 
 	esTexture tex;
-	if (!esTexture_load(&tex, "demores/img.png", TEX_LINEAR, TEX_NONE)) {
+	if (!esTexture_load(&tex, "samples/resources/img.png",
+				TEX_LINEAR, TEX_NONE)) {
 		printf("Cannot load image!\n");
 		return 1;
 	}
@@ -20,7 +21,8 @@ int main() {
 		{ 1, "in_uv" },
 		{ 2, "in_col" },
 	};
-	if (!esShader_dualFile(&shad, "demores/img.vert", "demores/img.frag",
+	if (!esShader_dualFile(&shad,
+				"samples/resources/img.vert", "samples/resources/img.frag",
 				shadAttribs, 3)) {
 		printf("Cannot load shaders!\n");
 		return 1;
