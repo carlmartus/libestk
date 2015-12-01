@@ -17,6 +17,11 @@ set(ESTK estk${MAJOR})
 # Configuration
 # =============
 
+find_package(SDL REQUIRED)
+find_package(SDL_image REQUIRED)
+find_package(SDL_mixer REQUIRED)
+find_package(GLEW REQUIRED)
+
 configure_file (
 	"${PROJECT_SOURCE_DIR}/estk.h.in"
 	"${PROJECT_BINARY_DIR}/estk.h"
