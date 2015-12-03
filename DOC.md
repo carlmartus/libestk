@@ -69,13 +69,6 @@
 	- type [esTexture_load](#estexture_load)
 	- type [esTexture_use](#estexture_use)
 	- type [esTexture_free](#estexture_free)
- - [Font](#font)
-	- type [esFont](#esfont)
-	- func [esFont_create](#esfont_create)
-	- func [esFont_delete](#esfont_delete)
-	- func [esFont_addText](#esfont_addtext)
-	- func [esFont_render](#esfont_render)
-	- func [esFont_clearBuf](#esfont_clearbuf)
  - [Framebuffer](#framebuffer)
 	- type [esFb](#esfb)
 	- type [esFb_create](#esfb_create)
@@ -93,12 +86,6 @@
 	- func [esMusic_free](#esmusic_free)
 	- func [esMusic_play](#esmusic_play)
 	- func [esMusic_halt](#esmusic_halt)
- - [Sprites](#sprites)
-	- func [esSprites2d_init](#essprites2d_init)
-	- func [esSprites2d_clear](#essprites2d_clear)
-	- func [esSprites2d_put](#essprites2d_put)
-	- func [esSprites2d_prepear](#essprites2d_prepear)
-	- func [esSprites2d_render](#essprites2d_render)
 
 
 
@@ -324,7 +311,7 @@ esErr esShader_dualFile(esShader *shader,
 ## `esShader_dualText`
 ```c
 esErr esShader_dualText(esShader *shader,
-		const char *vertFile, const char *fragFile,
+		const char *vertSource, const char *fragSource,
 		const esShaderAttrib *attribs, int attribCount);
 ```
 
@@ -503,50 +490,6 @@ void esTexture_free(esTexture *tex);
 ```
 
 
-# Font
-
-## `esFont`
-```c
-typedef struct {
-	esTexture *texture;
-	esShader *shader;
-
-	int vert_count;
-	int buf_size, buf_alloc;
-	esGeoBuf geo_buf;
-	esGeo geo;
-	void *buf;
-} esFont;
-```
-
-## `esFont_create`
-```c
-esErr esFont_create(esFont *ft, esTexture *tex, esShader *shad,
-		int attrib_loc, int attrib_uv, int addition_attribs);
-```
-
-## `esFont_delete`
-```c
-void esFont_delete(esFont *ft);
-```
-
-## `esFont_addText`
-```c
-void esFont_addText(esFont *ft, float offset_x, float offset_y,
-		const char *fmt, ...);
-```
-
-## `esFont_render`
-```c
-void esFont_render(esFont *ft);
-```
-
-## `esFont_clearBuf`
-```c
-void esFont_clearBuf(esFont *ft);
-```
-
-
 # Framebuffer
 
 ## `esFb`
@@ -632,40 +575,5 @@ void esMusic_play(esMusic *mu);
 ## `esMusic_halt`
 ```c
 void esMusic_halt(void);
-```
-
-
-# Sprites
-
-```c
-#define ES_SPRITE_FLIPX 1
-#define ES_SPRITE_FLIPY 2
-#define ES_SPRITE_FLIPXY (ES_SPRITE_FLIPX | ES_SPRITE_FLIPY)
-```
-
-## `esSprites2d_init`
-```c
-void esSprites2d_init(int palettDim, int maxSprites);
-```
-
-## `esSprites2d_clear`
-```c
-void esSprites2d_clear(void);
-```
-
-## `esSprites2d_put`
-```c
-void esSprites2d_put(float x, float y, float radius,
-		float rotate, int spriteX, int spriteY, unsigned flags);
-```
-
-## `esSprites2d_prepear`
-```c
-void esSprites2d_prepear(void);
-```
-
-## `esSprites2d_render`
-```c
-void esSprites2d_render(void);
 ```
 
