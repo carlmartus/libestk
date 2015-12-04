@@ -74,9 +74,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="126.0823"
-     inkscape:cy="80.37335"
+     inkscape:zoom="8"
+     inkscape:cx="90.969262"
+     inkscape:cy="29.140491"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -233,14 +233,14 @@
        sodipodi:linespacing="125%"
        x="-24.282364"
        y="184.18387"
-       transform="translate(-39.466251,190.45132)"><textPath
+       transform="translate(-40.923319,190.69707)"><textPath
          xlink:href="#path4280"
          id="textPath4282"><tspan
    id="tspan4253"
    style="stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none">ESTK</tspan></textPath></text>
     <path
        style="opacity:1;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 335.19477,70.263643 c 82.8325,8.58629 164.70536,34.597717 164.70536,34.597717"
+       d="M 335.19477,68.495876 C 417.32016,79.55704 502.96562,102.61857 502.96562,102.61857"
        id="path4280"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
