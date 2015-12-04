@@ -75,4 +75,6 @@ installed.
 # Todo
 
  * [ ] esGame_ quit function
+ * [ ] Framebuffer non-cubing dimensions
+ * [ ] Framebuffer multiple textures
 
