@@ -16,7 +16,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="logo5.svg">
+   sodipodi:docname="logo5.svg"
+   inkscape:export-filename="/home/martin/.pgit/libestk/logo/logo5.png"
+   inkscape:export-xdpi="188.75999"
+   inkscape:export-ydpi="188.75999">
   <defs
      id="defs4">
     <linearGradient
@@ -72,8 +75,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="98.775527"
-     inkscape:cy="68.594983"
+     inkscape:cx="78.275527"
+     inkscape:cy="107.59498"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
