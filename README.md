@@ -66,3 +66,8 @@ If you wish to add the library to your system run this:
 make install
 ```
 
+
+# Todo
+
+ * [ ] esGame_ quit function
+
