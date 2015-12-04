@@ -34,7 +34,6 @@ include_directories ("${PROJECT_BINARY_DIR}")
 
 #file(GLOB LIB_SOURCE src/*.c)
 set(LIB_SOURCE
-	src/framebuffer.c
 	src/gameloop.c
 	src/geometry.c
 	src/log.c
@@ -63,7 +62,6 @@ set(SAMPLES_SOURCE
 	cam
 	clear
 	events
-	framebuffer
 	image
 	mainloop
 	quaternion

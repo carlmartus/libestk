@@ -208,21 +208,6 @@ void esTexture_use(esTexture *tex);
 void esTexture_free(esTexture *tex);
 
 // }}}
-// Framebuffer {{{
-
-typedef struct {
-	int dimension;
-	int gl_fb, gl_tex, gl_depth;
-} esFb;
-
-esErr esFb_create(esFb *fb, int dimension,
-		esTextureMipmap min, esTextureMipmap mag);
-void esFb_free(esFb *fb);
-void esFb_set(esFb *fb);
-void esFb_unSet(void);
-void esFb_bind(esFb *fb);
-
-// }}}
 // Audio {{{
 
 typedef struct {
