@@ -205,6 +205,7 @@ typedef struct {
 esErr esTexture_load(esTexture *tex, const char *file_name,
 		esTextureMipmap min, esTextureMipmap mag);
 void esTexture_use(esTexture *tex);
+void esTexture_useWithId(unsigned textureNumber, esTexture *tex);
 void esTexture_free(esTexture *tex);
 
 // }}}

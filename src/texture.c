@@ -37,6 +37,11 @@ void esTexture_use(esTexture *tex) {
 	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
 }
 
+void esTexture_useWithId(unsigned textureNumber, esTexture *tex) {
+	glActiveTexture(textureNumber);
+	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
+}
+
 void esTexture_free(esTexture *tex) {
 	GLuint gltex = tex->gltexture;
 	glDeleteTextures(1, &gltex);
