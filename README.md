@@ -1,13 +1,15 @@
-libestk
-=======
+![ESTK Logo](logo/logo5.png)
 
-OpenGL ES Toolkit v5.0.0-dev.
+# Overview
+
+OpenGL ES Toolkit v5.0.0-dev is a wrapper library working with *OpenGL ES 2.0*.
 
 This project is a continuation of [ESTK](https://github.com/carlmartus/estk)
 which can be considered version 1.0 of libestk.
 
-*LibESTK* is a utility library ment to make *OpenGL ES 2.0* operations easier to
-perform with fewer calls compared to the standard *OpenGL* library.
+*LibESTK* is a utility library ment to make *OpenGL ES 2.0* operations easier
+to perform with fewer calls compared to the standard *OpenGL* library. This
+is compatible with *Emscripten*.
 
 Documentation can be found [here](DOC.md).
 
@@ -65,4 +67,8 @@ If you wish to add the library to your system run this:
 ```
 make install
 ```
+
+To compile a *Emscripten* compatible static library, execute the script
+```compile_emscriptenlib.sh```. This requires a functional *Emscripten*
+installed.
 
