@@ -74,11 +74,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8"
-     inkscape:cx="90.969262"
-     inkscape:cy="29.140491"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="77.181855"
+     inkscape:cy="63.473333"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer5"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="839"
@@ -134,7 +134,8 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Laser"
-     transform="translate(-287.25009,-180.16043)">
+     transform="translate(-287.25009,-180.16043)"
+     style="display:inline">
     <g
        id="g4348"
        transform="translate(-98.184002,-137.18861)">
@@ -169,7 +170,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="matrix(0.99196646,-0.12650114,0.12650114,0.99196646,-24.667207,46.203618)"
+       transform="matrix(0.99196646,-0.12650114,0.12650114,0.99196646,-26.081421,47.617832)"
        id="g4355">
       <circle
          r="9.409091"
