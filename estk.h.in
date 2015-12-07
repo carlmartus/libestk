@@ -213,9 +213,9 @@ typedef struct {
 } esTexture;
 
 esErr esTexture_load(esTexture *tex, const char *file_name,
-		esTextureMipmap min, esTextureMipmap mag);
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag);
 esErr esTexture_createColor(esTexture *tex, unsigned width, unsigned height,
-		esTextureMipmap min, esTextureMipmap mag);
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag);
 void esTexture_use(esTexture *tex);
 void esTexture_useWithId(unsigned textureNumber, esTexture *tex);
 void esTexture_free(esTexture *tex);
@@ -234,7 +234,7 @@ typedef struct {
 
 esErr esMultiRender_create(esMultiRender *mr,
 		unsigned width, unsigned height,
-		esTextureMipmap min, esTextureMipmap mag,
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag,
 		unsigned textureCount, ...);
 void esMultiRender_destroy(esMultiRender *mr);
 void esMultiRender_bind(esMultiRender *mr);

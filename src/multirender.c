@@ -7,7 +7,7 @@
 
 esErr esMultiRender_create(esMultiRender *mr,
 		unsigned width, unsigned height,
-		esTextureMipmap min, esTextureMipmap mag,
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag,
 		unsigned textureCount, ...) {
 
 	mr->textureCount = textureCount;
@@ -41,8 +41,11 @@ esErr esMultiRender_create(esMultiRender *mr,
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0,
 				channelCountMap[channelCount], GL_UNSIGNED_BYTE, 0);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mipmap_map[mag]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipmap_map[min]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+				mipmap_map[mipMapMag]);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+				mipmap_map[mipMapMin]);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

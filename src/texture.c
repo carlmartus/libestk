@@ -15,7 +15,7 @@ static esErr generateTexture(esTexture *tex);
 
 
 esErr esTexture_load(esTexture *tex, const char *file_name,
-		esTextureMipmap min, esTextureMipmap mag) {
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag) {
 	SDL_Surface *surf = IMG_Load(file_name);
 	if (surf == NULL) return ES_FAIL;
 
@@ -32,8 +32,10 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 	glTexImage2D(GL_TEXTURE_2D, 0, mode, surf->w, surf->h,
 			0, mode, GL_UNSIGNED_BYTE, surf->pixels);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipmap_map[min]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mipmap_map[mag]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+			mipmap_map[mipMapMin]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+			mipmap_map[mipMapMag]);
 
 	SDL_FreeSurface(surf);
 	return ES_OK;
@@ -41,15 +43,17 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 
 esErr esTexture_createColor(esTexture *tex,
 		unsigned width, unsigned height,
-		esTextureMipmap min, esTextureMipmap mag) {
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag) {
 
 	if (generateTexture(tex) != ES_OK) return ES_FAIL;
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
 			GL_UNSIGNED_BYTE, NULL);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipmap_map[min]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mipmap_map[mag]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+			mipmap_map[mipMapMin]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+			mipmap_map[mipMapMag]);
 }
 
 void esTexture_use(esTexture *tex) {
