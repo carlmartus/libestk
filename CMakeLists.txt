@@ -65,6 +65,7 @@ set(SAMPLES_SOURCE
 	events
 	image
 	mainloop
+	multirender
 	quaternion
 	red
 	shadercomp

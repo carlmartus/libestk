@@ -228,13 +228,15 @@ void esTexture_free(esTexture *tex);
 
 typedef struct {
 	unsigned textureCount;
-	esGLuint frameBuffer;
+	esGLuint frameBuffer, depthBuffer;
 	esGLuint renderTextures[ES_FRAMEBUFFER_MAX_TEXTURES];
 } esMultiRender;
 
 esErr esMultiRender_create(esMultiRender *mr,
 		unsigned width, unsigned height, unsigned textureCount);
 void esMultiRender_destroy(esMultiRender *mr);
+void esMultiRender_bind(esMultiRender *mr);
+void esMultiRender_unBind(void);
 
 // }}}
 // Audio {{{
