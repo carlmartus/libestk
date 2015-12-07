@@ -8,6 +8,9 @@ static const GLenum mipmap_map[] = {
 	[TEX_LINEAR] = GL_LINEAR,
 };
 
+static esErr generateTexture(esTexture *tex);
+
+
 esErr esTexture_load(esTexture *tex, const char *file_name,
 		esTextureMipmap min, esTextureMipmap mag) {
 	SDL_Surface *surf = IMG_Load(file_name);
@@ -33,6 +36,19 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 	return ES_OK;
 }
 
+esErr esTexture_createColor(esTexture *tex,
+		unsigned width, unsigned height,
+		esTextureMipmap min, esTextureMipmap mag) {
+
+	if (generateTexture(tex) != ES_OK) return ES_FAIL;
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+			GL_UNSIGNED_BYTE, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipmap_map[min]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mipmap_map[mag]);
+}
+
 void esTexture_use(esTexture *tex) {
 	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
 }
@@ -45,5 +61,14 @@ void esTexture_useWithId(unsigned textureNumber, esTexture *tex) {
 void esTexture_free(esTexture *tex) {
 	GLuint gltex = tex->gltexture;
 	glDeleteTextures(1, &gltex);
+}
+
+
+static esErr generateTexture(esTexture *tex) {
+	GLuint gltex;
+	glGenTextures(1, &gltex);
+	tex->gltexture = gltex;
+	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
+	return ES_OK;
 }
 

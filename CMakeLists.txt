@@ -39,6 +39,7 @@ set(LIB_SOURCE
 	src/log.c
 	src/math.c
 	src/misc.c
+	src/multirender.c
 	src/projection.c
 	src/shader.c
 	src/sound.c
