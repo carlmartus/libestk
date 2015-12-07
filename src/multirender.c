@@ -1,10 +1,14 @@
 #include "estk.h"
 #include <GL/glew.h>
 
+#include "internal.h"
+
 // http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 
 esErr esMultiRender_create(esMultiRender *mr,
-		unsigned width, unsigned height, unsigned textureCount, ...) {
+		unsigned width, unsigned height,
+		esTextureMipmap min, esTextureMipmap mag,
+		unsigned textureCount, ...) {
 
 	mr->textureCount = textureCount;
 	mr->width = width;
@@ -26,6 +30,9 @@ esErr esMultiRender_create(esMultiRender *mr,
 	for (int i=0; i<textureCount; i++) {
 		int channelCount = va_arg(args, int);
 		if (channelCount < 1 || channelCount > 4) {
+			esLog(ES_ERRO,
+					"Bad texture channel count (%d) for texture ID %d",
+					channelCount, i);
 			glDeleteTextures(textureCount, mr->renderTextures);
 			return ES_FAIL;
 		}
@@ -34,8 +41,11 @@ esErr esMultiRender_create(esMultiRender *mr,
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0,
 				channelCountMap[channelCount], GL_UNSIGNED_BYTE, 0);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mipmap_map[mag]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipmap_map[min]);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	}
 
 	va_end(args);
@@ -76,7 +86,9 @@ esErr esMultiRender_create(esMultiRender *mr,
 }
 
 void esMultiRender_destroy(esMultiRender *mr) {
-	// TODO Delete everything
+	glDeleteTextures(mr->textureCount, mr->renderTextures);
+	glDeleteRenderbuffers(1, &mr->depthBuffer);
+	glDeleteFramebuffers(1, &mr->frameBuffer);
 }
 
 void esMultiRender_bind(esMultiRender *mr) {
@@ -86,5 +98,16 @@ void esMultiRender_bind(esMultiRender *mr) {
 
 void esMultiRender_unBind(void) {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void esMultiRender_bindTexture(esMultiRender *mr, unsigned textureId) {
+	glBindTexture(GL_TEXTURE_2D, mr->renderTextures[textureId]);
+}
+
+void esMultiRender_bindTextureWithId(esMultiRender *mr, unsigned textureId,
+		unsigned openGlTextureId) {
+
+	glActiveTexture(openGlTextureId);
+	glBindTexture(GL_TEXTURE_2D, mr->renderTextures[textureId]);
 }
 

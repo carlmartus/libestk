@@ -75,8 +75,7 @@ installed.
 # Todo
 
  * [ ] esGame_ quit function
- * [ ] Framebuffer non-cubing dimensions
- * [ ] Framebuffer multiple textures
- * [ ] Multi render texture filter
- * [ ] Multi render free resources
+ * [ ] Better multirender example
+ * [ ] Multirender doc
+ * [ ] TEX_LINEAR estk prefix
 

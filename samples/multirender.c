@@ -62,7 +62,8 @@ int main(int argc, char **argv) {
 
 	// Multi render
 	esMultiRender mr;
-	if (esMultiRender_create(&mr, 400, 300, 2, 2, 3) != ES_OK) {
+	if (esMultiRender_create(&mr, 400, 300, TEX_LINEAR, TEX_LINEAR,
+				2, 2, 3) != ES_OK) {
 		printf("Error creating multi render!\n");
 		return 1;
 	}

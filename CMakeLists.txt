@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/samples)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
+
 # Version/Naming
 # ==============
 
@@ -55,6 +56,7 @@ set_target_properties(${ESTK}
 
 target_link_libraries(${ESTK} m GLEW SDL SDL_image SDL_mixer)
 
+
 # Samples
 # =======
 
@@ -79,6 +81,7 @@ foreach(FILE ${SAMPLES_SOURCE})
 	target_link_libraries(${FILE} ${ESTK} GL)
 	include_directories(${FILE} src)
 endforeach(FILE)
+
 
 # Install
 # =======

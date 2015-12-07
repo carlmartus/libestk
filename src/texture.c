@@ -3,10 +3,13 @@
 #include <SDL/SDL_image.h>
 #include <GL/glew.h>
 
+#include "internal.h"
+
+/*
 static const GLenum mipmap_map[] = {
 	[TEX_NONE] = GL_NEAREST,
 	[TEX_LINEAR] = GL_LINEAR,
-};
+};*/
 
 static esErr generateTexture(esTexture *tex);
 
