@@ -10,7 +10,7 @@ int main() {
 
 	esTexture tex;
 	if (!esTexture_load(&tex, "samples/resources/img.png",
-				TEX_LINEAR, TEX_NONE)) {
+				ES_TEX_LINEAR, ES_TEX_NONE)) {
 		printf("Cannot load image!\n");
 		return 1;
 	}

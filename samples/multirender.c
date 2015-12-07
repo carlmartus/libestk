@@ -7,18 +7,17 @@
 // Shaders
 //=============================================================================
 
-static const char redSrcVert[] = ES_SHADER_SOURCE(
+static const char redSrc_vert[] = ES_SHADER_SOURCE(
 	attribute vec2 in_vertex;
 	void main() {
 		gl_Position = vec4(in_vertex, 0, 1);
 	});
 
-static const char redSrcFrag[] = ES_SHADER_SOURCE(
+static const char redSrc_frag[] = ES_SHADER_SOURCE(
 	void main() {
 		gl_FragData[0] = vec4(1, 0, 0, 1);
 		gl_FragData[1] = vec4(0, 1, 1, 1);
 	});
-
 
 //=============================================================================
 // Geometry
@@ -45,7 +44,7 @@ int main(int argc, char **argv) {
 		{ 0, "in_vertex" },
 	};
 
-	if (!esShader_dualText(&red, redSrcVert, redSrcFrag, redAttribs, 1)) {
+	if (!esShader_dualText(&red, redSrc_vert, redSrc_frag, redAttribs, 1)) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
@@ -62,7 +61,7 @@ int main(int argc, char **argv) {
 
 	// Multi render
 	esMultiRender mr;
-	if (esMultiRender_create(&mr, 400, 300, TEX_LINEAR, TEX_LINEAR,
+	if (esMultiRender_create(&mr, 400, 300, ES_TEX_LINEAR, ES_TEX_LINEAR,
 				2, 2, 3) != ES_OK) {
 		printf("Error creating multi render!\n");
 		return 1;

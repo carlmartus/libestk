@@ -203,8 +203,8 @@ void esProj_perspective(
 //=============================================================================
 
 typedef enum {
-	TEX_NONE,
-	TEX_LINEAR,
+	ES_TEX_NONE,
+	ES_TEX_LINEAR,
 } esTextureMipmap;
 
 typedef struct {

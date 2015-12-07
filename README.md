@@ -77,5 +77,4 @@ installed.
  * [ ] esGame_ quit function
  * [ ] Better multirender example
  * [ ] Multirender doc
- * [ ] TEX_LINEAR estk prefix
 

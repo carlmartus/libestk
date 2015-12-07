@@ -7,8 +7,8 @@
 
 /*
 static const GLenum mipmap_map[] = {
-	[TEX_NONE] = GL_NEAREST,
-	[TEX_LINEAR] = GL_LINEAR,
+	[ES_TEX_NONE] = GL_NEAREST,
+	[ES_TEX_LINEAR] = GL_LINEAR,
 };*/
 
 static esErr generateTexture(esTexture *tex);
