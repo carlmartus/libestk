@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <SDL/SDL.h>
 #include <GL/glew.h>
 #include "estk.h"
 
@@ -34,7 +33,7 @@ int main(int argc, char **argv) {
 	}
 	esShader_free(&shad2);
 
-	SDL_Quit();
+	esGame_quit();
 	return 0;
 }
 

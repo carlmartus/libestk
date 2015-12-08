@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <GL/glew.h>
 #include <math.h>
-#include <SDL/SDL.h>
 #include "estk.h"
 
 static esSound sfx;
@@ -15,7 +14,7 @@ static void frame(float time) {
 static void loop_exit() {
 	esSound_free(&sfx);
 	printf("Good bye!\n");
-	SDL_Quit();
+	esGame_quit();
 }
 
 int main() {

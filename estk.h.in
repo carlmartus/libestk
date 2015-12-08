@@ -84,6 +84,8 @@ void esGame_loopQuit(void);
 void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
 void esGame_registerMouse(void (*callback) (int button, int down, int x, int y));
 void esGame_windowSize(int *w, int *h);
+void esGame_delay(unsigned int timeMs);
+void esGame_quit(void);
 
 // }}}
 // Shader {{{

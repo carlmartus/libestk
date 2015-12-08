@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <GL/glew.h>
 #include <math.h>
-#include <SDL/SDL.h>
 #include "estk.h"
 
 static esShader shad;
@@ -39,7 +38,7 @@ static void loop_exit(void) {
 	esLog(ES_INFO, "Good bye!");
 	esGeoBuf_free(&geobuf);
 	esShader_free(&shad);
-	SDL_Quit();
+	esGame_quit();
 }
 
 int main() {

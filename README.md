@@ -74,7 +74,6 @@ installed.
 
 # Todo
 
- * [ ] esGame_ quit function
  * [ ] Better multirender example
  * [ ] Multirender doc
 

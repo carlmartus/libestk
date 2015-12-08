@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <SDL/SDL.h>
 #include <GL/gl.h>
 #include "estk.h"
 
@@ -13,8 +12,8 @@ int main(int argc, char **argv) {
 
 	esGame_glSwap();
 
-	SDL_Delay(800);
-	SDL_Quit();
+	esGame_delay(800);
+	esGame_quit();
 	return 0;
 }
 

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <SDL/SDL.h>
 #include <GL/glew.h>
 #include "estk.h"
 
@@ -60,8 +59,8 @@ int main(int argc, char **argv) {
 	esGeoBuf_free(&geobuf);
 	esShader_free(&shad);
 
-	SDL_Delay(800);
-	SDL_Quit();
+	esGame_delay(800);
+	esGame_quit();
 	return 0;
 }
 

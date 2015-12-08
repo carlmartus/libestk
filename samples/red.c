@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <GL/glew.h>
-#include <SDL/SDL.h>
 #include "estk.h"
 
 static const char *glslRed_vert = ES_SHADER_SOURCE(
@@ -68,8 +67,8 @@ int main() {
 	esGeoBuf_free(&geoBuf);
 	esShader_free(&shad);
 
-	SDL_Delay(800);
-	SDL_Quit();
+	esGame_delay(800);
+	esGame_quit();
 	return 0;
 }
 
