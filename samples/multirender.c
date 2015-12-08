@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <GL/glew.h>
 #include "estk.h"
+#include <GL/glew.h>
 
 //=============================================================================
 // Shaders
@@ -44,7 +43,7 @@ int main(int argc, char **argv) {
 	};
 
 	if (!esShader_dualText(&red, redSrc_vert, redSrc_frag, redAttribs, 1)) {
-		printf("Cannot load shaders!\n");
+		esLog(ES_ERRO, "Cannot load shaders!\n");
 		return 1;
 	}
 
@@ -62,7 +61,7 @@ int main(int argc, char **argv) {
 	esMultiRender mr;
 	if (esMultiRender_create(&mr, 400, 300, ES_TEX_LINEAR, ES_TEX_LINEAR,
 				2, 2, 3) != ES_OK) {
-		printf("Error creating multi render!\n");
+		esLog(ES_ERRO, "Error creating multi render!\n");
 		return 1;
 	}
 
