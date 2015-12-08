@@ -52,13 +52,13 @@ int main() {
 
 	esGeo geo;
 	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &geoBuf, ES_GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
+	esGeo_point(&geo, 0, &geoBuf, ES_DATA_FLOAT, 2, 0, 0, ES_FALSE);
 
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShader_use(&shad);
-	esGeo_renderElements(&geo, &geoElements, ES_GEODATA_USHORT, 3);
+	esGeo_renderElements(&geo, &geoElements, ES_DATA_USHORT, 3);
 	//esGeoRenderArray(&geo, 3);
 	esCheckGlError();
 

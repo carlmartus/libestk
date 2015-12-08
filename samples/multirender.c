@@ -13,7 +13,7 @@ static const char redSrc_vert[] = ES_SHADER_SOURCE(
 
 static const char redSrc_frag[] = ES_SHADER_SOURCE(
 	void main() {
-		gl_FragData[0] = vec4(1, 0, 0, 1);
+		gl_FragData[0] = vec4(1, 1, 0, 1);
 		gl_FragData[1] = vec4(0, 1, 1, 1);
 	});
 
@@ -21,10 +21,9 @@ static const char redSrc_frag[] = ES_SHADER_SOURCE(
 // Geometry
 //=============================================================================
 
-static const float triangleLocation[] = {
-	0.0f, 0.0f,
-	1.0f, 0.0f,
-	0.0f, 1.0f,
+static const int8_t triangleLocation[] = {
+	-1, -1,		 1, -1,		-1,  1,
+	 1, -1,		 1,  1,		-1,  1,
 };
 
 //=============================================================================
@@ -55,7 +54,7 @@ int main(int argc, char **argv) {
 
 	esGeo geo;
 	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &bufTriangle, ES_GEODATA_FLOAT, 2, 0, 0, ES_FALSE);
+	esGeo_point(&geo, 0, &bufTriangle, ES_DATA_BYTE, 2, 0, 0, ES_FALSE);
 
 	// Multi render
 	esMultiRender mr;
@@ -67,17 +66,20 @@ int main(int argc, char **argv) {
 
 	// Render
 	esMultiRender_bind(&mr);
+	esMultiRender_unBind();
 
-	glClearColor(1.0, 0.5, 0.5, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 	esShader_use(&red);
-	esGeo_renderArray(&geo, 3);
+	esGeo_renderArray(&geo, 6);
 
+	/*
 	esMultiRender_unBind();
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	*/
 
 	esGame_glSwap();
 

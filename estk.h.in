@@ -7,7 +7,7 @@
 
 typedef unsigned int esGLuint;
 
-// Misc {{{
+// Common {{{
 //=============================================================================
 
 typedef enum {
@@ -19,6 +19,16 @@ typedef enum {
 	ES_FALSE = 0,
 	ES_TRUE = 1,
 } esBool;
+
+typedef enum {
+	ES_DATA_FLOAT,
+	ES_DATA_INT,
+	ES_DATA_UINT,
+	ES_DATA_SHORT,
+	ES_DATA_USHORT,
+	ES_DATA_BYTE,
+	ES_DATA_UBYTE,
+} esDataType;
 
 void _esCheckGlError();
 #define esCheckGlError() _esCheckGlError(__FILE__, __LINE__)
@@ -146,18 +156,8 @@ typedef enum {
 	ES_GEOBUF_STREAM,
 } esGeoBufType;
 
-typedef enum {
-	ES_GEODATA_FLOAT,
-	ES_GEODATA_INT,
-	ES_GEODATA_UINT,
-	ES_GEODATA_SHORT,
-	ES_GEODATA_USHORT,
-	ES_GEODATA_BYTE,
-	ES_GEODATA_UBYTE,
-} esGeoDataType;
-
 typedef struct {
-	esGeoDataType dataType;
+	esDataType dataType;
 	esGLuint glBuf;
 } esGeoBuf;
 
@@ -175,7 +175,7 @@ typedef struct {
 
 	struct {
 		esGeoBuf *geobuf;
-		esGeoDataType datatype;
+		esDataType datatype;
 		int elements;
 		size_t offset, stride;
 		esBool normalized;
@@ -184,11 +184,11 @@ typedef struct {
 
 void esGeo_reset(esGeo *geo, int bufCount);
 void esGeo_point(esGeo *geo, int id, esGeoBuf *geobuf,
-		esGeoDataType datatype, int elements,
+		esDataType datatype, int elements,
 		size_t offset, size_t stride, esBool normalized);
 void esGeo_renderArray(const esGeo *geo, int vertices);
 void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
-		esGeoDataType dataType, int vertexCount);
+		esDataType dataType, int vertexCount);
 
 // }}}
 // Projection {{{
@@ -215,6 +215,9 @@ typedef struct {
 	esGLuint gltexture;
 } esTexture;
 
+esErr esTexture_createRaw(esTexture *tex, unsigned channelCount,
+		unsigned width, unsigned height, esDataType dataType, const void *ptr,
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag);
 #ifdef ES_OPT_IMAGE
 esErr esTexture_load(esTexture *tex, const char *file_name,
 		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag);

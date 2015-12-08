@@ -34,8 +34,8 @@ int main() {
 
 	esGeo geo;
 	esGeo_reset(&geo, 2);
-	esGeo_point(&geo, 0, &geobuf, ES_GEODATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
-	esGeo_point(&geo, 1, &geobuf, ES_GEODATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
+	esGeo_point(&geo, 0, &geobuf, ES_DATA_FLOAT, 2, 0, sizeof(struct data), ES_FALSE);
+	esGeo_point(&geo, 1, &geobuf, ES_DATA_UBYTE, 4, 8, sizeof(struct data), ES_TRUE);
 
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

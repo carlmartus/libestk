@@ -3,8 +3,6 @@
 
 #include "internal.h"
 
-// http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
-
 esErr esMultiRender_create(esMultiRender *mr,
 		unsigned width, unsigned height,
 		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag,
@@ -16,13 +14,6 @@ esErr esMultiRender_create(esMultiRender *mr,
 
 	// Create textures
 	glGenTextures(textureCount, mr->renderTextures);
-
-	static const GLenum channelCountMap[] = {
-		[1] = GL_RED,
-		[2] = GL_RG,
-		[3] = GL_RGB,
-		[4] = GL_RGBA,
-	};
 
 	va_list args;
 	va_start(args, textureCount);
@@ -39,13 +30,13 @@ esErr esMultiRender_create(esMultiRender *mr,
 
 		glBindTexture(GL_TEXTURE_2D, mr->renderTextures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0,
-				channelCountMap[channelCount], GL_UNSIGNED_BYTE, 0);
+				map_channelCount[channelCount], GL_UNSIGNED_BYTE, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-				mipmap_map[mipMapMag]);
+				map_mipmap[mipMapMag]);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-				mipmap_map[mipMapMin]);
+				map_mipmap[mipMapMin]);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

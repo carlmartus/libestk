@@ -94,6 +94,6 @@ make install
 
 # Todo
 
- * [ ] Better multirender example
  * [ ] Raw image texture
+ * [ ] Better multirender example
 

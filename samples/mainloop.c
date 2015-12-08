@@ -70,7 +70,7 @@ int main() {
 	esGeoBuf_array(&geobuf, lo, sizeof(lo), ES_GEOBUF_STATIC);
 
 	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &geobuf, ES_GEODATA_FLOAT, 3, 0, 0, ES_FALSE);
+	esGeo_point(&geo, 0, &geobuf, ES_DATA_FLOAT, 3, 0, 0, ES_FALSE);
 
 	glClearColor(0.3, 0.4, 0.6, 1.0);
 	esGame_loop(frame, loop_exit, 0);
