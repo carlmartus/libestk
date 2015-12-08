@@ -14,6 +14,7 @@ static const GLenum mipmap_map[] = {
 static esErr generateTexture(esTexture *tex);
 
 
+#ifdef ES_OPT_IMAGE
 esErr esTexture_load(esTexture *tex, const char *file_name,
 		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag) {
 	SDL_Surface *surf = IMG_Load(file_name);
@@ -40,6 +41,7 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 	SDL_FreeSurface(surf);
 	return ES_OK;
 }
+#endif
 
 esErr esTexture_createColor(esTexture *tex,
 		unsigned width, unsigned height,

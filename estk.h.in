@@ -203,6 +203,7 @@ void esProj_perspective(
 // }}}
 // Texture {{{
 //=============================================================================
+#cmakedefine ES_OPT_IMAGE
 
 typedef enum {
 	ES_TEX_NONE,
@@ -214,8 +215,10 @@ typedef struct {
 	esGLuint gltexture;
 } esTexture;
 
+#ifdef ES_OPT_IMAGE
 esErr esTexture_load(esTexture *tex, const char *file_name,
 		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag);
+#endif
 esErr esTexture_createColor(esTexture *tex, unsigned width, unsigned height,
 		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag);
 void esTexture_use(esTexture *tex);

@@ -62,10 +62,15 @@ set_target_properties(${ESTK}
 	PROPERTIES VERSION ${VERSION}
 	SOVERSION ${MAJOR})
 
-target_link_libraries(${ESTK} m GLEW SDL SDL_image)
+target_link_libraries(${ESTK} m GLEW SDL)
+
 if(ES_OPT_AUDIO)
 	target_link_libraries(${ESTK} SDL_mixer)
 endif(ES_OPT_AUDIO)
+
+if(ES_OPT_IMAGE)
+	target_link_libraries(${ESTK} SDL_image)
+endif(ES_OPT_IMAGE)
 
 # Samples
 # =======
@@ -75,7 +80,6 @@ set(SAMPLES_SOURCE
 	cam
 	clear
 	events
-	image
 	mainloop
 	multirender
 	quaternion
@@ -88,6 +92,10 @@ set(SAMPLES_SOURCE
 if(ES_OPT_AUDIO)
 	set(SAMPLES_SOURCE ${SAMPLES_SOURCE} sound)
 endif(ES_OPT_AUDIO)
+
+if(ES_OPT_IMAGE)
+	set(SAMPLES_SOURCE ${SAMPLES_SOURCE} image)
+endif(ES_OPT_IMAGE)
 
 foreach(FILE ${SAMPLES_SOURCE})
 	add_executable(${FILE} "samples/${FILE}.c")
