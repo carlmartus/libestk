@@ -7,6 +7,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 option(ES_OPT_AUDIO "Audio with SDL_mixer" YES)
 option(ES_OPT_IMAGE "Image loading with SDL_image" YES)
+option(ES_OPT_EMSCRIPTEN "Emscripten mode" NO)
 
 # Version/Naming
 # ==============
@@ -21,12 +22,15 @@ set(ESTK estk${MAJOR})
 # Configuration
 # =============
 
-find_package(SDL REQUIRED)
-find_package(SDL_image REQUIRED)
-if(ES_OPT_AUDIO)
+if(NOT ES_OPT_EMSCRIPTEN)
+	find_package(SDL REQUIRED)
+	find_package(SDL_image REQUIRED)
+	find_package(GLEW REQUIRED)
+endif(NOT ES_OPT_EMSCRIPTEN)
+
+if(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
 	find_package(SDL_mixer REQUIRED)
-endif(ES_OPT_AUDIO)
-find_package(GLEW REQUIRED)
+endif(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/estk.h.in"
@@ -62,15 +66,17 @@ set_target_properties(${ESTK}
 	PROPERTIES VERSION ${VERSION}
 	SOVERSION ${MAJOR})
 
-target_link_libraries(${ESTK} m GLEW SDL)
+if(NOT ES_OPT_EMSCRIPTEN)
+	target_link_libraries(${ESTK} m GLEW SDL)
+endif(NOT ES_OPT_EMSCRIPTEN)
 
-if(ES_OPT_AUDIO)
+if(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
 	target_link_libraries(${ESTK} SDL_mixer)
-endif(ES_OPT_AUDIO)
+endif(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
 
-if(ES_OPT_IMAGE)
+if(ES_OPT_IMAGE AND NOT ES_OPT_EMSCRIPTEN)
 	target_link_libraries(${ESTK} SDL_image)
-endif(ES_OPT_IMAGE)
+endif(ES_OPT_IMAGE AND NOT ES_OPT_EMSCRIPTEN)
 
 # Samples
 # =======
@@ -97,11 +103,14 @@ if(ES_OPT_IMAGE)
 	set(SAMPLES_SOURCE ${SAMPLES_SOURCE} image)
 endif(ES_OPT_IMAGE)
 
-foreach(FILE ${SAMPLES_SOURCE})
-	add_executable(${FILE} "samples/${FILE}.c")
-	target_link_libraries(${FILE} ${ESTK} GL)
-	include_directories(${FILE} src)
-endforeach(FILE)
+# No samples for emscripen since it's just .js files
+if(NOT ES_OPT_EMSCRIPTEN)
+	foreach(FILE ${SAMPLES_SOURCE})
+		add_executable(${FILE} "samples/${FILE}.c")
+		target_link_libraries(${FILE} ${ESTK} GL)
+		include_directories(${FILE} src)
+	endforeach(FILE)
+endif(NOT ES_OPT_EMSCRIPTEN)
 
 # Install
 # =======

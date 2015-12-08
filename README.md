@@ -50,12 +50,14 @@ Documentation can be found [here](DOC.md).
 
 
 ## Compilation
-  First generate the build environment with cmake:
+
+### Traditional compilation
+First generate the build environment with cmake:
 ```
 cmake .
 ```
 
-  Now build the projet with:
+Now build the projet with:
 ```
 make
 ```
@@ -67,14 +69,31 @@ If you wish to add the library to your system run this:
 make install
 ```
 
-To compile a *Emscripten* compatible static library, execute the script
-```compile_emscriptenlib.sh```. This requires a functional *Emscripten*
-installed.
+### Emscripten
+This kind of compilation requires a installment of *Emscripten*. To compile the
+library with *Emscripten*, you must run *CMake* with a tool chain file from the
+*Emscripten* SDK:
+```
+ccmake -DCMAKE_TOOLCHAIN_FILE=[Path to Emscripten]/cmake/Modules/Platform/Emscripten.cmake ..
+```
+
+In the configuration GUI, set the option ```ES_OPT_EMSCRIPTEN``` to ```YES```.
+
+If you want *ESTK* to be a part of the *Emscripten* SDK (Recomended) set the
+parameter ```CMAKE_INSTALL_PREFIX``` to ```[Path to Emscripten]/system```.
+
+Now build the projet with:
+```
+make
+```
+
+If you want to integrate *ESTK* into your copy of the *Emscripten* SDK run:
+```
+make install
+```
 
 # Todo
 
  * [ ] Better multirender example
  * [ ] Raw image texture
- * [X] CMake option audio
- * [ ] CMake option image
 
