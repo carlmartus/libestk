@@ -74,4 +74,7 @@ installed.
 # Todo
 
  * [ ] Better multirender example
+ * [ ] Raw image texture
+ * [X] CMake option audio
+ * [ ] CMake option image
 

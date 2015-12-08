@@ -1,7 +1,12 @@
-cmake_minimum_required(VERSION 2.6)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/samples)
+cmake_minimum_required(VERSION 2.8)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
+# Configuration
+# =============
+
+option(ES_OPT_AUDIO "Audio with SDL_mixer" YES)
+option(ES_OPT_IMAGE "Image loading with SDL_image" YES)
 
 # Version/Naming
 # ==============
@@ -13,13 +18,14 @@ set(NOTE "-dev")
 set(VERSION ${MAJOR}.${MINOR}.${PATCH}${NOTE})
 set(ESTK estk${MAJOR})
 
-
 # Configuration
 # =============
 
 find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
-find_package(SDL_mixer REQUIRED)
+if(ES_OPT_AUDIO)
+	find_package(SDL_mixer REQUIRED)
+endif(ES_OPT_AUDIO)
 find_package(GLEW REQUIRED)
 
 configure_file (
@@ -28,7 +34,6 @@ configure_file (
 	)
 
 include_directories ("${PROJECT_BINARY_DIR}")
-
 
 # Library
 # =======
@@ -43,9 +48,12 @@ set(LIB_SOURCE
 	src/multirender.c
 	src/projection.c
 	src/shader.c
-	src/sound.c
 	src/texture.c
 	)
+
+if(ES_OPT_AUDIO)
+	set(LIB_SOURCE ${LIB_SOURCE} src/sound.c)
+endif(ES_OPT_AUDIO)
 
 add_library(${ESTK} STATIC ${LIB_SOURCE})
 set_property(TARGET ${ESTK} PROPERTY C_STANDARD 11) # Use GNU C11
@@ -54,8 +62,10 @@ set_target_properties(${ESTK}
 	PROPERTIES VERSION ${VERSION}
 	SOVERSION ${MAJOR})
 
-target_link_libraries(${ESTK} m GLEW SDL SDL_image SDL_mixer)
-
+target_link_libraries(${ESTK} m GLEW SDL SDL_image)
+if(ES_OPT_AUDIO)
+	target_link_libraries(${ESTK} SDL_mixer)
+endif(ES_OPT_AUDIO)
 
 # Samples
 # =======
@@ -71,17 +81,19 @@ set(SAMPLES_SOURCE
 	quaternion
 	red
 	shadercomp
-	sound
 	stride
 	uniform
 	)
+
+if(ES_OPT_AUDIO)
+	set(SAMPLES_SOURCE ${SAMPLES_SOURCE} sound)
+endif(ES_OPT_AUDIO)
 
 foreach(FILE ${SAMPLES_SOURCE})
 	add_executable(${FILE} "samples/${FILE}.c")
 	target_link_libraries(${FILE} ${ESTK} GL)
 	include_directories(${FILE} src)
 endforeach(FILE)
-
 
 # Install
 # =======

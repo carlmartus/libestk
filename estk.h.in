@@ -249,6 +249,8 @@ void esMultiRender_bindTextureWithId(esMultiRender *mr, unsigned textureId,
 // }}}
 // Audio {{{
 //=============================================================================
+#cmakedefine ES_OPT_AUDIO
+#ifdef ES_OPT_AUDIO
 
 typedef struct {
 	Mix_Chunk *chunk;
@@ -266,6 +268,7 @@ esErr esMusic_create(esMusic *mu, const char *file_name);
 void esMusic_free(esMusic *mu);
 void esMusic_play(esMusic *mu);
 void esMusic_halt(void);
+#endif
 
 //=============================================================================
 // }}}

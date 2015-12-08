@@ -26,9 +26,11 @@ void esGame_init(int screen_width, int screen_height) {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	SDL_SetVideoMode(screen_width, screen_height, 0, SDL_OPENGL);
 
+#ifdef ES_OPT_AUDIO
 	if (Mix_OpenAudio(22050, AUDIO_S16, 1, 4096)) {
 		esLog(ES_ERRO, "Cannot open audio\n");
 	}
+#endif
 
 	glewInit();
 }
@@ -139,7 +141,9 @@ void esGame_loop(
 		start = SDL_GetTicks();
 	}
 
+#ifdef ES_OPT_AUDIO
 	esMusic_halt();
+#endif
 	if (exit) exit();
 #endif
 }
