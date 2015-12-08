@@ -25,6 +25,7 @@ Documentation can be found [here](DOC.md).
  * Quaternion rotations
  * Keyboard/Mouse event wrapper
  * Sound file loading and playing
+ * Render to multiple textures
 
 # Screenshots
 ![Attributes](screenshots/attr.png)
@@ -73,5 +74,4 @@ installed.
 # Todo
 
  * [ ] Better multirender example
- * [ ] Multirender doc
 

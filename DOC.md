@@ -69,13 +69,13 @@
 	- type [esTexture_load](#estexture_load)
 	- type [esTexture_use](#estexture_use)
 	- type [esTexture_free](#estexture_free)
- - [Framebuffer](#framebuffer)
-	- type [esFb](#esfb)
-	- type [esFb_create](#esfb_create)
-	- type [esFb_free](#esfb_free)
-	- type [esFb_set](#esfb_set)
-	- type [esFb_unSet](#esfb_unset)
-	- type [esFb_bind](#esfb_bind)
+ - [Multi render](#multi render)
+	- type [esMultiRender](#esmultirender)
+	- func [esMultiRender_create](#esmultirender_create)
+	- func [esMultiRender_bind](#esmultirender_bind)
+	- func [esMultiRender_unBind](#esmultirender_unbind)
+	- func [esMultiRender_bindTexture](#esmultirender_bindtexture)
+	- func [esMultiRender_bindTextureWithId](#esmultirender_bindtexturewithid)
  - [Audio](#audio)
 	- type [esSound](#essound)
 	- func [esSound_create](#essound_create)
@@ -490,40 +490,49 @@ void esTexture_free(esTexture *tex);
 ```
 
 
-# Framebuffer
+# Multi render
 
-## `esFb`
+## `esMultiRender`
 ```c
 typedef struct {
-	int dimension;
-	int gl_fb, gl_tex, gl_depth;
-} esFb;
+	unsigned textureCount, width, height;
+	esGLuint frameBuffer, depthBuffer;
+	esGLuint renderTextures[ES_FRAMEBUFFER_MAX_TEXTURES];
+} esMultiRender;
 ```
 
-## `esFb_create`
+## `esMultiRender_create`
 ```c
-esErr esFb_create(esFb *fb, int dimension,
-		esTextureMipmap min, esTextureMipmap mag);
+esErr esMultiRender_create(esMultiRender *mr,
+		unsigned width, unsigned height,
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag,
+		unsigned textureCount, ...);
 ```
 
-## `esFb_free`
+## `esMultiRender_destroy`
 ```c
-void esFb_free(esFb *fb);
+void esMultiRender_destroy(esMultiRender *mr);
 ```
 
-## `esFb_set`
+## `esMultiRender_bind`
 ```c
-void esFb_set(esFb *fb);
+void esMultiRender_bind(esMultiRender *mr);
 ```
 
-## `esFb_unSet`
+## `esMultiRender_unBind`
 ```c
-void esFb_unSet(void);
+void esMultiRender_unBind(void);
 ```
 
-## `esFb_bind`
+## `esMultiRender_bindTexture`
 ```c
-void esFb_bind(esFb *fb);
+void esMultiRender_bindTexture(esMultiRender *mr, unsigned textureId);
+```
+
+## `esMultiRender_bindTextureWithId`
+```c
+void esMultiRender_bindTextureWithId(esMultiRender *mr, unsigned textureId,
+		unsigned openGlTextureId);
 ```
 
 # Audio
