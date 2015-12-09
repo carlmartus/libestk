@@ -1,21 +1,7 @@
 #include "estk.h"
 #include <GL/glew.h>
 
-static const unsigned int map_type[] = {
-	[ES_GEODATA_FLOAT] = GL_FLOAT,
-	[ES_GEODATA_INT] = GL_INT,
-	[ES_GEODATA_UINT] = GL_UNSIGNED_INT,
-	[ES_GEODATA_SHORT] = GL_SHORT,
-	[ES_GEODATA_USHORT] = GL_UNSIGNED_SHORT,
-	[ES_GEODATA_BYTE] = GL_BYTE,
-	[ES_GEODATA_UBYTE] = GL_UNSIGNED_BYTE,
-};
-
-static const unsigned int map_draw[] = {
-	[ES_GEOBUF_STATIC] = GL_STATIC_DRAW,
-	[ES_GEOBUF_DYNAMIC] = GL_DYNAMIC_DRAW,
-	[ES_GEOBUF_STREAM] = GL_STREAM_DRAW,
-};
+#include "internal.h"
 
 void esGeoBuf_create(esGeoBuf *buf) {
 	glGenBuffers(1, &buf->glBuf);
@@ -62,7 +48,7 @@ void esGeo_reset(esGeo *geo, int bufCount) {
 }
 
 void esGeo_point(esGeo *geo, int id, esGeoBuf *geobuf,
-		esGeoDataType datatype, int elements,
+		esDataType datatype, int elements,
 		size_t offset, size_t stride, esBool normalized)
 {
 	geo->buf[id].geobuf = geobuf;
@@ -110,7 +96,7 @@ void esGeo_renderArray(const esGeo *geo, int vertices) {
 }
 
 void esGeo_renderElements(const esGeo *geo, const esGeoBuf *indices,
-		esGeoDataType dataType, int vertexCount) {
+		esDataType dataType, int vertexCount) {
 
 	preRender(geo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices->glBuf);

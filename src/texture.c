@@ -2,17 +2,34 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <GL/glew.h>
-
 #include "internal.h"
-
-/*
-static const GLenum mipmap_map[] = {
-	[ES_TEX_NONE] = GL_NEAREST,
-	[ES_TEX_LINEAR] = GL_LINEAR,
-};*/
 
 static esErr generateTexture(esTexture *tex);
 
+esErr esTexture_createRaw(esTexture *tex, unsigned channelCount,
+		unsigned width, unsigned height, esDataType dataType, const void *ptr,
+		esTextureMipmap mipMapMin, esTextureMipmap mipMapMag) {
+
+	tex->w = width;
+	tex->h = height;
+
+	GLuint gltex;
+	glGenTextures(1, &gltex);
+	tex->gltexture = gltex;
+	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
+
+	int mode = map_channelCount[channelCount];
+
+	glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height,
+			0, mode, dataType, ptr);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+			map_mipmap[mipMapMin]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+			map_mipmap[mipMapMag]);
+
+	return ES_OK;
+}
 
 #ifdef ES_OPT_IMAGE
 esErr esTexture_load(esTexture *tex, const char *file_name,
@@ -34,9 +51,9 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 			0, mode, GL_UNSIGNED_BYTE, surf->pixels);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-			mipmap_map[mipMapMin]);
+			map_mipmap[mipMapMin]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-			mipmap_map[mipMapMag]);
+			map_mipmap[mipMapMag]);
 
 	SDL_FreeSurface(surf);
 	return ES_OK;
@@ -53,9 +70,9 @@ esErr esTexture_createColor(esTexture *tex,
 			GL_UNSIGNED_BYTE, NULL);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-			mipmap_map[mipMapMin]);
+			map_mipmap[mipMapMin]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-			mipmap_map[mipMapMag]);
+			map_mipmap[mipMapMag]);
 }
 
 void esTexture_use(esTexture *tex) {

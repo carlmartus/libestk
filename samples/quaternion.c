@@ -60,7 +60,7 @@ int main() {
 	// Geometric buffer
 	esGeoBuf_create(&geoBuf);
 	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &geoBuf, ES_GEODATA_FLOAT,
+	esGeo_point(&geo, 0, &geoBuf, ES_DATA_FLOAT,
 			3, 0, sizeof(esVec3f), ES_FALSE);
 
 	// Shader dual
