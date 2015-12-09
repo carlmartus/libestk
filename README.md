@@ -96,4 +96,5 @@ make install
 
  * [ ] Raw image texture
  * [ ] Better multirender example
+ * [ ] Multirender bind all textures function
 

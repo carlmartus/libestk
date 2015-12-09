@@ -7,13 +7,17 @@
 
 static const char redSrc_vert[] = ES_SHADER_SOURCE(
 	attribute vec2 in_vertex;
+	attribute vec2 in_uv;
+	varying vec2 va_uv;
 	void main() {
+		va_uv = in_uv;
 		gl_Position = vec4(in_vertex, 0, 1);
 	});
 
 static const char redSrc_frag[] = ES_SHADER_SOURCE(
+	varying vec2 va_uv;
 	void main() {
-		gl_FragData[0] = vec4(1, 1, 0, 1);
+		gl_FragData[0] = vec4(va_uv, 0, 1);
 		gl_FragData[1] = vec4(0, 1, 1, 1);
 	});
 
@@ -21,14 +25,21 @@ static const char redSrc_frag[] = ES_SHADER_SOURCE(
 // Geometry
 //=============================================================================
 
-static const int8_t triangleLocation[] = {
+static const int8_t triangleLoc[] = {
 	-1, -1,		 1, -1,		-1,  1,
 	 1, -1,		 1,  1,		-1,  1,
+};
+
+static const int8_t triangleUv[] = {
+	0, 0,		 1, 0,		0,  1,
+	1, 0,		 1, 1,		0,  1,
 };
 
 //=============================================================================
 // Program
 //=============================================================================
+
+static void generateImage(void *ptr, unsigned w, unsigned h);
 
 int main(int argc, char **argv) {
 
@@ -39,6 +50,7 @@ int main(int argc, char **argv) {
 	esShader red;
 	esShaderAttrib redAttribs[] = {
 		{ 0, "in_vertex" },
+		{ 1, "in_uv" },
 	};
 
 	if (!esShader_dualText(&red, redSrc_vert, redSrc_frag, redAttribs, 1)) {
@@ -47,14 +59,28 @@ int main(int argc, char **argv) {
 	}
 
 	// Geometry
-	esGeoBuf bufTriangle;
-	esGeoBuf_create(&bufTriangle);
-	esGeoBuf_array(&bufTriangle, triangleLocation, sizeof(triangleLocation),
+	esGeoBuf bufTriangleLoc, bufTriangleUv;
+
+	esGeoBuf_create(&bufTriangleLoc);
+	esGeoBuf_array(&bufTriangleLoc, triangleLoc, sizeof(triangleLoc),
+			ES_GEOBUF_STATIC);
+
+	esGeoBuf_create(&bufTriangleUv);
+	esGeoBuf_array(&bufTriangleUv, triangleUv, sizeof(triangleUv),
 			ES_GEOBUF_STATIC);
 
 	esGeo geo;
-	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &bufTriangle, ES_DATA_BYTE, 2, 0, 0, ES_FALSE);
+	esGeo_reset(&geo, 2);
+	esGeo_point(&geo, 0, &bufTriangleLoc, ES_DATA_BYTE, 2, 0, 0, ES_FALSE);
+	esGeo_point(&geo, 1, &bufTriangleUv, ES_DATA_UBYTE, 2, 0, 0, ES_FALSE);
+
+	// Image
+	char imageBuf[64*64*2];
+	generateImage(imageBuf, 64, 64);
+
+	esTexture tex;
+	esTexture_createRaw(&tex, 2, 64, 64, ES_DATA_UBYTE, imageBuf,
+			ES_TEX_LINEAR, ES_TEX_LINEAR);
 
 	// Multi render
 	esMultiRender mr;
@@ -84,11 +110,27 @@ int main(int argc, char **argv) {
 	esGame_glSwap();
 
 	// Free
-	esGeoBuf_free(&bufTriangle);
+	esGeoBuf_free(&bufTriangleLoc);
 	esShader_free(&red);
 
 	esGame_delay(800);
 	esGame_quit();
 	return 0;
+}
+
+
+static void generateImage(void *ptr, unsigned w, unsigned h) {
+#define GEN_SHIFT 3
+	int x, y;
+	unsigned char *dst = ptr;
+
+	for (y=0; y<h; y++) {
+		for (x=0; x<w; x++) {
+			*dst++ = ((x >> GEN_SHIFT) & 1) ^ ((y >> GEN_SHIFT) & 1);
+			*dst++ = x & ((1 << GEN_SHIFT) - 1);
+		}
+	}
+
+#undef GEN_SHIFT
 }
 
