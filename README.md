@@ -94,8 +94,5 @@ make install
 
 # Todo
 
- * [ ] Raw image texture
- * [ ] Better multirender example
- * [ ] Multirender bind all textures function
  * [ ] Shared uniform system
 
