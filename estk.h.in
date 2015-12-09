@@ -80,7 +80,7 @@ typedef void (*esLogMessage) (esLogClass class, const char *message);
 
 void esLogCallback(esLogMessage callback);
 void esLog(int class, const char *fmt, ...);
-#define esLogVersion() esLog(ES_DEBU, "libestk Version " ESTK_VERSION)
+#define esLogVersion() esLog(ES_INFO, "libestk Version " ESTK_VERSION)
 #define esLogUnimplemented() esLog(ES_DEBU, "Unimplemented %s:%d", __FILE__, __LINE__)
 
 // }}}
@@ -94,6 +94,7 @@ void esGame_loopQuit(void);
 void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
 void esGame_registerMouse(void (*callback) (int button, int down, int x, int y));
 void esGame_windowSize(int *w, int *h);
+void esGame_setViewport(void);
 void esGame_delay(unsigned int timeMs);
 void esGame_quit(void);
 
@@ -122,7 +123,7 @@ typedef struct {
 	const char *name;
 } esShaderAttrib;
 
-#define ES_SHADER_SOURCE(src) "#version 100\n" #src
+#define ES_SHADER_SOURCE(src) "#version 130\n" #src
 
 
 void esShader_reset(esShader *shader);
@@ -140,7 +141,7 @@ esErr esShader_dualText(esShader *shader,
 		const esShaderAttrib *attribs, int attribCount);
 void esShader_use(const esShader *shader);
 void esShader_free(esShader *shader);
-esErr esShader_uniformRegister(esShader *shader,
+esGLuint esShader_uniformRegister(esShader *shader,
 		esUniform reg, const char *name);
 esErr esShader_uniformGl(esShader *shader, esUniform reg);
 
@@ -250,6 +251,7 @@ void esMultiRender_unBind(void);
 void esMultiRender_bindTexture(esMultiRender *mr, unsigned textureId);
 void esMultiRender_bindTextureWithId(esMultiRender *mr, unsigned textureId,
 		unsigned openGlTextureId);
+void esMultiRender_bindAllTextures(esMultiRender *mr);
 
 
 // }}}

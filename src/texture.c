@@ -18,16 +18,20 @@ esErr esTexture_createRaw(esTexture *tex, unsigned channelCount,
 	tex->gltexture = gltex;
 	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
 
+	if (channelCount < 1 || channelCount > 4) return ES_FAIL;
+
 	int mode = map_channelCount[channelCount];
 
 	glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height,
-			0, mode, dataType, ptr);
+			0, mode, map_type[dataType], ptr);
+	esCheckGlError();
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 			map_mipmap[mipMapMin]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
 			map_mipmap[mipMapMag]);
 
+	esCheckGlError();
 	return ES_OK;
 }
 
@@ -56,6 +60,7 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 			map_mipmap[mipMapMag]);
 
 	SDL_FreeSurface(surf);
+	esCheckGlError();
 	return ES_OK;
 }
 #endif
@@ -73,6 +78,9 @@ esErr esTexture_createColor(esTexture *tex,
 			map_mipmap[mipMapMin]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
 			map_mipmap[mipMapMag]);
+
+	esCheckGlError();
+	return ES_OK;
 }
 
 void esTexture_use(esTexture *tex) {

@@ -30,7 +30,7 @@ Documentation can be found [here](DOC.md).
 # Screenshots
 ![Attributes](screenshots/attr.png)
 ![Camera projection](screenshots/cam.png)
-![Frame buffer, rendering to texture](screenshots/fb.png)
+![Multirender, render to textures](screenshots/multirender.png)
 ![Image, textures](screenshots/image.png)
 ![Game main loop](screenshots/mainloop.png)
 ![Quaternions](screenshots/quaternion.png)
@@ -97,4 +97,5 @@ make install
  * [ ] Raw image texture
  * [ ] Better multirender example
  * [ ] Multirender bind all textures function
+ * [ ] Shared uniform system
 

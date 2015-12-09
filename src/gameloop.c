@@ -172,6 +172,10 @@ void esGame_windowSize(int *w, int *h) {
 	*h = window_h;
 }
 
+void esGame_setViewport(void) {
+	glViewport(0, 0, window_w, window_h);
+}
+
 void esGame_delay(unsigned int timeMs) {
 	SDL_Delay(timeMs);
 }

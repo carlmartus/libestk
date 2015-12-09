@@ -159,7 +159,7 @@ esErr esShader_uniformRegister(esShader *shader,
 	return ES_OK;
 }
 
-esErr esShader_uniformGl(esShader *shader, esUniform reg) {
+esGLuint esShader_uniformGl(esShader *shader, esUniform reg) {
 	return shader->uniforms[reg];
 }
 

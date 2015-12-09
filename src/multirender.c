@@ -29,8 +29,9 @@ esErr esMultiRender_create(esMultiRender *mr,
 		}
 
 		glBindTexture(GL_TEXTURE_2D, mr->renderTextures[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0,
-				map_channelCount[channelCount], GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_2D, 0, map_channelCount[channelCount],
+				width, height, 0, map_channelCount[channelCount],
+				GL_UNSIGNED_BYTE, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
 				map_mipmap[mipMapMag]);
@@ -100,8 +101,15 @@ void esMultiRender_bindTexture(esMultiRender *mr, unsigned textureId) {
 
 void esMultiRender_bindTextureWithId(esMultiRender *mr, unsigned textureId,
 		unsigned openGlTextureId) {
-
-	glActiveTexture(openGlTextureId);
+	glActiveTexture(GL_TEXTURE0 + openGlTextureId);
 	glBindTexture(GL_TEXTURE_2D, mr->renderTextures[textureId]);
+}
+
+void esMultiRender_bindAllTextures(esMultiRender *mr) {
+	for (int i=0; i<mr->textureCount; i++) {
+		esMultiRender_bindTextureWithId(mr, i, i);
+	}
+
+	esCheckGlError();
 }
 
