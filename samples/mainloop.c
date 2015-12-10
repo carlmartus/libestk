@@ -3,6 +3,7 @@
 #include <math.h>
 #include <assert.h>
 #include "estk.h"
+#include "resources/mesh_jeep.h"
 
 //=============================================================================
 // GLSL program
@@ -27,56 +28,6 @@ static const char glslMesh_frag[] = ES_SHADER_SOURCE(
 	void main() {
 		gl_FragColor = va_color;
 	});
-
-
-//=============================================================================
-// Sample mesh data
-// Generated using blender python script in extra/blender_export.py
-//=============================================================================
-
-typedef struct {
-	float x, y, z;
-	uint8_t r, g, b, a;
-} Vertex;
-
-static Vertex vertData[] = {
-	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
-	{ 1.0, -1.0, -1.0, 0x84, 0x99, 0x19, 0xff },
-	{ -1.0, -1.0, -1.0, 0xf9, 0x08, 0x3b, 0xff },
-	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
-	{ -1.0, -1.0, -1.0, 0xf9, 0x08, 0x3b, 0xff },
-	{ -1.0, 1.0, -1.0, 0x32, 0xff, 0x01, 0xff },
-	{ 1.0, 1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ -1.0, 1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
-	{ 1.0, 1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
-	{ 1.0, -1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
-	{ 1.0, 1.0, 1.0, 0xff, 0x00, 0x3d, 0xff },
-	{ 1.0, -1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
-	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
-	{ 1.0, -1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
-	{ 1.0, -1.0, -1.0, 0x31, 0xff, 0x01, 0xff },
-	{ 1.0, -1.0, -1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ 1.0, -1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
-	{ 1.0, -1.0, -1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
-	{ -1.0, -1.0, -1.0, 0x29, 0x5b, 0xff, 0xff },
-	{ -1.0, -1.0, -1.0, 0xff, 0xf5, 0x9c, 0xff },
-	{ -1.0, -1.0, 1.0, 0xff, 0xe3, 0x00, 0xff },
-	{ -1.0, 1.0, 1.0, 0xff, 0xe3, 0x00, 0xff },
-	{ -1.0, -1.0, -1.0, 0xff, 0xf5, 0x9c, 0xff },
-	{ -1.0, 1.0, 1.0, 0xff, 0xe3, 0x00, 0xff },
-	{ -1.0, 1.0, -1.0, 0xff, 0x15, 0x37, 0xff },
-	{ 1.0, 1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
-	{ 1.0, 1.0, -1.0, 0x38, 0xff, 0x09, 0xff },
-	{ -1.0, 1.0, -1.0, 0xec, 0x18, 0x37, 0xff },
-	{ 1.0, 1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
-	{ -1.0, 1.0, -1.0, 0xec, 0x18, 0x37, 0xff },
-	{ -1.0, 1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
-};
 
 //=============================================================================
 // Internals
@@ -133,12 +84,13 @@ static void frame(float time) {
 	esShader_use(&shad);
 
 	float v = 0.01f * (float) frame_count;
-	esVec3f cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 1.4f };
+	esVec3f cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 3.0f };
 	esVec3f cam_at = { 0.0f, 0.0f, 0.0f };
 	esVec3f cam_up = { 0.0f, 0.0f, 1.0f };
 
 	esMat4f mat;
-	esProj_perspective(&mat, 0.9f+v, 1.333f, 0.1f, 20.0f, cam_ey, cam_at, cam_up);
+	esProj_perspective(&mat, 0.9f+v, 1.333f, 0.1f, 20.0f,
+			cam_ey, cam_at, cam_up);
 
 	glUniformMatrix4fv(esShader_uniformGl(&shad, 0),
 			1, 0, (const float*) &mat);
