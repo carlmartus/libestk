@@ -1,23 +1,139 @@
 #include <stdio.h>
 #include <GL/glew.h>
 #include <math.h>
+#include <assert.h>
 #include "estk.h"
+
+//=============================================================================
+// GLSL program
+//=============================================================================
+
+static const char glslMesh_vert[] = ES_SHADER_SOURCE(
+	attribute vec3 in_location;
+	attribute vec4 in_color;
+
+	varying vec4 va_color;
+
+	uniform mat4 un_view;
+
+	void main() {
+		va_color = in_color;
+		gl_Position = un_view*vec4(in_location, 1.0);
+	});
+
+static const char glslMesh_frag[] = ES_SHADER_SOURCE(
+	varying vec4 va_color;
+
+	void main() {
+		gl_FragColor = va_color;
+	});
+
+
+//=============================================================================
+// Sample mesh data
+// Generated using blender python script in extra/blender_export.py
+//=============================================================================
+
+typedef struct {
+	float x, y, z;
+	uint8_t r, g, b, a;
+} Vertex;
+
+static Vertex vertData[] = {
+	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
+	{ 1.0, -1.0, -1.0, 0x84, 0x99, 0x19, 0xff },
+	{ -1.0, -1.0, -1.0, 0xf9, 0x08, 0x3b, 0xff },
+	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
+	{ -1.0, -1.0, -1.0, 0xf9, 0x08, 0x3b, 0xff },
+	{ -1.0, 1.0, -1.0, 0x32, 0xff, 0x01, 0xff },
+	{ 1.0, 1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ -1.0, 1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
+	{ 1.0, 1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
+	{ 1.0, -1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
+	{ 1.0, 1.0, 1.0, 0xff, 0x00, 0x3d, 0xff },
+	{ 1.0, -1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
+	{ 1.0, 1.0, -1.0, 0xff, 0x00, 0x3d, 0xff },
+	{ 1.0, -1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
+	{ 1.0, -1.0, -1.0, 0x31, 0xff, 0x01, 0xff },
+	{ 1.0, -1.0, -1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ 1.0, -1.0, 1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
+	{ 1.0, -1.0, -1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ -1.0, -1.0, 1.0, 0xff, 0x04, 0x21, 0xff },
+	{ -1.0, -1.0, -1.0, 0x29, 0x5b, 0xff, 0xff },
+	{ -1.0, -1.0, -1.0, 0xff, 0xf5, 0x9c, 0xff },
+	{ -1.0, -1.0, 1.0, 0xff, 0xe3, 0x00, 0xff },
+	{ -1.0, 1.0, 1.0, 0xff, 0xe3, 0x00, 0xff },
+	{ -1.0, -1.0, -1.0, 0xff, 0xf5, 0x9c, 0xff },
+	{ -1.0, 1.0, 1.0, 0xff, 0xe3, 0x00, 0xff },
+	{ -1.0, 1.0, -1.0, 0xff, 0x15, 0x37, 0xff },
+	{ 1.0, 1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
+	{ 1.0, 1.0, -1.0, 0x38, 0xff, 0x09, 0xff },
+	{ -1.0, 1.0, -1.0, 0xec, 0x18, 0x37, 0xff },
+	{ 1.0, 1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
+	{ -1.0, 1.0, -1.0, 0xec, 0x18, 0x37, 0xff },
+	{ -1.0, 1.0, 1.0, 0x31, 0xff, 0x00, 0xff },
+};
+
+//=============================================================================
+// Internals
+//=============================================================================
 
 static esShader shad;
 static esGeo geo;
 static esGeoBuf geobuf;
 
+static void frame(float time);
+static void loop_exit(void);
+
+//=============================================================================
+// Program
+//=============================================================================
+
+int main() {
+	esGame_init(400, 300);
+	esLogVersion();
+
+	esShaderAttrib shadAttribs[] = {
+		{ 0, "in_location" },
+		{ 1, "in_color" },
+	};
+
+	glEnable(GL_DEPTH_TEST);
+
+	assert(esShader_dualText(&shad, glslMesh_vert, glslMesh_frag,
+				shadAttribs, 1) == ES_OK);
+	assert(esShader_uniformRegister(&shad, 0, "un_view") == ES_OK);
+
+	esGeoBuf_create(&geobuf);
+	esGeoBuf_array(&geobuf, vertData, sizeof(vertData), ES_GEOBUF_STATIC);
+
+	esGeo_reset(&geo, 2);
+	esGeo_point(&geo, 0, &geobuf,
+			ES_DATA_FLOAT, 3, 0, sizeof(Vertex), ES_FALSE);
+	esGeo_point(&geo, 1, &geobuf,
+			ES_DATA_UBYTE, 4, 12, sizeof(Vertex), ES_TRUE);
+
+	glClearColor(0.3, 0.4, 0.6, 1.0);
+	esGame_loop(frame, loop_exit, 0);
+	return 0;
+}
+
+
 static void frame(float time) {
 	static int frame_count = 0;
 
-	esLog(ES_INFO, "Frame %3.3f", time);
+	//esLog(ES_INFO, "Frame %3.3f", time);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	esShader_use(&shad);
 
 	float v = 0.01f * (float) frame_count;
-	esVec3f cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 1.0f };
+	esVec3f cam_ey = { 3.0f*cosf(v*4.0f), 3.0f*sinf(v*4.0f), 1.4f };
 	esVec3f cam_at = { 0.0f, 0.0f, 0.0f };
 	esVec3f cam_up = { 0.0f, 0.0f, 1.0f };
 
@@ -27,7 +143,7 @@ static void frame(float time) {
 	glUniformMatrix4fv(esShader_uniformGl(&shad, 0),
 			1, 0, (const float*) &mat);
 
-	esGeo_renderArray(&geo, 3);
+	esGeo_renderArray(&geo, sizeof(vertData) / sizeof(vertData[0]));
 
 	esGame_glSwap();
 
@@ -39,41 +155,5 @@ static void loop_exit(void) {
 	esGeoBuf_free(&geobuf);
 	esShader_free(&shad);
 	esGame_quit();
-}
-
-int main() {
-	esGame_init(400, 300);
-	esLogVersion();
-
-	esShaderAttrib shadAttribs[] = {
-		{ 0, "in_vertex" },
-	};
-	if (!esShader_dualFile(&shad,
-				"samples/resources/cam.vert", "samples/resources/red.frag",
-				shadAttribs, 1)) {
-		esLog(ES_ERRO, "Cannot load shaders!");
-		return 1;
-	}
-
-	if (!esShader_uniformRegister(&shad, 0, "un_view")) {
-		esLog(ES_ERRO, "Cannot get uniform");
-		return 1;
-	}
-
-	static const float lo[] = {
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-	};
-
-	esGeoBuf_create(&geobuf);
-	esGeoBuf_array(&geobuf, lo, sizeof(lo), ES_GEOBUF_STATIC);
-
-	esGeo_reset(&geo, 1);
-	esGeo_point(&geo, 0, &geobuf, ES_DATA_FLOAT, 3, 0, 0, ES_FALSE);
-
-	glClearColor(0.3, 0.4, 0.6, 1.0);
-	esGame_loop(frame, loop_exit, 0);
-	return 0;
 }
 

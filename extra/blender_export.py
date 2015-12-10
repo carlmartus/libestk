@@ -14,7 +14,7 @@ def export():
         for loop in loops:
             loc = loop.vert.co
             col = loop[layerColor]
-            line = '{ %.1f, %.1f, %.1f, %s, %s, %s }' % (
+            line = '{ %.1f, %.1f, %.1f, %s, %s, %s, 0xff },' % (
                     loc.x, loc.y, loc.z,
                     fl2Hex(col.r), fl2Hex(col.g), fl2Hex(col.b))
             print(line)
