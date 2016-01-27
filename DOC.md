@@ -25,6 +25,7 @@
 	- func [esLogUnimplemented](#eslogunimplemented)
  - [Game loop](#game loop)
 	- func [esGame_init](#esgame_init)
+	- func [esGame_quit](#esgame_quit)
 	- func [esGame_glSwap](#esgame_glswap)
 	- func [esGame_loop](#esgame_loop)
 	- func [esGame_loopQuit](#esgame_loopquit)
@@ -220,6 +221,11 @@ void esLogUnimplemented();
 ## `esGame_init`
 ```c
 void esGame_init(int screen_width, int screen_height);
+```
+
+## `esGame_quit`
+```c
+void esGame_quit(void);
 ```
 
 ## `esGame_glSwap`

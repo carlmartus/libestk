@@ -88,6 +88,7 @@ void esLog(int class, const char *fmt, ...);
 //=============================================================================
 
 void esGame_init(int screen_width, int screen_height);
+void esGame_quit(void);
 void esGame_glSwap(void);
 void esGame_loop(void (*frame)(float t), void (*exit)(), int frame_rate);
 void esGame_loopQuit(void);
@@ -96,7 +97,6 @@ void esGame_registerMouse(void (*callback) (int button, int down, int x, int y))
 void esGame_windowSize(int *w, int *h);
 void esGame_setViewport(void);
 void esGame_delay(unsigned int timeMs);
-void esGame_quit(void);
 
 // }}}
 // Shader {{{
