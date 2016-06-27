@@ -8,6 +8,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 option(ES_OPT_AUDIO "Audio with SDL_mixer" YES)
 option(ES_OPT_IMAGE "Image loading with SDL_image" YES)
 option(ES_OPT_EMSCRIPTEN "Emscripten mode" NO)
+option(ES_OPT_GLEW "GLEW settings" YES)
 
 # Version/Naming
 # ==============
