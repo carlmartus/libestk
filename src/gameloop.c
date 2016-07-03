@@ -1,11 +1,7 @@
 #include "estk.h"
 #include <string.h>
 #include <SDL/SDL.h>
-#ifdef ES_OPT_GLEW
-#include <GL/glew.h>
-#else
-#include <GL/gl.h>
-#endif
+#include "internal.h"
 
 #ifdef EMSCRIPTEN
 #include <emscripten/emscripten.h>
@@ -36,7 +32,7 @@ void esGame_init(int screen_width, int screen_height) {
 	}
 #endif
 
-#ifdef ES_OPT_GLEW
+#ifdef ES_OPT_GL_GLEW
 	glewInit();
 #endif
 }

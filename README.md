@@ -14,18 +14,22 @@ is compatible with *Emscripten*.
 Documentation can be found [here](DOC.md).
 
 # Features
- * FPS bound game loop
- * OpenGL ES Compatibility
- * WebGL compatibility
- * Emscripten compatibility
- * GLSL Shaders wrapper
- * OpenGL vertex buffer wrapper
- * Projection matrix generators
- * Texture file loading
- * Quaternion rotations
- * Keyboard/Mouse event wrapper
- * Sound file loading and playing
- * Render to multiple textures
+ * FPS bound game loop.
+ * OpenGL ES Compatibility.
+ * WebGL compatibility.
+ * Emscripten compatibility.
+ * GLSL Shaders wrapper.
+ * OpenGL vertex buffer wrapper.
+ * Projection matrix generators.
+ * Texture file loading.
+ * Quaternion rotations.
+ * Keyboard/Mouse event wrapper.
+ * Sound file loading and playing.
+ * Render to multiple textures.
+
+# Development
+ * Render to texture not ES2 compatible.
+ * GLES2 mode not working with uniforms.
 
 # Screenshots
 ![Attributes](screenshots/attr.png)
@@ -46,7 +50,7 @@ Documentation can be found [here](DOC.md).
  * SDL
  * SDL_image
  * SDL_mixer
- * GLEW
+ * GLEW (Optional on *nix* systems)
 
 
 ## Compilation

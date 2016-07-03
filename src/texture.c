@@ -1,7 +1,6 @@
 #include "estk.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include <GL/glew.h>
 #include "internal.h"
 
 static esErr generateTexture(esTexture *tex);

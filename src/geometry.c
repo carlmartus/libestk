@@ -1,6 +1,4 @@
 #include "estk.h"
-#include <GL/glew.h>
-
 #include "internal.h"
 
 void esGeoBuf_create(esGeoBuf *buf) {

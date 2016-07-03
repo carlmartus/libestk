@@ -1,4 +1,20 @@
 #pragma once
+#include "estk.h"
+
+// OpenGL conditional includes
+#ifdef ES_OPT_GL_GLEW
+#include <GL/glew.h>
+#endif
+
+#ifdef ES_OPT_GL_GLES2
+#include <GL/gl.h>
+#include <GLES2/gl2.h>
+#endif
+
+#ifdef ES_OPT_GL_LEGACY
+#include <GL/gl.h>
+#endif
+
 
 static const GLenum map_mipmap[] = {
 	[ES_TEX_NONE] = GL_NEAREST,

@@ -1,6 +1,4 @@
 #include "estk.h"
-#include <GL/glew.h>
-
 #include "internal.h"
 
 esErr esMultiRender_create(esMultiRender *mr,
@@ -68,7 +66,13 @@ esErr esMultiRender_create(esMultiRender *mr,
 				GL_TEXTURE_2D, mr->renderTextures[i], 0);
 	}
 
+#ifdef ES_OPT_GL_GLEW
 	glDrawBuffers(textureCount, drawBuffers);
+#endif
+
+#ifdef ES_OPT_GL_GLEW
+	glDrawBuffers(textureCount, drawBuffers);
+#endif
 
 	// Validate
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {

@@ -4,7 +4,9 @@
 #include <SDL/SDL_mixer.h>
 
 #define ESTK_VERSION "@MAJOR@.@MINOR@.@PATCH@@NOTE@"
-#cmakedefine ES_OPT_GLEW
+#cmakedefine ES_OPT_GL_GLEW
+#cmakedefine ES_OPT_GL_GLES2
+#cmakedefine ES_OPT_GL_LEGACY
 
 typedef unsigned int esGLuint;
 

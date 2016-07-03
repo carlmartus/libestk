@@ -1,5 +1,5 @@
 #include "estk.h"
-#include <GL/glew.h>
+#include "internal.h"
 
 //==============================================================================
 // Interal shader operations

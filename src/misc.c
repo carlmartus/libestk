@@ -1,8 +1,8 @@
 #include "estk.h"
+#include "internal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <GL/glew.h>
 
 static void checkError(const char *file, int line) {
 	GLenum err = glGetError();
