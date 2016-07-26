@@ -1,29 +1,49 @@
 #include <stdio.h>
-#include <GL/glew.h>
 #include "estk.h"
+
+const char *vert = ES_SHADER_SOURCE(
+precision mediump float;
+
+attribute vec3 inVertex;
+uniform vec4 unBase;
+varying vec4 vaBase;
+
+void main() {
+	vaBase = unBase;
+	gl_Position = vec4(inVertex, 1);
+});
+
+const char *frag = ES_SHADER_SOURCE(
+precision mediump float;
+
+varying vec4 vaBase;
+
+void main() {
+	gl_FragColor = vaBase;
+});
+
 
 int main(int argc, char **argv) {
 
-	esGame_init(400, 300);
+	esGame_init("Uniform sample", 400, 300);
 	esLogVersion();
 
 	esShader shad;
 	esShaderAttrib shadAttribs[] = {
-		{ 0, "in_vertex" },
+		{ 0, "inVertex" },
 	};
-	if (!esShader_dualFile(&shad,
-				"samples/resources/uni.vert", "samples/resources/uni.frag",
-				shadAttribs, 1)) {
+	if (!esShader_dualText(&shad, vert, frag, shadAttribs, 1)) {
 		printf("Cannot load shaders!\n");
 		return 1;
 	}
 
-	if (!esShader_uniformRegister(&shad, 0, "un_base")) {
+	if (!esShader_uniformRegister(&shad, 0, "unBase")) {
 		printf("Cannot get uniform constant\n");
 		return 1;
 	}
 
 	esShader_use(&shad);
+	esLog(ES_INFO, "Uniform %p", glUniform4f);
 	glUniform4f(esShader_uniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
 
 	static const float red_lo[] = {

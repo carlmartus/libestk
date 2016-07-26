@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "estk.h"
 
 static void loop_frame(float fr) {
@@ -15,7 +15,7 @@ static void callback_message(int sdlkey, int down) {
 
 int main(int argc, char **argv) {
 
-	esGame_init(400, 300);
+	esGame_init("Events sample", 400, 300);
 	esLogVersion();
 
 	esGame_registerKey(SDLK_q, callback_quit);

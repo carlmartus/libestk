@@ -1,10 +1,9 @@
 #include <stdio.h>
-#include <GL/glew.h>
 #include "estk.h"
 
 int main() {
 
-	esGame_init(400, 300);
+	esGame_init("Image sample", 400, 300);
 	esLogVersion();
 
 	esTexture tex;

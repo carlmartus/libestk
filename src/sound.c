@@ -1,5 +1,5 @@
 #include "estk.h"
-#include <SDL/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 
 esErr esSound_create(esSound *sn, const char *file_name) {
 	sn->chunk = Mix_LoadWAV(file_name);

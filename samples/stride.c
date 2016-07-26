@@ -1,10 +1,8 @@
 #include <stdio.h>
-#include <GL/glew.h>
 #include "estk.h"
 
 int main() {
-
-	esGame_init(400, 300);
+	esGame_init("Stride sample", 400, 300);
 	esLogVersion();
 
 	esShader shad;

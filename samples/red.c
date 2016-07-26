@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <GL/glew.h>
 #include "estk.h"
 
 static const char *glslRed_vert = ES_SHADER_SOURCE(
@@ -19,7 +18,7 @@ static const char *glslRed_frag = ES_SHADER_SOURCE(
 
 int main() {
 
-	esGame_init(400, 300);
+	esGame_init("Red triangle sample", 400, 300);
 	esLogVersion();
 
 	esShader shad;

@@ -1,5 +1,4 @@
 #include "estk.h"
-#include <GL/glew.h>
 #include <assert.h>
 
 //=============================================================================
@@ -70,7 +69,7 @@ static void generateImage(void *ptr, unsigned w, unsigned h);
 
 int main(int argc, char **argv) {
 
-	esGame_init(400, 300);
+	esGame_init("Multi render sample", 400, 300);
 	esLogVersion();
 
 	// Shader

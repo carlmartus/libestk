@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
+project(estk C)
+
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
@@ -15,7 +17,7 @@ option(ES_OPT_GL_LEGACY "OpenGL legacy mode" NO)
 # Version/Naming
 # ==============
 
-set(MAJOR 5)
+set(MAJOR 6)
 set(MINOR 0)
 set(PATCH 0)
 set(NOTE "-dev")
@@ -26,17 +28,14 @@ set(ESTK estk${MAJOR})
 # =============
 
 if(NOT ES_OPT_EMSCRIPTEN)
-	find_package(SDL REQUIRED)
-	find_package(SDL_image REQUIRED)
 	find_package(GLEW REQUIRED)
 endif(NOT ES_OPT_EMSCRIPTEN)
 
-if(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
-	find_package(SDL_mixer REQUIRED)
-endif(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
+include(FindPkgConfig)
+pkg_search_module(SDL2 REQUIRED sdl2)
 
 configure_file (
-	"${PROJECT_SOURCE_DIR}/estk.h.in"
+	"src/estk.h.in"
 	"${PROJECT_BINARY_DIR}/estk.h"
 	)
 
@@ -70,15 +69,15 @@ set_target_properties(${ESTK}
 	SOVERSION ${MAJOR})
 
 if(NOT ES_OPT_EMSCRIPTEN)
-	target_link_libraries(${ESTK} m GLEW SDL)
+	target_link_libraries(${ESTK} m GLEW SDL2)
 endif(NOT ES_OPT_EMSCRIPTEN)
 
 if(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
-	target_link_libraries(${ESTK} SDL_mixer)
+	target_link_libraries(${ESTK} SDL2_mixer)
 endif(ES_OPT_AUDIO AND NOT ES_OPT_EMSCRIPTEN)
 
 if(ES_OPT_IMAGE AND NOT ES_OPT_EMSCRIPTEN)
-	target_link_libraries(${ESTK} SDL_image)
+	target_link_libraries(${ESTK} SDL2_image)
 endif(ES_OPT_IMAGE AND NOT ES_OPT_EMSCRIPTEN)
 
 # Samples
@@ -87,13 +86,11 @@ endif(ES_OPT_IMAGE AND NOT ES_OPT_EMSCRIPTEN)
 set(SAMPLES_SOURCE
 	attr
 	cam
-	clear
 	events
 	mainloop
 	multirender
 	quaternion
 	red
-	shadercomp
 	stride
 	uniform
 	)

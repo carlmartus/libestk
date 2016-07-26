@@ -15,6 +15,9 @@
 #include <GL/gl.h>
 #endif
 
+#include <GL/gl.h>
+#include <SDL2/SDL_opengles2.h>
+
 
 static const GLenum map_mipmap[] = {
 	[ES_TEX_NONE] = GL_NEAREST,

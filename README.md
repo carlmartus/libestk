@@ -47,10 +47,10 @@ Documentation can be found [here](DOC.md).
 ## Dependencies
  * OpenGL ES 2.0
  * CMake
- * SDL
- * SDL_image
- * SDL_mixer
- * GLEW (Optional on *nix* systems)
+ * *SDL2*
+ * *SDL2_image* (optional)
+ * *SDL2_mixer* (optional)
+ * *GLEW* (Optional on *nix* systems)
 
 
 ## Compilation

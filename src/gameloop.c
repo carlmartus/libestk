@@ -1,6 +1,6 @@
 #include "estk.h"
 #include <string.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "internal.h"
 
 #ifdef EMSCRIPTEN
@@ -9,6 +9,8 @@
 
 #define MAX_KEYS 2000
 
+static SDL_Window *window;
+static SDL_GLContext *glContext;
 static int window_w, window_h;
 
 static int loop_run;
@@ -19,12 +21,32 @@ static struct {
 
 static void (*mouse_callback) (int button, int down, int x, int y) = 0;
 
-void esGame_init(int screen_width, int screen_height) {
+void esGame_init(const char *wmTitle,
+		int screen_width, int screen_height) {
+
 	window_w = screen_width;
 	window_h = screen_height;
 
+#ifdef ES_OPT_AUDIO
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	SDL_SetVideoMode(screen_width, screen_height, 0, SDL_OPENGL);
+#else
+	SDL_Init(SDL_INIT_VIDEO);
+#endif
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
+	//SDL_SetVideoMode(screen_width, screen_height, 0, SDL_OPENGL);
+	window = SDL_CreateWindow(wmTitle,
+			0,
+			0,
+			screen_width, screen_height,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+
+	if (!window) {
+		esLog(ES_ERRO, "Can't create window");
+	}
 
 #ifdef ES_OPT_AUDIO
 	if (Mix_OpenAudio(22050, AUDIO_S16, 1, 4096)) {
@@ -35,9 +57,13 @@ void esGame_init(int screen_width, int screen_height) {
 #ifdef ES_OPT_GL_GLEW
 	glewInit();
 #endif
+
+	glContext = SDL_GL_CreateContext(window);
+	SDL_GL_MakeCurrent(window, glContext);
 }
 
 static void event_key(int sdlkey, int down) {
+	esLog(ES_INFO, "KEY %d %d", sdlkey, down);
 	if (keys[sdlkey].callback) {
 		keys[sdlkey].callback(sdlkey, down);
 	}
@@ -62,8 +88,8 @@ static void events(void) {
 		switch (event.type) {
 			case SDL_QUIT : loop_run = 0; break;
 
-			case SDL_KEYDOWN :	event_key(event.key.keysym.sym, 1); break;
-			case SDL_KEYUP :	event_key(event.key.keysym.sym, 0); break;
+			case SDL_KEYDOWN :	event_key(event.key.keysym.sym&511, 1); break;
+			case SDL_KEYUP :	event_key(event.key.keysym.sym&511, 0); break;
 
 			case SDL_MOUSEMOTION : event_mouse(0, 0, event.motion.x, event.motion.y); break;
 
@@ -78,7 +104,7 @@ static void events(void) {
 }
 
 void esGame_glSwap(void) {
-	SDL_GL_SwapBuffers();
+	SDL_GL_SwapWindow(window);
 }
 
 #ifdef EMSCRIPTEN
@@ -183,6 +209,8 @@ void esGame_delay(unsigned int timeMs) {
 }
 
 void esGame_quit(void) {
+	SDL_GL_DeleteContext(glContext);
+	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 

@@ -1,6 +1,5 @@
 #include "estk.h"
-#include <SDL/SDL.h>
-#include <GL/glew.h>
+#include <SDL2/SDL.h>
 
 static esShader shader;
 static esGeo geo;
@@ -54,7 +53,7 @@ static void callback_quit(int sdlkey, int down) {
 }
 
 int main() {
-	esGame_init(400, 300);
+	esGame_init("Quaternion sample", 400, 300);
 	esLogVersion();
 
 	// Geometric buffer

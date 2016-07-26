@@ -11,9 +11,12 @@ static int checkShader(GLuint id, const char *shaderInfo) {
 	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 
 	if (result != GL_TRUE) {
-		char info_buf[500];
-		glGetShaderInfoLog(id, sizeof(info_buf)-1, NULL, info_buf);
+		char infoBuf[500];
+		GLsizei infoLen;
+		glGetShaderInfoLog(id, sizeof(infoBuf)-1, &infoLen, infoBuf);
+
 		esCheckGlError();
+		esLog(ES_ERRO, "GLSL error (%d, %d b): %s", id, infoLen, infoBuf);
 		return ES_FAIL;
 	}
 
@@ -25,6 +28,8 @@ static int loadShaderText(const char *source,
 	esCheckGlError();
 
 	int shad = glCreateShader(shaderType);
+	esCheckGlError();
+
 	glShaderSource(shad, 1, (const char**) &source, NULL);
 	glCompileShader(shad);
 
@@ -72,16 +77,19 @@ esErr esShader_loadText(esShader *shader,
 					"Fragment shader");
 			break;
 
-		default :
 		case ES_SHADER_VERT :
 			id = loadShaderText(source,
 					GL_VERTEX_SHADER,
 					"Vertex shader");
 			break;
+
+		default :
+			esLog(ES_ERRO, "Invalid shader type");
+			return ES_FAIL;
 	}
 
 	if (id == 0) {
-		esLog(ES_ERRO, "Invalid shader source (%s)\n", source);
+		esLog(ES_ERRO, "Invalid shader source (%s)", source);
 		return ES_FAIL;
 	}
 
@@ -124,8 +132,8 @@ esErr esShader_dualFile(esShader *shader,
 
 	esShader_reset(shader);
 
-	if (!esShader_loadFile(shader, ES_SHADER_VERT, vertFile)) return ES_FAIL;
-	if (!esShader_loadFile(shader, ES_SHADER_FRAG, fragFile)) return ES_FAIL;
+	if (esShader_loadFile(shader, ES_SHADER_VERT, vertFile) == ES_FAIL) return ES_FAIL;
+	if (esShader_loadFile(shader, ES_SHADER_FRAG, fragFile) == ES_FAIL) return ES_FAIL;
 	return esShader_compile(shader, attribs, attribCount);
 }
 
@@ -135,8 +143,8 @@ esErr esShader_dualText(esShader *shader,
 
 	esShader_reset(shader);
 
-	if (!esShader_loadText(shader, ES_SHADER_VERT, vertSource)) return ES_FAIL;
-	if (!esShader_loadText(shader, ES_SHADER_FRAG, fragSource)) return ES_FAIL;
+	if (esShader_loadText(shader, ES_SHADER_VERT, vertSource) == ES_FAIL) return ES_FAIL;
+	if (esShader_loadText(shader, ES_SHADER_FRAG, fragSource) == ES_FAIL) return ES_FAIL;
 	return esShader_compile(shader, attribs, attribCount);
 }
 

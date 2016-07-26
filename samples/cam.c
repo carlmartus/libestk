@@ -1,10 +1,9 @@
 #include <stdio.h>
-#include <GL/glew.h>
 #include "estk.h"
 
 int main(int argc, char **argv) {
 
-	esGame_init(400, 300);
+	esGame_init("Camera sample", 400, 300);
 	esLogVersion();
 
 	esShader shad;

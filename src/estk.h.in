@@ -1,10 +1,12 @@
 #ifndef ESTK_H
 #define ESTK_H
 #include <stdlib.h>
-#include <SDL/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
+
+#include <GL/gl.h>
+#include <SDL2/SDL_opengles2.h>
 
 #define ESTK_VERSION "@MAJOR@.@MINOR@.@PATCH@@NOTE@"
-#cmakedefine ES_OPT_GL_GLEW
 #cmakedefine ES_OPT_GL_GLES2
 #cmakedefine ES_OPT_GL_LEGACY
 
@@ -90,7 +92,7 @@ void esLog(int class, const char *fmt, ...);
 // Game loop {{{
 //=============================================================================
 
-void esGame_init(int screen_width, int screen_height);
+void esGame_init(const char *wmTitle, int screen_width, int screen_height);
 void esGame_quit(void);
 void esGame_glSwap(void);
 void esGame_loop(void (*frame)(float t), void (*exit)(), int frame_rate);
@@ -126,8 +128,8 @@ typedef struct {
 	const char *name;
 } esShaderAttrib;
 
-#define ES_SHADER_SOURCE(src) "#version 130\n" #src
-
+//#define ES_SHADER_SOURCE(src) "#version 130\n" #src
+#define ES_SHADER_SOURCE(src) "#version 100\n" #src
 
 void esShader_reset(esShader *shader);
 esErr esShader_loadFile(esShader *shader,

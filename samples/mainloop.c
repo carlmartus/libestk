@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <GL/glew.h>
 #include <math.h>
 #include <assert.h>
 #include "estk.h"
@@ -45,7 +44,7 @@ static void loop_exit(void);
 //=============================================================================
 
 int main() {
-	esGame_init(400, 300);
+	esGame_init("Main loop sample", 400, 300);
 	esLogVersion();
 
 	esShaderAttrib shadAttribs[] = {
