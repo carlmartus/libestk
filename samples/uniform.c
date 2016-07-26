@@ -43,7 +43,6 @@ int main(int argc, char **argv) {
 	}
 
 	esShader_use(&shad);
-	esLog(ES_INFO, "Uniform %p", glUniform4f);
 	glUniform4f(esShader_uniformGl(&shad, 0), 0.0f, 1.0f, 0.0f, 1.0f); // Green
 
 	static const float red_lo[] = {

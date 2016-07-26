@@ -10,9 +10,6 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 option(ES_OPT_AUDIO "Audio with SDL_mixer" YES)
 option(ES_OPT_IMAGE "Image loading with SDL_image" YES)
 option(ES_OPT_EMSCRIPTEN "Emscripten mode" NO)
-option(ES_OPT_GL_GLEW "OpenGL GLEW mode" YES)
-option(ES_OPT_GL_GLES2 "OpenGL GLES2 mode" NO)
-option(ES_OPT_GL_LEGACY "OpenGL legacy mode" NO)
 
 # Version/Naming
 # ==============

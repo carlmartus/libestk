@@ -9,6 +9,8 @@
 //=============================================================================
 
 static const char glslMesh_vert[] = ES_SHADER_SOURCE(
+	precision mediump float;
+
 	attribute vec3 in_location;
 	attribute vec4 in_color;
 
@@ -22,6 +24,7 @@ static const char glslMesh_vert[] = ES_SHADER_SOURCE(
 	});
 
 static const char glslMesh_frag[] = ES_SHADER_SOURCE(
+	precision mediump float;
 	varying vec4 va_color;
 
 	void main() {

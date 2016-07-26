@@ -37,12 +37,11 @@ void esGame_init(const char *wmTitle,
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
-	//SDL_SetVideoMode(screen_width, screen_height, 0, SDL_OPENGL);
 	window = SDL_CreateWindow(wmTitle,
-			0,
-			0,
-			screen_width, screen_height,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
+			window_w, window_h,
+			SDL_WINDOW_OPENGL);
 
 	if (!window) {
 		esLog(ES_ERRO, "Can't create window");
@@ -52,10 +51,6 @@ void esGame_init(const char *wmTitle,
 	if (Mix_OpenAudio(22050, AUDIO_S16, 1, 4096)) {
 		esLog(ES_ERRO, "Cannot open audio\n");
 	}
-#endif
-
-#ifdef ES_OPT_GL_GLEW
-	glewInit();
 #endif
 
 	glContext = SDL_GL_CreateContext(window);
