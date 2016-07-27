@@ -52,14 +52,15 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 
 	glTexImage2D(GL_TEXTURE_2D, 0, mode, surf->w, surf->h,
 			0, mode, GL_UNSIGNED_BYTE, surf->pixels);
+	esCheckGlError();
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 			map_mipmap[mipMapMin]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
 			map_mipmap[mipMapMag]);
+	esCheckGlError();
 
 	SDL_FreeSurface(surf);
-	esCheckGlError();
 	return ES_OK;
 }
 #endif

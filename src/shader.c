@@ -37,9 +37,7 @@ static int loadShaderText(const char *source,
 		esCheckGlError();
 		return 0;
 	}
-	esCheckGlError();
 
-	//esLog(ES_INFO, "Loaded shader %s", fileName);
 	esCheckGlError();
 	return shad;
 }

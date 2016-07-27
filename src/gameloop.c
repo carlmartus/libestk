@@ -58,7 +58,6 @@ void esGame_init(const char *wmTitle,
 }
 
 static void event_key(int sdlkey, int down) {
-	esLog(ES_INFO, "KEY %d %d", sdlkey, down);
 	if (keys[sdlkey].callback) {
 		keys[sdlkey].callback(sdlkey, down);
 	}

@@ -18,7 +18,7 @@ static void loop_exit() {
 
 int main() {
 
-	esGame_init(400, 300);
+	esGame_init("Sound sample", 400, 300);
 	esLogVersion();
 
 	if (!esSound_create(&sfx, "samples/resources/sound.ogg")) {
