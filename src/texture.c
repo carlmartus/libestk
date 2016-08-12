@@ -47,6 +47,7 @@ esErr esTexture_load(esTexture *tex, const char *file_name,
 	glGenTextures(1, &gltex);
 	tex->gltexture = gltex;
 	glBindTexture(GL_TEXTURE_2D, tex->gltexture);
+	esCheckGlError();
 
 	int mode = surf->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
 

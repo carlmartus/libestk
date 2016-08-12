@@ -7,8 +7,6 @@
 #include <SDL2/SDL_opengles2.h>
 
 #define ESTK_VERSION "@MAJOR@.@MINOR@.@PATCH@@NOTE@"
-#cmakedefine ES_OPT_GL_GLES2
-#cmakedefine ES_OPT_GL_LEGACY
 
 typedef unsigned int esGLuint;
 
@@ -98,7 +96,9 @@ void esGame_glSwap(void);
 void esGame_loop(void (*frame)(float t), void (*exit)(), int frame_rate);
 void esGame_loopQuit(void);
 void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
-void esGame_registerMouse(void (*callback) (int button, int down, int x, int y));
+void esGame_registerMouse(void (*callback) (int button, int down,
+			int x, int y, int dx, int dy));
+void esGame_captureMouse(int on);
 void esGame_windowSize(int *w, int *h);
 void esGame_setViewport(void);
 void esGame_delay(unsigned int timeMs);

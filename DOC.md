@@ -31,6 +31,7 @@
 	- func [esGame_loopQuit](#esgame_loopquit)
 	- func [esGame_registerKey](#esgame_registerkey)
 	- func [esGame_registerMouse](#esgame_registermouse)
+	- func [esGame_captureMouse](#esgame_capturemouse)
 	- func [esGame_windowSize](#esgame_windowsize)
  - [Shader](#shader)
 	- type [esUniform](#esuniform)
@@ -250,7 +251,12 @@ void esGame_registerKey(int sdlkey, void (*callback)(int key, int down));
 
 ## `esGame_registerMouse`
 ```c
-void esGame_registerMouse(void (*callback) (int button, int down, int x, int y));
+void esGame_registerMouse(void (*callback) (int button, int down, int x, int y, int dx, int dy));
+```
+
+## `esGame_captureMouse`
+```c
+void esGame_captureMouse(void (*callback) (int button, int down, int x, int y, int dx, int dy));
 ```
 
 ## `esGame_windowSize`

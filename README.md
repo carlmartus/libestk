@@ -2,7 +2,7 @@
 
 # Overview
 
-OpenGL ES Toolkit v5.0.0-dev is a wrapper library working with *OpenGL ES 2.0*.
+OpenGL ES Toolkit v6.1.0-dev is a wrapper library working with *OpenGL ES 2.0*.
 
 This project is a continuation of [ESTK](https://github.com/carlmartus/estk)
 which can be considered version 1.0 of libestk.
@@ -100,4 +100,5 @@ make install
 
  * [ ] Shared uniform system
  * [ ] User param pointer as argument on all callbacks
+ * [ ] Window resize event
 

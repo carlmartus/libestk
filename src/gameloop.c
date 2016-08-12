@@ -12,6 +12,7 @@
 static SDL_Window *window;
 static SDL_GLContext *glContext;
 static int window_w, window_h;
+static int blockNextMouse;
 
 static int loop_run;
 static int key_regs = 0;
@@ -19,10 +20,13 @@ static struct {
 	void (*callback) (int key, int down);
 } keys[MAX_KEYS];
 
-static void (*mouse_callback) (int button, int down, int x, int y) = 0;
+static void (*mouse_callback) (int button, int down, int x, int y,
+		int dx, int dy) = 0;
 
 void esGame_init(const char *wmTitle,
 		int screen_width, int screen_height) {
+
+	blockNextMouse = 0;
 
 	window_w = screen_width;
 	window_h = screen_height;
@@ -34,6 +38,7 @@ void esGame_init(const char *wmTitle,
 #endif
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
@@ -63,9 +68,16 @@ static void event_key(int sdlkey, int down) {
 	}
 }
 
-static void event_mouse(int mouseButton, int down, int x, int y) {
+static void event_mouse(int mouseButton, int down,
+		int x, int y, int dx, int dy) {
+
+	if (blockNextMouse) {
+		blockNextMouse = 0;
+		return;
+	}
+
 	if (mouse_callback) {
-		mouse_callback(mouseButton, down, x, y);
+		mouse_callback(mouseButton, down, x, y, dx, dy);
 	}
 }
 
@@ -76,6 +88,9 @@ static void events(void) {
 		[SDL_BUTTON_LEFT] = 1,
 		[SDL_BUTTON_RIGHT] = 2,
 		[SDL_BUTTON_MIDDLE] = 3,
+		// SDL2 Additional buttons
+		[SDL_BUTTON_X1] = 4,
+		[SDL_BUTTON_X2] = 5,
 	};
 
 	while (SDL_PollEvent(&event)) {
@@ -85,13 +100,15 @@ static void events(void) {
 			case SDL_KEYDOWN :	event_key(event.key.keysym.sym&511, 1); break;
 			case SDL_KEYUP :	event_key(event.key.keysym.sym&511, 0); break;
 
-			case SDL_MOUSEMOTION : event_mouse(0, 0, event.motion.x, event.motion.y); break;
+			case SDL_MOUSEMOTION :
+				event_mouse(0, 0, event.motion.x, event.motion.y,
+						event.motion.xrel, event.motion.yrel); break;
 
 			case SDL_MOUSEBUTTONUP :
 			case SDL_MOUSEBUTTONDOWN :
 				event_mouse(button_map[event.button.button],
 						event.button.type == SDL_MOUSEBUTTONDOWN ? 1:0,
-						event.button.x, event.button.y); break;
+						event.button.x, event.button.y, 0, 0); break;
 				break;
 		}
 	}
@@ -185,8 +202,19 @@ void esGame_registerKey(int sdlkey,
 }
 
 void esGame_registerMouse(
-		void (*callback) (int button, int down, int x, int y)) {
+		void (*callback) (int button, int down, int x, int y, int dx, int dy)) {
 	mouse_callback = callback;
+}
+
+void esGame_captureMouse(int on) {
+	SDL_bool b = on ? SDL_TRUE : SDL_FALSE;
+	SDL_SetRelativeMouseMode(b);
+	SDL_CaptureMouse(b);
+
+	if (b == SDL_FALSE) {
+		SDL_WarpMouseInWindow(window, 0, 0);
+		blockNextMouse = 1;
+	}
 }
 
 void esGame_windowSize(int *w, int *h) {

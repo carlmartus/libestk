@@ -15,7 +15,7 @@ option(ES_OPT_EMSCRIPTEN "Emscripten mode" NO)
 # ==============
 
 set(MAJOR 6)
-set(MINOR 0)
+set(MINOR 1)
 set(PATCH 0)
 set(NOTE "-dev")
 set(VERSION ${MAJOR}.${MINOR}.${PATCH}${NOTE})
