@@ -52,13 +52,22 @@ Documentation can be found [here](DOC.md).
  * *SDL2_mixer* (optional)
  * *GLEW* (Optional on *nix* systems)
 
+In Debian like Linux distros, a development environment can be installed with:
+
+```
+sudo apt-get install cmake libsdl2-image-dev libsdl2-mixer-dev libglew-dev libsdl2-dev
+```
+
 
 ## Compilation
 
 ### Traditional compilation
+
 First generate the build environment with cmake:
 ```
-cmake .
+mkdir build
+cd build
+cmake ..
 ```
 
 Now build the projet with:
@@ -66,14 +75,15 @@ Now build the projet with:
 make
 ```
 
-The library and all the demos can now be found in the ```bin``` directory.
+The library and all the demos can now be found in the `bin` directory.
 
-If you wish to add the library to your system run this:
+If you wish to add the library to your system run this as root:
 ```
 make install
 ```
 
 ### Emscripten
+
 This kind of compilation requires a installment of *Emscripten*. To compile the
 library with *Emscripten*, you must run *CMake* with a tool chain file from the
 *Emscripten* SDK:
