@@ -6,8 +6,8 @@ addons:
         sources:
             - george-edison55-precise-backports
         packages:
-            - cmake-data
             - cmake
+            - cmake-data
             - libglew-dev
             - libsdl2-dev
             - libsdl2-image-dev

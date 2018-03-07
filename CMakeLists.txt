@@ -30,7 +30,7 @@ set(ESTK estk${MAJOR})
 #endif(NOT ES_OPT_EMSCRIPTEN)
 
 include(FindPkgConfig)
-pkg_search_module(SDL2 REQUIRED sdl2)
+#pkg_search_module(SDL2 REQUIRED sdl2)
 
 configure_file (
 	"src/estk.h.in"
