@@ -24,9 +24,10 @@ set(ESTK estk${MAJOR})
 # Configuration
 # =============
 
-if(NOT ES_OPT_EMSCRIPTEN)
-	find_package(GLEW REQUIRED)
-endif(NOT ES_OPT_EMSCRIPTEN)
+# Doesn't work with travis-ci
+#if(NOT ES_OPT_EMSCRIPTEN)
+#find_package(GLEW REQUIRED)
+#endif(NOT ES_OPT_EMSCRIPTEN)
 
 include(FindPkgConfig)
 pkg_search_module(SDL2 REQUIRED sdl2)
