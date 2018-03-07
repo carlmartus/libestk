@@ -1,9 +1,13 @@
 dist: trusty
+os: linux
+group: stable
+sudo: required
 language: c
 
 before_install:
     - sudo apt-get -qq update
-    - sudo apt-get install -y cmake cmake-data \
+    - sudo apt-get install -y cmake cmake-data
+    - sudo apt-get install -y \
       libglew-dev \
       libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
 
