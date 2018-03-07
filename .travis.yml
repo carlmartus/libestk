@@ -1,5 +1,11 @@
+dist: trusty
 language: c
+
+addons:
+    apt:
+        packages:
+            - libglew-dev
 
 script:
     - cmake .
-    - make
+    - cmake --build .
