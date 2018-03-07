@@ -5,6 +5,9 @@ addons:
     apt:
         packages:
             - libglew-dev
+            - libsdl1.2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
 
 script:
     - cmake .
