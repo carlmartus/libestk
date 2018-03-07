@@ -1,4 +1,4 @@
-dist: artful
+dist: bionic
 language: c
 
 addons:
