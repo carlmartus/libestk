@@ -2,6 +2,8 @@
 
 # Overview
 
+[![Build Status](https://travis-ci.org/carlmartus/libestk.svg?branch=master)](https://travis-ci.org/carlmartus/libestk)
+
 OpenGL ES Toolkit v6.1.0-dev is a wrapper library working with *OpenGL ES 2.0*.
 
 This project is a continuation of [ESTK](https://github.com/carlmartus/estk)
