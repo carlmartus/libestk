@@ -1,17 +1,12 @@
-dist: bionic
+dist: xenial
 language: c
 
-addons:
-    apt:
-        sources:
-            - george-edison55-precise-backports
-        packages:
-            - cmake
-            - cmake-data
-            - libglew-dev
-            - libsdl2-dev
-            - libsdl2-image-dev
-            - libsdl2-mixer-dev
+before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y cmake cmake-data \
+      libglew-dev \
+      libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
+
 
 script:
     - cmake .
